@@ -98,16 +98,16 @@ export const SERVICE_CATEGORIES = [
     iconBoxClass: "bg-pink-500 text-white shadow-pink-400/50",
     titleClass: "text-pink-900",
   },
-  // {
-  //   id: 7,
-  //   title: "Hồ sơ sức khỏe toàn dân",
-  //   path: "/health-records",
-  //   icon: FileHeart,
-  //   containerClass:
-  //     "bg-gradient-to-br from-sky-50 via-sky-100 to-sky-50 border-sky-200 hover:shadow-sky-300",
-  //   iconBoxClass: "bg-sky-600 text-white shadow-sky-400/50",
-  //   titleClass: "text-sky-900",
-  // },
+  {
+    id: 7,
+    title: "Hồ sơ sức khỏe toàn dân",
+    path: "/health-records",
+    icon: FileHeart,
+    containerClass:
+      "bg-gradient-to-br from-sky-50 via-sky-100 to-sky-50 border-sky-200 hover:shadow-sky-300",
+    iconBoxClass: "bg-sky-600 text-white shadow-sky-400/50",
+    titleClass: "text-sky-900",
+  },
   {
     id: 8,
     title: "Hệ thống y tế Thủ đô",
@@ -297,12 +297,12 @@ export const MAIN_MENU: MenuItem[] = [
         path: "/consulting",
         icon: Utensils,
       },
-      // {
-      //   id: "population",
-      //   title: "Hồ sơ sức khỏe toàn dân",
-      //   path: "/health-records",
-      //   icon: Users,
-      // },
+      {
+        id: "population",
+        title: "Hồ sơ sức khỏe toàn dân",
+        path: "/health-records",
+        icon: Users,
+      },
     ],
   },
   { id: "policy", title: "Chính sách - BHYT", path: "/policy", icon: Info },
