@@ -1,5 +1,5 @@
 import React from 'react';
-import { calculateTotalUnits, calculateOnTimeStats, formatRate } from '@/utils/reportDataUtils';
+
 
 interface TCT01TabContentProps {
     data: {
