@@ -54,9 +54,7 @@ const NewsCategory = () => {
           limit: 10,
           order: "createdAt.desc",
         });
-        const latestItems = Array.isArray(latestData.data)
-          ? latestData.data
-          : latestData.data?.data || [];
+        const latestItems = Array.isArray(latestData) ? latestData : (latestData?.items ?? latestData?.data ?? []);
         setLatestNews(latestItems);
         setLatestNews3([...latestItems].sort(() => 0.5 - Math.random()).slice(0, 3));
 
@@ -70,9 +68,7 @@ const NewsCategory = () => {
           status: "published",
           limit: 30,
         });
-        const allPosts = Array.isArray(trendingData.data)
-          ? trendingData.data
-          : trendingData.data?.data || [];
+        const allPosts = Array.isArray(trendingData) ? trendingData : (trendingData?.items ?? trendingData?.data ?? []);
         const shuffled = [...allPosts].sort(() => 0.5 - Math.random());
         setTrendingNews(shuffled.slice(0, 5));
       } catch (err) {

@@ -129,10 +129,10 @@ const Home = () => {
             title: p.title,
             summary: p.summary,
             content: p.content,
-            imageUrl: p.image_url,
-            category: p.category_id || "news-events",
-            createdAt: p.created_at,
-            isFeatured: p.is_featured,
+            imageUrl: p.image_url || p.imageUrl,
+            category: p.category_id ?? p.categoryId ?? "news-events",
+            createdAt: p.created_at || p.createdAt,
+            isFeatured: p.is_featured ?? p.isFeatured,
           }));
           setDbPosts(mappedPosts);
         } else {

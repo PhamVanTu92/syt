@@ -237,8 +237,8 @@ const PermissionsManagement: React.FC = () => {
           </td>
           <td className="px-6 py-4">
             <span className="text-[10px] text-gray-600 font-black">
-              {item.created_at
-                ? new Date(item.created_at).toLocaleString("vi-VN")
+              {item.created_at || item.createdAt
+                ? new Date(item.created_at || item.createdAt).toLocaleString("vi-VN")
                 : "---"}
             </span>
           </td>

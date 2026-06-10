@@ -61,7 +61,7 @@ const AdminDashboard = () => {
         const mapped = data.map((p: any) => ({
           ...p,
           imageUrl: p.image_url,
-          createdAt: p.created_at,
+          createdAt: p.created_at || p.createdAt,
           category: p.category_id,
         }));
         setPosts(mapped);
