@@ -2,31 +2,48 @@ import { lazy, Suspense } from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 
-// ─── Layouts ─────────────────────────────────────────────────────────────────
+// ─── New Layouts ──────────────────────────────────────────────────────────────
 const PublicLayout = lazy(() => import('@/components/layout/PublicLayout'))
-const AdminLayout  = lazy(() => import('@/components/layout/AdminLayout'))
 
-// ─── Auth pages ───────────────────────────────────────────────────────────────
-const LoginPage          = lazy(() => import('@/features/auth/pages/LoginPage'))
-const RegisterPage       = lazy(() => import('@/features/auth/pages/RegisterPage'))
-const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswordPage'))
+// ─── Legacy Admin Route guard (renders Outlet; each page provides its own AdminLayout) ──
+const LegacyAdminRoute = lazy(() => import('@/components/legacy/AdminRoute'))
 
-// ─── Admin — Content ─────────────────────────────────────────────────────────
-const DashboardPage = lazy(() => import('@/features/posts/pages/DashboardPage'))
+// ─── Auth pages (legacy) ─────────────────────────────────────────────────────
+const Login            = lazy(() => import('@/pages/Login'))
+const ForgotPassword   = lazy(() => import('@/pages/ForgotPassword'))
+const ConfirmPassword  = lazy(() => import('@/pages/ConfirmPassword'))
+const ChangePassword   = lazy(() => import('@/pages/ChangePassword'))
 
-// ─── Admin — Users & Roles ───────────────────────────────────────────────────
-const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'))
-const RolesPage = lazy(() => import('@/features/users/pages/RolesPage'))
+// ─── Admin pages (legacy) ────────────────────────────────────────────────────
+const AdminDashboard             = lazy(() => import('@/pages/AdminDashboard'))
+const UserManagement             = lazy(() => import('@/pages/UserManagement'))
+const RolesManagement            = lazy(() => import('@/pages/RolesManagement'))
+const PermissionsManagement      = lazy(() => import('@/pages/PermissionsManagement'))
+const BannersManagement          = lazy(() => import('@/pages/BannersManagement'))
+const AdminWorkSchedule          = lazy(() => import('@/pages/AdminWorkSchedule'))
+const TemplatesManagement        = lazy(() => import('@/pages/TemplatesManagement'))
+const TemplateCreate             = lazy(() => import('@/pages/TemplateCreate'))
+const TemplateQrView             = lazy(() => import('@/pages/TemplateQrView'))
+const FeedbacksManagement        = lazy(() => import('@/pages/FeedbacksManagement'))
+const SurveysManagement          = lazy(() => import('@/pages/SurveysManagement'))
+const SocialFacilitiesManagement = lazy(() => import('@/pages/SocialFacilitiesManagement'))
+const AffiliatedFacilitiesManagement = lazy(() => import('@/pages/AffiliatedFacilitiesManagement'))
+const TradingFacilitiesManagement = lazy(() => import('@/pages/TradingFacilitiesManagement'))
+const SmtpSettings               = lazy(() => import('@/pages/SmtpSettings'))
+const Report_DCBC                = lazy(() => import('@/pages/Report_DCBC'))
+const Report_KSHL                = lazy(() => import('@/pages/Report_KSHL'))
+const Report_TCT01               = lazy(() => import('@/pages/Report_TCT01'))
 
-// ─── Admin — Facilities ──────────────────────────────────────────────────────
-const SocialFacilitiesPage   = lazy(() => import('@/features/facilities/pages/SocialFacilitiesPage'))
-
-// ─── Admin — Schedules ───────────────────────────────────────────────────────
-const SchedulesPage = lazy(() => import('@/features/schedules/pages/SchedulesPage'))
-
-// ─── Admin — Forms & Feedbacks ───────────────────────────────────────────────
-const FormsPage     = lazy(() => import('@/features/forms/pages/FormsPage'))
-const FeedbacksPage = lazy(() => import('@/features/feedbacks/pages/FeedbacksPage'))
+// ─── Public pages (legacy) ───────────────────────────────────────────────────
+const Home               = lazy(() => import('@/pages/Home'))
+const NewsCategory       = lazy(() => import('@/pages/NewsCategory'))
+const NewsDetail         = lazy(() => import('@/pages/NewsDetail'))
+const FormList           = lazy(() => import('@/pages/FormList'))
+const FormDetail         = lazy(() => import('@/pages/FormDetail'))
+const DataLookup         = lazy(() => import('@/pages/DataLookup'))
+const HanoiSystem        = lazy(() => import('@/pages/HanoiSystem'))
+const HealthConsultation = lazy(() => import('@/pages/HealthConsultation'))
+const EmergencyCenter    = lazy(() => import('@/pages/EmergencyCenter'))
 
 // ─── Route guard ─────────────────────────────────────────────────────────────
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -50,48 +67,72 @@ function S({ children }: { children: React.ReactNode }) {
 // ─── Router ──────────────────────────────────────────────────────────────────
 export const router = createBrowserRouter([
   // ── Auth (no layout) ──────────────────────────────────────────────────────
-  { path: '/login',           element: <S><LoginPage /></S> },
-  { path: '/register',        element: <S><RegisterPage /></S> },
-  { path: '/forgot-password', element: <S><ForgotPasswordPage /></S> },
+  { path: '/login',            element: <S><Login /></S> },
+  { path: '/forgot-password',  element: <S><ForgotPassword /></S> },
+  { path: '/confirm-password', element: <S><ConfirmPassword /></S> },
+  { path: '/change-password',  element: <S><ChangePassword /></S> },
 
-  // ── Admin (protected, AdminLayout) ────────────────────────────────────────
+  // ── Admin (protected, legacy AdminRoute which renders Outlet) ───────────────
   {
     path: '/admin',
-    element: (
-      <RequireAuth>
-        <S><AdminLayout /></S>
-      </RequireAuth>
-    ),
+    element: <S><LegacyAdminRoute /></S>,
     children: [
       { index: true, element: <Navigate to="/admin/dashboard" replace /> },
 
-      // Content
-      { path: 'dashboard', element: <S><DashboardPage /></S> },
+      // Dashboard
+      { path: 'dashboard',   element: <S><AdminDashboard /></S> },
 
       // Users & RBAC
-      { path: 'users',    element: <S><UsersPage /></S> },
-      { path: 'roles',    element: <S><RolesPage /></S> },
+      { path: 'users',       element: <S><UserManagement /></S> },
+      { path: 'roles',       element: <S><RolesManagement /></S> },
+      { path: 'permissions', element: <S><PermissionsManagement /></S> },
 
-      // Facilities
-      { path: 'social-facilities',    element: <S><SocialFacilitiesPage /></S> },
+      // Content
+      { path: 'posts',       element: <S><AdminDashboard /></S> },
+      { path: 'banners',     element: <S><BannersManagement /></S> },
 
       // Schedules
-      { path: 'schedules', element: <S><SchedulesPage /></S> },
+      { path: 'schedules',   element: <S><AdminWorkSchedule /></S> },
 
-      // Forms & Feedback
-      { path: 'templates/reflect',  element: <S><FormsPage /></S> },
-      { path: 'templates/evaluate', element: <S><FormsPage /></S> },
-      { path: 'feedbacks/reflect',  element: <S><FeedbacksPage /></S> },
-      { path: 'feedbacks/evaluate', element: <S><FeedbacksPage /></S> },
+      // Templates
+      { path: 'templates',          element: <S><TemplatesManagement /></S> },
+      { path: 'templates/create',   element: <S><TemplateCreate /></S> },
+      { path: 'templates/:id/qr',   element: <S><TemplateQrView /></S> },
+
+      // Feedbacks & Surveys
+      { path: 'feedbacks/reflect',  element: <S><FeedbacksManagement /></S> },
+      { path: 'feedbacks/evaluate', element: <S><FeedbacksManagement /></S> },
+      { path: 'surveys',            element: <S><SurveysManagement /></S> },
+
+      // Facilities
+      { path: 'facilities/social',     element: <S><SocialFacilitiesManagement /></S> },
+      { path: 'facilities/affiliated', element: <S><AffiliatedFacilitiesManagement /></S> },
+      { path: 'facilities/trading',    element: <S><TradingFacilitiesManagement /></S> },
+
+      // Reports
+      { path: 'reports/dcbc',  element: <S><Report_DCBC /></S> },
+      { path: 'reports/kshl',  element: <S><Report_KSHL /></S> },
+      { path: 'reports/tct01', element: <S><Report_TCT01 /></S> },
+
+      // Settings
+      { path: 'smtp', element: <S><SmtpSettings /></S> },
     ],
   },
 
-  // ── Public (PublicLayout) ─────────────────────────────────────────────────
+  // ── Public (PublicLayout with legacy pages) ───────────────────────────────
   {
     path: '/',
     element: <S><PublicLayout /></S>,
     children: [
-      { index: true, element: <div className="container mx-auto px-4 py-12 text-center"><h1 className="text-3xl font-bold text-primary">Sở Y Tế Hà Nội</h1><p className="mt-4 text-muted-foreground">Cổng thông tin điện tử</p></div> },
+      { index: true,                  element: <S><Home /></S> },
+      { path: 'tin-tuc',              element: <S><NewsCategory /></S> },
+      { path: 'tin-tuc/:id',          element: <S><NewsDetail /></S> },
+      { path: 'form-danh-gia',        element: <S><FormList /></S> },
+      { path: 'form-danh-gia/:id',    element: <S><FormDetail /></S> },
+      { path: 'tra-cuu',              element: <S><DataLookup /></S> },
+      { path: 'he-thong-ha-noi',      element: <S><HanoiSystem /></S> },
+      { path: 'tu-van-suc-khoe',      element: <S><HealthConsultation /></S> },
+      { path: 'cap-cuu',              element: <S><EmergencyCenter /></S> },
     ],
   },
 
