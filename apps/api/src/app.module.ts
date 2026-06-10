@@ -15,6 +15,7 @@ import { SchedulesModule } from './modules/schedules/schedules.module';
 import { DatasetsModule } from './modules/datasets/datasets.module';
 import { FormsModule } from './modules/forms/forms.module';
 import { SurveysModule } from './modules/surveys/surveys.module';
+import { EmailConfirmModule } from './modules/email-confirm/email-confirm.module';
 import { FeedbacksModule } from './modules/feedbacks/feedbacks.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { HealthController } from './common/health/health.controller';
@@ -43,6 +44,7 @@ import { PermissionGuard } from './common/guards/permission.guard';
     DatasetsModule,
     FormsModule,
     SurveysModule,
+    EmailConfirmModule,
     FeedbacksModule,
     ReportsModule,
   ],
