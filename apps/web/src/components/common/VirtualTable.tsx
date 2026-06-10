@@ -8,7 +8,6 @@
  * Then uncomment the implementation below and remove the fallback.
  */
 
-import { useRef } from 'react'
 import { cn } from '@/lib/utils'
 
 // ─── Virtualized implementation (uncomment after installing @tanstack/react-virtual) ───

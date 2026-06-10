@@ -41,7 +41,7 @@ api.interceptors.response.use(
         return new Promise((resolve) => {
           refreshQueue.push((token: string) => {
             original.headers.Authorization = `Bearer ${token}`
-            resolve(api(original as Parameters<typeof api>[0]))
+            resolve(api(original as unknown as Parameters<typeof api>[0]))
           })
         })
       }
@@ -63,7 +63,7 @@ api.interceptors.response.use(
         refreshQueue.forEach((cb) => cb(newToken))
         refreshQueue = []
         original.headers.Authorization = `Bearer ${newToken}`
-        return api(original as Parameters<typeof api>[0])
+        return api(original as unknown as Parameters<typeof api>[0])
       } catch {
         // PERF FIX: clear queue to prevent memory leak before redirecting
         refreshQueue = []

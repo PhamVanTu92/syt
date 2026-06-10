@@ -328,10 +328,6 @@ export default function DashboardPage() {
     if (!('page' in patch)) setPage(1) // reset URL page on filter change
   }
 
-  const gotoPage = (p: number) => {
-    setFilters((prev) => ({ ...prev, page: p }))
-    setPage(p)
-  }
 
   return (
     <div className="space-y-6">

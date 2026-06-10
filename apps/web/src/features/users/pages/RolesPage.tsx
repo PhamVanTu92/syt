@@ -131,7 +131,8 @@ interface AssignPermissionsDialogProps {
   onClose: () => void
 }
 
-function groupPermissionsByParent(permissions: Permission[]): Map<string, Permission[]> {
+// NOTE: groupPermissionsByParent is available for future grouped-view UI
+export function groupPermissionsByParent(permissions: Permission[]): Map<string, Permission[]> {
   const grouped = new Map<string, Permission[]>()
   for (const perm of permissions) {
     const parent = perm.parentKey ?? '_root'

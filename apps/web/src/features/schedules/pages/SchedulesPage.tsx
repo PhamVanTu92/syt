@@ -454,7 +454,7 @@ export default function SchedulesPage() {
               </tr>
             )}
             {schedules.map((s) => {
-              const isOwner = currentUser?.id === s.creatorId
+              const isOwner = String(currentUser?.id) === String(s.creatorId)
               return (
                 <tr key={s.id} className="hover:bg-gray-50">
                   <td className="px-5 py-3">
