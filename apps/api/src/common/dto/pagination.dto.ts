@@ -27,6 +27,41 @@ export class PaginationDto {
   @IsOptional()
   @IsIn(['asc', 'desc'])
   sortOrder: 'asc' | 'desc' = 'desc';
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  sort_by?: string;
+
+  @ApiPropertyOptional({ enum: ['ASC', 'DESC', 'asc', 'desc'] })
+  @IsOptional()
+  @IsString()
+  sort_dir?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  status?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  type?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  unit?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  unit_type?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  survey_key?: string;
 }
 
 export function paginate(page: number, limit: number) {
