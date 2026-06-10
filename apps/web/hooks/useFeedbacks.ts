@@ -36,10 +36,11 @@ export const useFeedbacks = (type?: string, toastRef?: React.RefObject<Toast | n
       const data = response.data || response;
       let list: any[] = [];
       let total = 0;
-      
-      if (data?.items && Array.isArray(data.items)) { list = data.items; total = data.total || list.length; }
+
+      if (Array.isArray(data)) { list = data; total = data.length; }
+      else if (Array.isArray(data?.data)) { list = data.data; total = response.meta?.total ?? data.data.length; }
+      else if (data?.items && Array.isArray(data.items)) { list = data.items; total = data.total || list.length; }
       else if (data?.data?.items && Array.isArray(data.data.items)) { list = data.data.items; total = data.data.total || list.length; }
-      else if (Array.isArray(data)) { list = data; total = data.length; }
       
       setFeedbacks(list);
       setTotalRecords(total);

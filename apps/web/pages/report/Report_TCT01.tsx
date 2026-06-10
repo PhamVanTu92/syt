@@ -68,13 +68,10 @@ const Report_TCT01 = () => {
             const data = response.data || response;
             let list: any[] = [];
 
-            if (data?.items && Array.isArray(data.items)) {
-                list = data.items;
-            } else if (data?.data?.items && Array.isArray(data.data.items)) {
-                list = data.data.items;
-            } else if (Array.isArray(data)) {
-                list = data;
-            }
+            if (Array.isArray(data)) { list = data; }
+            else if (Array.isArray(data?.data)) { list = data.data; }
+            else if (data?.items && Array.isArray(data.items)) { list = data.items; }
+            else if (data?.data?.items && Array.isArray(data.data.items)) { list = data.data.items; }
             setFeedbacks(list);
         } catch (error) {
             console.error(error);

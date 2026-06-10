@@ -69,13 +69,9 @@ const TemplatesManagement: React.FC = () => {
       let list: any[] = [];
       let total = 0;
 
-      if (data && data.data && Array.isArray(data.data.items)) {
-        list = data.data.items;
-        total = data.data.total || list.length;
-      } else if (Array.isArray(data)) {
-        list = data;
-        total = data.length;
-      }
+      if (Array.isArray(data?.data)) { list = data.data; total = data.meta?.total ?? list.length; }
+      else if (data && data.data && Array.isArray(data.data.items)) { list = data.data.items; total = data.data.total || list.length; }
+      else if (Array.isArray(data)) { list = data; total = data.length; }
 
       setTemplates(list);
       setTotalRecords(total);

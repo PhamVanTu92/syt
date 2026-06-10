@@ -37,8 +37,8 @@ export const useSchedules = (): UseSchedulesResult => {
     setError(null);
     try {
       const data = await api.get("/schedules", filters); 
-      setSchedules(data.data.schedules || []);
-      setTotalRecords(data.data.totalItems || 0);
+      setSchedules(Array.isArray(data.data) ? data.data : (data.data?.schedules || []));
+      setTotalRecords(data.meta?.total ?? data.data?.total_items ?? 0);
     } catch (err) {
       setError(err);
       console.error("Failed to fetch schedules:", err);
