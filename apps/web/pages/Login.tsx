@@ -38,10 +38,10 @@ const Login: React.FC = () => {
         password: password,
       });
 
-      // Unwrap new backend envelope { success, data: { accessToken, user } }
+      // Unwrap new backend envelope { success, data: { access_token, user } } (keys snakified)
       const payload = data?.data ?? data;
-      if (payload && (payload.token || payload.accessToken)) {
-        const loggedInUser = await login(payload.token || payload.accessToken, payload.user);
+      if (payload && (payload.token || payload.access_token)) {
+        const loggedInUser = await login(payload.token || payload.access_token, payload.user);
         const landingPath = getLandingPath(loggedInUser);
         navigate(landingPath, { replace: true });
       } else {

@@ -2,6 +2,18 @@ import { SmtpConfig } from "./types";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
+// Convert camelCase keys → snake_case recursively (new NestJS backend returns camelCase)
+const toSnake = (str: string) => str.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`);
+const snakifyKeys = (obj: any): any => {
+  if (Array.isArray(obj)) return obj.map(snakifyKeys);
+  if (obj !== null && typeof obj === 'object' && !(obj instanceof Date)) {
+    return Object.fromEntries(
+      Object.entries(obj).map(([k, v]) => [toSnake(k), snakifyKeys(v)])
+    );
+  }
+  return obj;
+};
+
 const handleResponse = async (response: Response, method: string) => {
   let data;
   try {
@@ -34,7 +46,8 @@ const handleResponse = async (response: Response, method: string) => {
     throw new Error(data.message || `API Error: ${response.status} ${response.statusText}`);
   }
 
-  return data;
+  // Convert camelCase → snake_case so legacy frontend code works unchanged
+  return snakifyKeys(data);
 };
 
 export const api = {
