@@ -88,12 +88,13 @@ export class FormsService {
 
   async create(dto: CreateFormDto) {
     const { sections, info, ...formData } = dto;
+    const { status: rawStatus, ...formRest } = formData;
 
     return this.prisma.$transaction(async (tx) => {
       const form = await tx.form.create({
         data: {
-          ...formData,
-          status: formData.status ?? 'active',
+          ...formRest,
+          status: (rawStatus ?? 'active') as 'active' | 'inactive',
           ...(info !== undefined ? { info: info as Prisma.InputJsonValue } : {}),
         },
       });
@@ -111,11 +112,16 @@ export class FormsService {
   async update(id: number, dto: Partial<CreateFormDto>) {
     await this.findOne(id);
     const { sections, info, ...formData } = dto;
+    const { status: rawStatus, ...formRest } = formData;
 
     return this.prisma.$transaction(async (tx) => {
       await tx.form.update({
         where: { id },
-        data: { ...formData, ...(info !== undefined ? { info: info as Prisma.InputJsonValue } : {}) },
+        data: {
+          ...formRest,
+          ...(rawStatus !== undefined ? { status: rawStatus as 'active' | 'inactive' } : {}),
+          ...(info !== undefined ? { info: info as Prisma.InputJsonValue } : {}),
+        },
       });
 
       if (sections !== undefined) {
@@ -136,7 +142,7 @@ export class FormsService {
     // Check if form is used in active surveys
     const surveysUsing = await this.prisma.survey.findFirst({
       where: {
-        status: 'active',
+        status: true, // Survey.status is Boolean? (true=active)
         formIds: { path: [], array_contains: id },
       },
     });

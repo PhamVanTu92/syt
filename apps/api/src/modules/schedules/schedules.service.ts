@@ -83,11 +83,16 @@ export class SchedulesService {
 
   async create(dto: CreateScheduleDto, createdBy: number) {
     const { attendeeIds, ...data } = dto;
+    type WsStatus   = 'DRAFT' | 'APPROVED' | 'CANCELLED';
+    type WsPriority = 'NORMAL' | 'IMPORTANT' | 'URGENT';
     return this.prisma.workSchedule.create({
       data: {
         ...data,
+        startTime: data.startTime ?? new Date(),
+        endTime: data.endTime ?? new Date(),
+        priority: (data.priority ?? 'NORMAL') as WsPriority,
         createdBy,
-        status: 'DRAFT',
+        status: 'DRAFT' as WsStatus,
         attendees: attendeeIds?.length
           ? { create: attendeeIds.map((userId) => ({ userId })) }
           : undefined,
@@ -98,15 +103,17 @@ export class SchedulesService {
 
   async update(id: number, dto: Partial<CreateScheduleDto>, userId: number) {
     const schedule = await this.findOne(id);
-    if (schedule.createdBy !== userId && schedule.status === 'APPROVED') {
+    if (schedule.createdBy !== userId && (schedule.status as string) === 'APPROVED') {
       throw new ForbiddenException('Không thể sửa lịch đã duyệt');
     }
-    const { attendeeIds, ...data } = dto;
+    type WsPriority = 'NORMAL' | 'IMPORTANT' | 'URGENT';
+    const { attendeeIds, priority, ...data } = dto;
 
     await this.prisma.workSchedule.update({
       where: { id },
       data: {
         ...data,
+        ...(priority !== undefined ? { priority: priority as WsPriority } : {}),
         ...(attendeeIds !== undefined
           ? {
               attendees: {
@@ -131,7 +138,7 @@ export class SchedulesService {
     await this.findOne(id);
     return this.prisma.workSchedule.update({
       where: { id },
-      data: { status: dto.action, approvedBy },
+      data: { status: dto.action as 'DRAFT' | 'APPROVED' | 'CANCELLED', approvedBy },
     });
   }
 }

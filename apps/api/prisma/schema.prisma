@@ -215,8 +215,8 @@ model WorkSchedule {
   id               BigInt                       @id @default(autoincrement())
   title            String
   content          String?
-  startTime        DateTime                     @map("start_time") @db.Timestamptz(6)
-  endTime          DateTime                     @map("end_time") @db.Timestamptz(6)
+  startTime        DateTime?                    @map("start_time") @db.Timestamptz(6)
+  endTime          DateTime?                    @map("end_time") @db.Timestamptz(6)
   location         String?                      @db.VarChar(500)
   coordinatingUnit String?                      @map("coordinating_unit")
   status           enum_work_schedules_status   @default(DRAFT)

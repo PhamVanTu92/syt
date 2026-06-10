@@ -65,15 +65,27 @@ export class PostsService {
   }
 
   async create(dto: CreatePostDto, authorId: number) {
+    const { status, ...rest } = dto;
     return this.prisma.post.create({
-      data: { ...dto, authorId },
+      data: {
+        ...rest,
+        authorId,
+        ...(status !== undefined ? { status: status as 'draft' | 'published' } : {}),
+      },
       include: { author: { select: { id: true, fullName: true } } },
     });
   }
 
   async update(id: number, dto: Partial<CreatePostDto>) {
     await this.findOne(id);
-    return this.prisma.post.update({ where: { id }, data: dto });
+    const { status, ...rest } = dto;
+    return this.prisma.post.update({
+      where: { id },
+      data: {
+        ...rest,
+        ...(status !== undefined ? { status: status as 'draft' | 'published' } : {}),
+      },
+    });
   }
 
   async remove(id: number) {

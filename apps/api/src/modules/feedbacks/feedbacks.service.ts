@@ -88,7 +88,7 @@ export class FeedbacksService {
       }
     }
 
-    const status = userId ? 'approved' : 'pending';
+    const status = (userId ? 'approved' : 'pending') as 'pending' | 'approved' | 'rejected';
 
     return this.prisma.$transaction(async (tx) => {
       const feedback = await tx.feedback.create({
@@ -186,7 +186,10 @@ export class FeedbacksService {
 
   async updateStatus(id: number, status: string) {
     await this.findOne(id);
-    return this.prisma.feedback.update({ where: { id }, data: { status } });
+    return this.prisma.feedback.update({
+      where: { id },
+      data: { status: status as 'pending' | 'approved' | 'rejected' },
+    });
   }
 
   async remove(id: number) {
