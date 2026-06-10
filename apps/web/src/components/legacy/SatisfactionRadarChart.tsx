@@ -20,12 +20,6 @@ type SatisfactionComponentChartProps = {
   hideOverall?: boolean;
 };
 
-type ChartItem = {
-  key: string;
-  label: string;
-  shortLabel: string;
-  value: number;
-};
 
 const SHORT_LABEL_MAP: Record<string, string> = {
   "Khả năng tiếp cận": "Khả năng tiếp cận",

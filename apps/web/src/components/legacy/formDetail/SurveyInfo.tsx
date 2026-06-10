@@ -1,13 +1,13 @@
 import { socialFacilitiesService } from "@/services/socialFacilitiesService";
-import { api } from "@/api";
+import { api } from "@/lib/legacy-api";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/AuthContext";
 import {
   SocialFacilityDropdown,
   SocialFacilityOption,
-} from "@/components/feedbacks/SocialFacilityDropdown";
+} from "@/components/legacy/feedbacks/SocialFacilityDropdown";
 
 export default function SurveyInfo({
   info,
@@ -17,7 +17,7 @@ export default function SurveyInfo({
   error,
   survey_key,
   form_id,
-}) {
+}: any) {
   const { user } = useAuth();
 
   // State kiểm tra đơn vị đã khai báo chưa
@@ -59,7 +59,7 @@ export default function SurveyInfo({
         "mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl",
     },
     wrapper: { className: "max-h-60" },
-    item: ({ context }) => ({
+    item: ({ context }: any) => ({
       className: `
       px-4 py-2 text-[14px] cursor-pointer transition-colors
       ${context.selected
@@ -129,7 +129,7 @@ export default function SurveyInfo({
     }
 
     const matchedOption = staticOptions.find(
-      (opt) => String(opt.key) === String(unitId),
+      (opt: any) => String(opt.key) === String(unitId),
     );
 
     if (matchedOption) {
@@ -207,7 +207,7 @@ export default function SurveyInfo({
             unit_id: selectedOption.key,
             form_id: Number(form_id),
           })
-          .then((res) => {
+          .then((res: any) => {
             if (controller.signal.aborted) return;
             const msg = (res?.message || "").toLowerCase();
             let isDeclared = false;
@@ -229,7 +229,7 @@ export default function SurveyInfo({
             setCheckUnitStatus(isDeclared ? "declared" : "not_declared");
             setCheckUnitMessage(res?.message || "");
           })
-          .catch((err) => {
+          .catch((err: any) => {
             if (controller.signal.aborted) return;
             console.error("check-unit error:", err);
             setCheckUnitStatus(null);

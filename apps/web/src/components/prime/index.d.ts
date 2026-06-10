@@ -21,3 +21,4 @@ export * from 'primereact/chip';
 export * from 'primereact/inputnumber';
 export * from 'primereact/inputswitch';
 export * from 'primereact/tooltip';
+export * from 'primereact/editor';

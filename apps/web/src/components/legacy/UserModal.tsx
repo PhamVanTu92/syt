@@ -39,10 +39,6 @@ const getUserRoleIds = (user: any): number[] => {
   return [];
 };
 
-type FacilityOption = {
-  label: string;
-  value: string;
-};
 
 const UserModal: React.FC<UserModalProps> = ({
   visible,

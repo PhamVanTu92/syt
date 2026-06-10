@@ -1,6 +1,6 @@
 ﻿import React, { useState, useEffect, useRef } from "react";
-import { X, Info, MapPin, Building } from "lucide-react";
-import { WorkSchedule, User } from "@/types/legacy";
+import { X, Info, MapPin } from "lucide-react";
+import { WorkSchedule } from "@/types/legacy";
 import { Dropdown, Calendar, InputText, Button } from "@/components/prime";
 import { Toast } from "primereact/toast";
 import { users } from "@/constants";
@@ -127,7 +127,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
         start_time: new Date(formData.start_time).toISOString(),
         end_time: formData.end_time
           ? new Date(formData.end_time).toISOString()
-          : null,
+          : '',
       };
       await onSave(scheduleToSave);
       toast.current?.show({

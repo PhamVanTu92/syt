@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { Chart } from "primereact/chart";
-import SatisfactionTrendChart from "@/components/Chart";
+import SatisfactionTrendChart from "@/components/legacy/Chart";
 import { DashboardStats } from '@/types/DashboardStats';
 import SatisfactionComponentChart from '@/components/legacy/SatisfactionRadarChart';
 import OverviewStats from '@/components/legacy/StatsChart';
@@ -48,7 +48,7 @@ export const FeedbackStatsSection: React.FC<FeedbackStatsSectionProps> = ({
   tiendoChartData,
   danhgiaChartData,
   barChartData,
-  getPercentValue
+  getPercentValue: _getPercentValue
 }) => {
   if (loading) {
     return (

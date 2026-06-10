@@ -4,8 +4,6 @@ import {
   Save,
   Send,
   X,
-  FileText,
-  Check,
 } from "lucide-react";
 import { Toast } from "primereact/toast";
 import {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FeedbackItem } from '@/types/feedbacks';
-import { useFacilities } from '@/hooks/useFacilities';
+import { useFacilities } from '@/hooks/legacy/useFacilities';
 import { getReportedFacilityId, getExpectedFacilities } from '@/utils/reportDataUtils';
 
 interface ReportAppendixProps {
@@ -18,7 +18,7 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
     type = 'DCBC',
     surveys = [],
     selectedSurveyKey = "",
-    dateFilter = null
+    dateFilter: _dateFilter = null
 }) => {
     const { facilities } = useFacilities();
 
@@ -32,7 +32,7 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
             return {
                 app1Title: "PHỤ LỤC 1",
                 app1Sub: "Danh mục các đơn vị đã thực hiện báo cáo trong kỳ",
-                app1Items: sortedEntries.map(([formId, group]) => {
+                app1Items: sortedEntries.map(([_formId, group]) => {
                     // Loại bỏ các đơn vị trùng lặp (nếu một đơn vị nộp nhiều lần)
                     const uniqueUnitsMap = new Map();
                     group.items.forEach(item => {

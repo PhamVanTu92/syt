@@ -13,9 +13,9 @@ import {
   Dropdown,
   InputText,
   InputTextarea,
-  Editor,
   Button,
 } from "@/components/prime";
+import { Editor } from "primereact/editor";
 import { Toast } from "primereact/toast";
 
 interface PostFormProps {
@@ -330,7 +330,7 @@ const PostForm: React.FC<PostFormProps> = ({
               </label>
               <Editor
                 value={formData.content}
-                onTextChange={(e) =>
+                onTextChange={(e: any) =>
                   setFormData({ ...formData, content: e.htmlValue })
                 }
                 placeholder="Nội dung bài viết đầy đủ..."

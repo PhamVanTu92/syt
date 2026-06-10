@@ -1,8 +1,8 @@
-import React, { memo, useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import SurveyInfo from "./SurveyInfo";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { api } from "@/api";
+import { api } from "@/lib/legacy-api";
 import { Toast } from "primereact/toast";
 import { useNavigate } from "react-router-dom";
 

@@ -5,8 +5,8 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
 import { MultiSelect } from 'primereact/multiselect';
 import { InfoNode, InfoOptionNode } from '@/types/templates';
-import { api } from '@/api';
-import { FacilityFilterDropdown } from '@/components/feedbacks/FacilityFilterDropdown';
+import { api } from '@/lib/legacy-api';
+import { FacilityFilterDropdown } from '@/components/legacy/feedbacks/FacilityFilterDropdown';
 
 interface InfoBuilderProps {
   info: InfoNode[];
