@@ -9,6 +9,9 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { PermissionCacheService } from '../../common/services/permission-cache.service';
 import { PaginationDto, paginate, paginatedResponse } from '../../common/dto/pagination.dto';
 import type { CreateUserDto, UpdateUserDto } from './dto/create-user.dto';
+import {
+  USER_STATUS, toUserStatus, toUserRole, fromUserStatus,
+} from '../../common/utils/prisma-compat.util';
 
 @Injectable()
 export class UsersService {
@@ -67,9 +70,9 @@ export class UsersService {
         email: dto.email.toLowerCase(),
         password: hash,
         fullName: dto.fullName,
-        role: dto.role ?? 'user',
+        role: toUserRole(dto.role) ?? 'user',
         unit: dto.unit,
-        status: dto.status ?? 'active',
+        status: toUserStatus(dto.status ?? 'active') ?? USER_STATUS.active,
         isVerified: true,
       },
     });
@@ -78,7 +81,15 @@ export class UsersService {
 
   async update(id: number, dto: UpdateUserDto) {
     await this.findOne(id);
-    const user = await this.prisma.user.update({ where: { id }, data: dto });
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        ...(dto.fullName !== undefined ? { fullName: dto.fullName } : {}),
+        ...(dto.unit !== undefined ? { unit: dto.unit } : {}),
+        ...(dto.status !== undefined ? { status: toUserStatus(dto.status) } : {}),
+        ...(dto.role !== undefined ? { role: toUserRole(dto.role) } : {}),
+      },
+    });
     return this.formatUser(user);
   }
 
@@ -132,7 +143,10 @@ export class UsersService {
 
   async getLeaders() {
     const users = await this.prisma.user.findMany({
-      where: { role: { in: ['leader', 'admin'] }, status: 'active' },
+      where: {
+        role: { in: ['leader', 'admin'] as ('admin' | 'user' | 'office' | 'leader')[] },
+        status: USER_STATUS.active,
+      },
       orderBy: { fullName: 'asc' },
     });
     return users.map(this.formatUser);
@@ -143,9 +157,14 @@ export class UsersService {
     const { password, refreshToken, ...safe } = user as {
       password: string;
       refreshToken: string | null;
+      status: number;
       [key: string]: unknown;
     };
     void password; void refreshToken;
-    return safe;
+    return {
+      ...safe,
+      // Map Int status back to string for API consumers
+      status: fromUserStatus(safe['status'] as number),
+    };
   }
 }

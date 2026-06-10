@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -33,8 +34,8 @@ export class TradingFacilitiesService {
     if (query.isActive !== undefined) where['isActive'] = query.isActive;
 
     const [items, total] = await Promise.all([
-      this.prisma.tradingFacility.findMany({ where, skip, take, orderBy: { name: 'asc' } }),
-      this.prisma.tradingFacility.count({ where }),
+      this.prisma.tradingFacility.findMany({ where: where as Prisma.TradingFacilityWhereInput, skip, take, orderBy: { name: 'asc' } }),
+      this.prisma.tradingFacility.count({ where: where as Prisma.TradingFacilityWhereInput }),
     ]);
     return paginatedResponse(items, total, query.page, query.limit);
   }

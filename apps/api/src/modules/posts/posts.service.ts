@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -39,13 +40,13 @@ export class PostsService {
 
     const [posts, total] = await Promise.all([
       this.prisma.post.findMany({
-        where,
+        where: where as Prisma.PostWhereInput,
         skip,
         take,
         orderBy: { createdAt: 'desc' },
         include: { author: { select: { id: true, fullName: true, email: true } } },
       }),
-      this.prisma.post.count({ where }),
+      this.prisma.post.count({ where: where as Prisma.PostWhereInput }),
     ]);
 
     return paginatedResponse(posts, total, query.page, query.limit);

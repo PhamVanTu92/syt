@@ -6,6 +6,7 @@ import type { Request } from 'express';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { TokenHmacService } from '../../../common/services/token-hmac.service';
 import type { JwtPayload } from './jwt.strategy';
+import { USER_STATUS } from '../../../common/utils/prisma-compat.util';
 
 @Injectable()
 export class RefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
@@ -30,7 +31,7 @@ export class RefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
 
     const user = await this.prisma.user.findUnique({ where: { id: payload.sub } });
     if (!user) throw new UnauthorizedException();
-    if (user.status !== 'active') throw new UnauthorizedException('Tài khoản đã bị vô hiệu hóa');
+    if (user.status !== USER_STATUS.active) throw new UnauthorizedException('Tài khoản đã bị vô hiệu hóa');
 
     if (!user.refreshToken) throw new UnauthorizedException('Phiên đăng nhập đã hết hạn');
     // PERF FIX: HMAC verify (<1ms vs bcrypt ~300ms) — safe because tokens are 32-byte random

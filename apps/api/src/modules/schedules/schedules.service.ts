@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { IsEnum, IsOptional, IsString, IsInt, IsArray } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -47,7 +48,7 @@ export class SchedulesService {
 
     const [items, total] = await Promise.all([
       this.prisma.workSchedule.findMany({
-        where,
+        where: where as Prisma.WorkScheduleWhereInput,
         skip,
         take,
         orderBy: { startTime: 'asc' },
@@ -59,7 +60,7 @@ export class SchedulesService {
           attachments: { select: { id: true, fileUrl: true } },
         },
       }),
-      this.prisma.workSchedule.count({ where }),
+      this.prisma.workSchedule.count({ where: where as Prisma.WorkScheduleWhereInput }),
     ]);
 
     return paginatedResponse(items, total, query.page, query.limit);

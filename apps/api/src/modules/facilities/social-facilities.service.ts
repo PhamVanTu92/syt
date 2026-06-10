@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException, Optional } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { IsOptional, IsString } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -37,8 +38,8 @@ export class SocialFacilitiesService {
     if (query.category) where['category'] = query.category;
 
     const [items, total] = await Promise.all([
-      this.prisma.socialFacility.findMany({ where, skip, take, orderBy: { name: 'asc' } }),
-      this.prisma.socialFacility.count({ where }),
+      this.prisma.socialFacility.findMany({ where: where as Prisma.SocialFacilityWhereInput, skip, take, orderBy: { name: 'asc' } }),
+      this.prisma.socialFacility.count({ where: where as Prisma.SocialFacilityWhereInput }),
     ]);
     return paginatedResponse(items, total, query.page, query.limit);
   }

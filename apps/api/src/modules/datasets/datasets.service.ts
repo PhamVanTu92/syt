@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { PaginationDto, paginate, paginatedResponse } from '../../common/dto/pagination.dto';
 
@@ -16,8 +17,8 @@ export class DatasetsService {
     const where: Record<string, unknown> = { datasetTypeId: type.id };
 
     const [items, total] = await Promise.all([
-      this.prisma.datasetRecord.findMany({ where, skip, take, orderBy: { id: 'asc' } }),
-      this.prisma.datasetRecord.count({ where }),
+      this.prisma.datasetRecord.findMany({ where: where as Prisma.DatasetRecordWhereInput, skip, take, orderBy: { id: 'asc' } }),
+      this.prisma.datasetRecord.count({ where: where as Prisma.DatasetRecordWhereInput }),
     ]);
     return { ...paginatedResponse(items, total, query.page, query.limit), type };
   }

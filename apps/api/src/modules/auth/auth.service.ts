@@ -14,6 +14,7 @@ import * as crypto from 'crypto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { TokenHmacService } from '../../common/services/token-hmac.service';
 import { EmailService } from '../email/email.service';
+import { USER_STATUS, fromUserStatus } from '../../common/utils/prisma-compat.util';
 import type { LoginDto } from './dto/login.dto';
 import type { RegisterDto } from './dto/register.dto';
 import type { ChangePasswordDto } from './dto/change-password.dto';
@@ -43,7 +44,7 @@ export class AuthService {
     });
 
     if (!user) throw new UnauthorizedException('Email hoặc mật khẩu không đúng');
-    if (user.status !== 'active') throw new UnauthorizedException('Tài khoản đã bị vô hiệu hóa');
+    if (user.status !== USER_STATUS.active) throw new UnauthorizedException('Tài khoản đã bị vô hiệu hóa');
 
     const valid = await bcrypt.compare(dto.password, user.password);
     if (!valid) throw new UnauthorizedException('Email hoặc mật khẩu không đúng');
@@ -68,7 +69,7 @@ export class AuthService {
         email: user.email,
         fullName: user.fullName,
         role: user.role,
-        status: user.status,
+        status: fromUserStatus(user.status),
         unit: user.unit,
         isVerified: user.isVerified,
         permissions,
@@ -115,8 +116,8 @@ export class AuthService {
         password: hash,
         fullName: dto.fullName,
         unit: dto.unit,
-        role: 'user',
-        status: 'pending',
+        role: 'user' as const,
+        status: USER_STATUS.pending,
         isVerified: false,
       },
     });

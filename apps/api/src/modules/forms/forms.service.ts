@@ -22,7 +22,7 @@ export class FormsService {
     // PERF FIX: fetch forms + total in parallel; counts via groupBy (2 queries total, not N+2)
     const [items, total, statusGroups] = await Promise.all([
       this.prisma.form.findMany({
-        where,
+        where: where as Prisma.FormWhereInput,
         skip,
         take,
         orderBy: { createdAt: 'desc' },
@@ -32,7 +32,7 @@ export class FormsService {
           _count: { select: { sections: true } }, // sections count is cheap (form-scoped)
         },
       }),
-      this.prisma.form.count({ where }),
+      this.prisma.form.count({ where: where as Prisma.FormWhereInput }),
       // Single groupBy replaces 2 count queries
       this.prisma.form.groupBy({
         by: ['status'],

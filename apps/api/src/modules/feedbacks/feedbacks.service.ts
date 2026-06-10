@@ -154,7 +154,7 @@ export class FeedbacksService {
 
     const [items, total] = await Promise.all([
       this.prisma.feedback.findMany({
-        where,
+        where: where as Prisma.FeedbackWhereInput,
         skip,
         take,
         orderBy: { createdAt: 'desc' },
@@ -163,7 +163,7 @@ export class FeedbacksService {
           user: { select: { id: true, fullName: true } },
         },
       }),
-      this.prisma.feedback.count({ where }),
+      this.prisma.feedback.count({ where: where as Prisma.FeedbackWhereInput }),
     ]);
 
     return paginatedResponse(items, total, query.page, query.limit);
@@ -254,10 +254,10 @@ export class FeedbacksService {
     const STATS_MAX = 2000;
     // HIGH FIX: count real total before loading, surface truncation warning
     const [totalCount, statusCounts] = await Promise.all([
-      this.prisma.feedback.count({ where }),
+      this.prisma.feedback.count({ where: where as Prisma.FeedbackWhereInput }),
       this.prisma.feedback.groupBy({
         by: ['status'],
-        where,
+        where: where as Prisma.FeedbackWhereInput,
         _count: { status: true },
       }),
     ]);
@@ -265,7 +265,7 @@ export class FeedbacksService {
 
     // PERF FIX: use select instead of include — only load fields needed for computation
     const feedbacks = await this.prisma.feedback.findMany({
-      where,
+      where: where as Prisma.FeedbackWhereInput,
       select: {
         createdAt: true,
         sections: {

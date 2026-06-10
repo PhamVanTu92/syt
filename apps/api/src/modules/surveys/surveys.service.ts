@@ -6,6 +6,10 @@ import { Type } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PrismaService } from '../../prisma/prisma.service';
 import { PaginationDto, paginate, paginatedResponse } from '../../common/dto/pagination.dto';
+import {
+  toSurveyStatus, fromSurveyStatus,
+  toSurveyFormIds, fromSurveyFormIds,
+} from '../../common/utils/prisma-compat.util';
 
 export class CreateSurveyDto {
   @IsString() name!: string;
@@ -33,7 +37,8 @@ export class SurveysService {
 
     const where: Record<string, unknown> = {};
     if (query.type) where['type'] = query.type;
-    if (query.status) where['status'] = query.status;
+    // Survey.status is Boolean? — map string filter value
+    if (query.status !== undefined) where['status'] = toSurveyStatus(query.status);
     if (query.search) where['name'] = { contains: query.search, mode: 'insensitive' };
 
     const [items, total] = await Promise.all([
@@ -64,21 +69,22 @@ export class SurveysService {
   }
 
   async create(dto: CreateSurveyDto) {
-    const { facilityIds, formIds, ...data } = dto;
+    const { facilityIds, formIds, status, ...data } = dto;
+    const boolStatus = toSurveyStatus(status ?? 'active') ?? true;
 
-    if (dto.status === 'active' && dto.type) {
+    if (boolStatus && dto.type) {
       // Deactivate other active surveys of same type
       await this.prisma.survey.updateMany({
-        where: { type: dto.type, status: 'active' },
-        data: { status: 'inactive' },
+        where: { type: dto.type, status: true },
+        data: { status: false },
       });
     }
 
     const survey = await this.prisma.survey.create({
       data: {
         ...data,
-        status: data.status ?? 'active',
-        formIds: formIds ?? [],
+        status: boolStatus,
+        formIds: toSurveyFormIds(formIds),
         facilities: facilityIds?.length
           ? { create: facilityIds.map((facilityId) => ({ facilityId })) }
           : undefined,
@@ -92,12 +98,13 @@ export class SurveysService {
 
   async update(id: number, dto: Partial<CreateSurveyDto>) {
     await this.findOne(id);
-    const { facilityIds, formIds, ...data } = dto;
+    const { facilityIds, formIds, status, ...data } = dto;
+    const boolStatus = toSurveyStatus(status);
 
-    if (dto.status === 'active' && dto.type) {
+    if (boolStatus === true && dto.type) {
       await this.prisma.survey.updateMany({
-        where: { type: dto.type, status: 'active', id: { not: id } },
-        data: { status: 'inactive' },
+        where: { type: dto.type, status: true, id: { not: id } },
+        data: { status: false },
       });
     }
 
@@ -105,7 +112,8 @@ export class SurveysService {
       where: { id },
       data: {
         ...data,
-        ...(formIds !== undefined ? { formIds } : {}),
+        ...(status !== undefined ? { status: boolStatus } : {}),
+        ...(formIds !== undefined ? { formIds: toSurveyFormIds(formIds) } : {}),
         ...(facilityIds !== undefined
           ? {
               facilities: {
@@ -150,7 +158,6 @@ export class SurveysService {
 
   async addFacility(surveyId: number, facilityId: string) {
     await this.findOne(surveyId);
-    // CRITICAL FIX: use correct composite unique key instead of id: 0
     await this.prisma.surveyFacility.upsert({
       where: { surveyId_facilityId: { surveyId, facilityId } },
       update: {},
@@ -169,15 +176,18 @@ export class SurveysService {
   private async autoExpireSurveys() {
     const now = new Date();
     await this.prisma.survey.updateMany({
-      where: { status: 'active', dateTo: { lt: now } },
-      data: { status: 'inactive' },
+      where: { status: true, dateTo: { lt: now } },
+      data: { status: false },
     });
   }
 
   private formatSurvey(survey: Record<string, unknown>) {
     return {
       ...survey,
-      formIds: Array.isArray(survey['formIds']) ? survey['formIds'] : [],
+      // Map Boolean? back to 'active'/'inactive' for API consumers
+      status: fromSurveyStatus(survey['status'] as boolean | null | undefined),
+      // Map JSON string back to number[] for API consumers
+      formIds: fromSurveyFormIds(survey['formIds'] as string | null | undefined),
     };
   }
 }
