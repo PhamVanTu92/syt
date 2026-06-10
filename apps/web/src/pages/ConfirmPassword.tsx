@@ -373,7 +373,7 @@ const ConfirmPassword: React.FC = () => {
                        <ValidationItem label="Ít nhất 1 chữ cái in hoa" isValid={validation.hasUpper} hasInput={!!password} />
                        <ValidationItem label="Ít nhất 1 ký tự đặc biệt" isValid={validation.hasSpecial} hasInput={!!password} />
                        <ValidationItem label="Không chứa khoảng trắng" isValid={validation.noSpace} hasInput={!!password} />
-                       <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={passwordsMatch} hasInput={!!confirmPassword} />
+                       <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={!!passwordsMatch} hasInput={!!confirmPassword} />
                     </div>
 
                     <Button

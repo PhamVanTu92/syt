@@ -17,7 +17,6 @@ import {
   CheckCircle,
   Clock,
   MapPin,
-  User as UserIcon,
 } from "lucide-react";
 import ScheduleForm from "@/components/legacy/ScheduleForm";
 import {
@@ -82,7 +81,7 @@ const AdminWorkSchedule: React.FC = () => {
       let res;
       if (editingSchedule?.id) {
         res = await updateSchedule(editingSchedule.id, scheduleData);
-        if (!res?.message) {
+        if (!(res as any)?.message) {
           toast.current?.show({
             severity: "success",
             summary: "Thành công",
@@ -92,7 +91,7 @@ const AdminWorkSchedule: React.FC = () => {
         }
       } else {
         res = await createSchedule(scheduleData);
-        if (!res?.message) {
+        if (!(res as any)?.message) {
           toast.current?.show({
             severity: "success",
             summary: "Thành công",
@@ -133,7 +132,7 @@ const AdminWorkSchedule: React.FC = () => {
       accept: async () => {
         try {
           const res = await deleteSchedule(id);
-          if (!res?.message) {
+          if (!(res as any)?.message) {
             toast.current?.show({
               severity: "success",
               summary: "Thành công",

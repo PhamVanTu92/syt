@@ -46,7 +46,7 @@ const FacilityFieldConfig: React.FC<FacilityFieldConfigProps> = ({
   useEffect(() => {
     let cancelled = false;
     api.get('/social-facilities', { page: 1, limit: 1 })
-      .then((res) => {
+      .then((res: any) => {
         if (cancelled) return;
         if (Array.isArray(res?.meta?.reports)) setTypeReports(res.meta.reports);
       })
@@ -100,8 +100,8 @@ const FacilityFieldConfig: React.FC<FacilityFieldConfigProps> = ({
             value: String(option.key),
           }))}
           onChange={() => { }}
-          onResolvedChange={(resolvedOptions) => {
-            const nextOptions: InfoOptionNode[] = resolvedOptions.map((option) => {
+          onResolvedChange={(resolvedOptions: any) => {
+            const nextOptions: InfoOptionNode[] = resolvedOptions.map((option: any) => {
               const existing = selectedOptions.find(
                 (selectedOption) => String(selectedOption.key) === String(option.value),
               );

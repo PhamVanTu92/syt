@@ -1,5 +1,5 @@
 ﻿import React, { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowLeft, AlertCircle, CheckCircle2, Lock, XCircle } from "lucide-react";
 import { Button } from "@/components/prime";
 import { api } from "@/lib/legacy-api";
@@ -202,12 +202,12 @@ const ChangePassword: React.FC = () => {
                    <ValidationItem label="Ít nhất 1 chữ cái in hoa" isValid={validation.hasUpper} hasInput={!!formData.newPassword} />
                    <ValidationItem label="Ít nhất 1 ký tự đặc biệt" isValid={validation.hasSpecial} hasInput={!!formData.newPassword} />
                    <ValidationItem label="Không chứa khoảng trắng" isValid={validation.noSpace} hasInput={!!formData.newPassword} />
-                   <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={passwordsMatch} hasInput={!!formData.confirmPassword} />
+                   <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={!!passwordsMatch} hasInput={!!formData.confirmPassword} />
                 </div>
 
                 <Button
                   type="submit"
-                  disabled={isLoading || !canSubmit}
+                  disabled={isLoading || !Boolean(canSubmit)}
                   loading={isLoading}
                   label="XÁC NHẬN ĐỔI MẬT KHẨU"
                   className="w-full !h-[60px] !bg-[#0088cc] !text-white font-black rounded-2xl shadow-xl shadow-blue-100 hover:!bg-[#0077bb] transition-all transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none border-none"

@@ -198,33 +198,6 @@ const SurveysManagement: React.FC = () => {
     setSurveyDialog(true);
   };
 
-  const _toggleStatus = async (rowData: any) => {
-    try {
-      const newStatus = !rowData.status;
-      const res = await surveyService.updateSurvey(rowData.id, {
-        ...rowData,
-        status: newStatus,
-      });
-      if (!res?.message) {
-        toast.current?.show({
-          severity: "success",
-          summary: "Thành công",
-          detail: "Đã cập nhật trạng thái",
-        });
-      }
-      fetchSurveys();
-    } catch (error: any) {
-      console.error(error);
-      if (error.message && error.message.includes("API Error")) {
-        toast.current?.show({
-          severity: "error",
-          summary: "Lỗi",
-          detail: "Không thể cập nhật trạng thái",
-        });
-      }
-    }
-  };
-
   const actionBodyTemplate = (rowData: any) => {
     return (
       <div className="flex gap-2">
