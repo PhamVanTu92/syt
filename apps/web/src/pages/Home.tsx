@@ -733,7 +733,7 @@ const Home = () => {
               <CategoryColumn
                 key={item.id}
                 title={item.title}
-                Icon={item.icon}
+                Icon={item.icon as any}
                 iconColor={item.iconColor}
                 hoverColor={item.hoverColor}
                 image={item.image}

@@ -1,4 +1,4 @@
-﻿import { Button } from '@/components/prime'
+﻿import { Button, InputText, Dropdown, DataTable, Column, Dialog } from '@/components/prime'
 import AdminLayout from '@/components/legacy/AdminLayout';
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import { formService } from '@/services/formService';

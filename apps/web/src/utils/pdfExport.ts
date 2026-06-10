@@ -220,7 +220,7 @@ export const exportReportToPDF = async (
             if (!template) return;
             const expected = getExpectedFacilities(template, facilities);
             const reportedIds = new Set(group.items.map((fb: any) => getReportedFacilityId(fb, facilities)));
-            const nonReported = expected.filter(exp => !reportedIds.has(exp.id));
+            const nonReported = expected.filter((exp: any) => !reportedIds.has(exp.id));
 
             appendixIBody.push([
                 { content: appendixRoman[gi] || gi + 1, styles: { halign: 'center', fontStyle: 'bold', fillColor: [240, 240, 240] } },

@@ -17,7 +17,7 @@ export default function SurveyInfo({
   error,
   survey_key,
   form_id,
-}) {
+}: any) {
   const { user } = useAuth();
 
   // State kiểm tra đơn vị đã khai báo chưa

@@ -28,7 +28,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
     title: "",
     content: "",
     start_time: "",
-    end_time: ("") ?? '',
+    end_time: "",
     location: "",
     presider_id: 0,
     coordinating_unit: "",
@@ -67,7 +67,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
         leader: "",
         content: "",
         start_time: "",
-        end_time: ("") ?? '',
+        end_time: "",
         location: "",
         presider_id: 0,
         coordinating_unit: "",
@@ -127,7 +127,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
         start_time: new Date(formData.start_time).toISOString(),
         end_time: formData.end_time
           ? new Date(formData.end_time).toISOString()
-          : null,
+          : "",
       };
       await onSave(scheduleToSave);
       toast.current?.show({

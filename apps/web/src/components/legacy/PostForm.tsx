@@ -331,7 +331,7 @@ const PostForm: React.FC<PostFormProps> = ({
               <Editor
                 value={formData.content}
                 onTextChange={(e) =>
-                  setFormData({ ...formData, content: e.htmlValue })
+                  setFormData({ ...formData, content: e.htmlValue ?? '' })
                 }
                 placeholder="Nội dung bài viết đầy đủ..."
                 style={{ height: "300px" }}

@@ -1,7 +1,8 @@
 ﻿
 import { useEffect, useRef } from "react";
-import { 
-  ShieldCheck
+import {
+  ShieldCheck,
+  Activity,
 } from "lucide-react";
 
 const HealthRecordsDetail = () => {

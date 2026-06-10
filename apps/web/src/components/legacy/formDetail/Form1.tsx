@@ -440,7 +440,7 @@ export default function BieuMau1Table({ id, type, formJson, survey_key }: any) {
   const prevOpenSection = useRef(openSection);
   const visibleInfo = useMemo(() => {
     return (info ?? [])
-      .filter((item) => item?.status)
+      .filter((item: any) => item?.status)
       .map((item: any, index: any) => ({
         item,
         fieldKey: getInfoKey(item, index),
