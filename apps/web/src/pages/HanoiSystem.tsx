@@ -24,7 +24,7 @@ import { Button } from "@/components/prime";
 import { socialFacilitiesService } from "@/services/socialFacilitiesService";
 import { Sidebar } from "primereact/sidebar";
 import { Dialog } from "primereact/dialog";
-import "../styles/index.css";
+import "../styles/globals.css";
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
