@@ -1,13 +1,13 @@
-﻿import AdminLayout from "@/components/AdminLayout";
-import React, { useState, useRef } from "react";
+﻿import AdminLayout from "@/components/legacy/AdminLayout";
+import { useState, useRef } from "react";
 import { Toast } from "@/components/prime";
 import { ReportFilters } from "@/components/legacy/report/ReportFilters";
 import { TablePreview } from "@/components/legacy/report/TablePreview";
 import { exportKSHLToWord } from "@/utils/wordExportKSHL";
 import { exportKSHLToPDF } from "@/utils/pdfExportKSHL";
-import { useGSATData } from "@/hooks/useGSATData";
+import { useGSATData } from "@/hooks/legacy/useGSATData";
 import { ReportHeader } from "@/components/legacy/report/ReportHeader";
-import { useReportFilter } from "@/hooks/useReportFilter";
+import { useReportFilter } from "@/hooks/legacy/useReportFilter";
 import { surveyService } from "@/services/surveyService";
 
 const Report_KSHL = () => {

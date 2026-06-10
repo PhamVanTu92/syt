@@ -3,7 +3,6 @@ import {
   Shield,
   Plus,
   Edit3,
-  Trash2,
   Search,
   Loader2,
   X,
@@ -14,7 +13,7 @@ import {
 } from "lucide-react";
 import { api } from '@/lib/legacy-api';
 import AdminLayout from '@/components/legacy/AdminLayout';
-import { ScrollableTable } from "../components/common/ScrollableTable";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
 import { Button, InputText, InputTextarea, Dropdown } from "@/components/prime";
 import { Toast } from "primereact/toast";
 import { Permission } from '@/types/legacy';

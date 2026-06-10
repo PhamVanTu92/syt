@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+﻿import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import {
   Building2,
   Award,
@@ -6,19 +6,17 @@ import {
   Stethoscope,
   Database,
   Edit3,
-  Filter,
   Loader2,
   Plus,
   Search,
   Trash2,
-  X,
 } from "lucide-react";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
 import AdminLayout from '@/components/legacy/AdminLayout';
-import { ScrollableTable } from "../components/common/ScrollableTable";
-import { PageSizeSelector } from "../components/common/PageSizeSelector";
-import { TablePagination } from "../components/common/TablePagination";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
+import { PageSizeSelector } from '@/components/legacy/common/PageSizeSelector";
+import { TablePagination } from '@/components/legacy/common/TablePagination";
 import DatasetRecordForm from '@/components/legacy/DatasetRecordForm';
 import { Button, Dropdown } from "@/components/prime";
 import {
@@ -386,7 +384,7 @@ const TradingFacilitiesManagement = () => {
                   />
                   <PageSizeSelector
                     value={params.limit}
-                    onChange={(size) => handleQueryParamChange("limit", size)}
+                    onChange={(size: any) => handleQueryParamChange("limit", size)}
                   />
                   <Button
                     onClick={() => {
@@ -485,10 +483,10 @@ const TradingFacilitiesManagement = () => {
               </>
             }
             pageSize={params.limit}
-            onPageSizeChange={(size) => handleQueryParamChange("limit", size)}
+            onPageSizeChange={(size: any) => handleQueryParamChange("limit", size)}
             currentPage={params.page}
             totalPages={totalPages}
-            onPageChange={(page) => handleQueryParamChange("page", page)}
+            onPageChange={(page: any) => handleQueryParamChange("page", page)}
           />
         </div>
       )}

@@ -10,8 +10,6 @@ import {
   Key,
   Save,
   Loader2,
-  RefreshCw,
-  Hash,
   Lock,
   Eye,
   EyeOff

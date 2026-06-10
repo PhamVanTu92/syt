@@ -2,7 +2,6 @@
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ChevronRight,
-  FileText,
   Home,
   ArrowLeft,
   Download,

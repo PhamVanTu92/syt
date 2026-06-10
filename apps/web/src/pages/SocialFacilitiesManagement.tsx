@@ -11,8 +11,8 @@ import {
 import { api } from '@/lib/legacy-api';
 import AdminLayout from '@/components/legacy/AdminLayout';
 import { Button } from "@/components/prime";
-import { ScrollableTable } from "../components/common/ScrollableTable";
-import { TablePagination } from "../components/common/TablePagination";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
+import { TablePagination } from '@/components/legacy/common/TablePagination";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
 import FacilityForm from '@/components/legacy/FacilityForm';

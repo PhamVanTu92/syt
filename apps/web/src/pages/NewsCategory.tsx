@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback, useRef } from "react";
+﻿import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { MAIN_MENU, SERVICE_CATEGORIES_FILTER } from '@/constants';
 import { api } from '@/lib/legacy-api';

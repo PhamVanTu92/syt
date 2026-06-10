@@ -10,7 +10,7 @@ import { FeedbackStatsSection } from "../components/feedbacks/FeedbackStatsSecti
 import { FeedbackDataTable } from "../components/feedbacks/FeedbackDataTable";
 import { FeedbackDetailsDialog } from "../components/feedbacks/FeedbackDetailsDialog";
 import { surveyService } from "@/services/surveyService";
-import { useReportFilter } from "@/hooks/useReportFilter";
+import { useReportFilter } from "@/hooks/legacy/useReportFilter";
 
 const ALLOWED_TYPES = ["evaluate", "reflect"] as const;
 type FormType = (typeof ALLOWED_TYPES)[number];

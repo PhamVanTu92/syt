@@ -1,5 +1,5 @@
-﻿import AdminLayout from "@/components/AdminLayout";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+﻿import AdminLayout from "@/components/legacy/AdminLayout";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { feedBacksSevice } from "@/services/feedBacksSevice";
 import { formService } from "@/services/formService";
 import { ReportTabContent } from "@/components/legacy/report/ReportTabContent";
@@ -16,8 +16,8 @@ import {
   ReportEmptyState,
   StyledTabViewCSS,
 } from "@/components/legacy/report/ReportStates";
-import { useReportFilter } from "@/hooks/useReportFilter";
-import { useFacilities } from "@/hooks/useFacilities";
+import { useReportFilter } from "@/hooks/legacy/useReportFilter";
+import { useFacilities } from "@/hooks/legacy/useFacilities";
 import { surveyService } from "@/services/surveyService";
 import { getReportedFacilityId } from "@/utils/reportDataUtils";
 
@@ -171,7 +171,7 @@ const Report_DCBC = () => {
   useEffect(() => {
     const fetchTemplates = async () => {
       const formIds = Object.keys(groupedFeedbacks).filter(
-        (id) => id !== "unknown",
+        (id: any) => id !== "unknown",
       );
 
       for (const id of formIds) {

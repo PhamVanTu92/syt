@@ -1,4 +1,4 @@
-import { jsPDF } from "jspdf"
+﻿import { jsPDF } from "jspdf"
 import autoTable from 'jspdf-autotable'
 import { TIMES_REGULAR_BASE64, TIMES_BOLD_BASE64 } from '@/utils/pdfFonts'
 import { formatDateVN } from '@/utils/dateUtils'
@@ -228,7 +228,7 @@ export const exportReportToPDF = async (
             ]);
 
             if (nonReported.length > 0) {
-                nonReported.forEach((unit, ii) => {
+                nonReported.forEach((unit: any, ii: any) => {
                     appendixIBody.push([{ content: ii + 1, styles: { halign: 'center' } }, unit.name]);
                 });
             } else {

@@ -8,9 +8,9 @@ import { Calendar } from "primereact/calendar";
 import { Toast } from "@/components/prime";
 import { Navigate, useParams } from "react-router-dom";
 import { useTemplateForm } from '@/hooks/legacy/useTemplateForm';
-import { InfoBuilder } from "../components/templates/InfoBuilder";
-import { ReflectBuilder } from "../components/templates/ReflectBuilder";
-import { EvaluateBuilder } from "../components/templates/EvaluateBuilder";
+import { InfoBuilder } from '@/components/legacy/templates/InfoBuilder";
+import { ReflectBuilder } from '@/components/legacy/templates/ReflectBuilder";
+import { EvaluateBuilder } from '@/components/legacy/templates/EvaluateBuilder";
 import { ConfirmDialog } from 'primereact/confirmdialog';
 const ALLOWED_TYPES = ["evaluate", "reflect"] as const;
 type FormType = (typeof ALLOWED_TYPES)[number];
@@ -53,7 +53,7 @@ const TemplateCreate: React.FC = () => {
   } = useTemplateForm(id, type, toast);
 
   let currentAccumulated = 0;
-  const groupStartIndices = template.data.map((group) => {
+  const groupStartIndices = template.data.map((group: any) => {
     const start = currentAccumulated;
     currentAccumulated += group.option.length;
     return start;

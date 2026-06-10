@@ -1,8 +1,8 @@
 ﻿import React, { useEffect, useState, useMemo, useRef } from "react";
 import { api } from '@/lib/legacy-api';
 import AdminLayout from '@/components/legacy/AdminLayout';
-import { ScrollableTable } from "../components/common/ScrollableTable";
-import { TablePagination } from "../components/common/TablePagination";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
+import { TablePagination } from '@/components/legacy/common/TablePagination";
 import UserModal from '@/components/legacy/UserModal';
 import {
   Loader2,
@@ -588,7 +588,7 @@ const UserManagement: React.FC = () => {
             </>
           }
           pageSize={params.limit}
-          onPageSizeChange={(size) =>
+          onPageSizeChange={(size: any) =>
             setParams((prev) => ({ ...prev, limit: size }))
           }
           currentPage={params.page}

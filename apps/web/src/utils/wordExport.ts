@@ -1,4 +1,4 @@
-import {
+﻿import {
     Document,
     Packer,
     Paragraph,
@@ -10,10 +10,6 @@ import {
     BorderStyle,
     AlignmentType,
     VerticalAlign,
-    Header,
-    Footer,
-    PageNumber,
-    NumberFormat,
     SectionType
 } from "docx";
 import { saveAs } from "file-saver";
@@ -241,7 +237,7 @@ export const exportReportToWord = async (
             }));
 
             if (nonReported.length > 0) {
-                nonReported.forEach((unit, ii) => {
+                nonReported.forEach((unit: any, ii: any) => {
                     appendixIRows.push(new TableRow({ children: [mkCell((ii + 1).toString(), false, AlignmentType.CENTER), mkCell(unit.name)] }));
                 });
             } else {

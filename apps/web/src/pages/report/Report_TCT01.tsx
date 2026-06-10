@@ -1,5 +1,5 @@
-﻿import AdminLayout from "@/components/AdminLayout";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+﻿import AdminLayout from "@/components/legacy/AdminLayout";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 import { ReportFilters } from '@/components/legacy/report/ReportFilters'
 import { Toast } from '@/components/prime'
