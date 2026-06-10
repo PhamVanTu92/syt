@@ -53,11 +53,9 @@ export class SchedulesService {
         take,
         orderBy: { startTime: 'asc' },
         include: {
-          creator: { select: { id: true, fullName: true } },
-          presider: { select: { id: true, fullName: true } },
           // PERF FIX: return count only in list — full attendees only in detail
           _count: { select: { attendees: true } },
-          attachments: { select: { id: true, fileUrl: true } },
+          attachments: { select: { id: true, file_path: true, file_name: true } },
         },
       }),
       this.prisma.workSchedule.count({ where: where as Prisma.WorkScheduleWhereInput }),
@@ -70,9 +68,6 @@ export class SchedulesService {
     const s = await this.prisma.workSchedule.findUnique({
       where: { id },
       include: {
-        creator: { select: { id: true, fullName: true } },
-        approver: { select: { id: true, fullName: true } },
-        presider: { select: { id: true, fullName: true } },
         attendees: { include: { user: { select: { id: true, fullName: true } } } },
         attachments: true,
       },

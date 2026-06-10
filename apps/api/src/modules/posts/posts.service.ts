@@ -44,7 +44,6 @@ export class PostsService {
         skip,
         take,
         orderBy: { createdAt: 'desc' },
-        include: { author: { select: { id: true, fullName: true, email: true } } },
       }),
       this.prisma.post.count({ where: where as Prisma.PostWhereInput }),
     ]);
@@ -57,7 +56,6 @@ export class PostsService {
     const post = await this.prisma.post.update({
       where: { id },
       data: { viewCount: { increment: 1 } },
-      include: { author: { select: { id: true, fullName: true } } },
     }).catch(() => null);
 
     if (!post) throw new NotFoundException('Bài viết không tồn tại');
@@ -72,7 +70,6 @@ export class PostsService {
         authorId,
         ...(status !== undefined ? { status: status as 'draft' | 'published' } : {}),
       },
-      include: { author: { select: { id: true, fullName: true } } },
     });
   }
 
