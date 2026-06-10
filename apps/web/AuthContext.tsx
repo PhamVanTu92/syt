@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setLoading(false);
           }
           const response = await api.get("/auth/me");
-          const baseUser = response.user;
+          const baseUser = response.data || response.user || response;
           const enrichedUser = await enrichUserWithRolePermissions(baseUser);
           setUser(enrichedUser);
           localStorage.setItem("user_info", JSON.stringify(enrichedUser));
