@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useState, useRef } from "react";
 import { api } from '@/lib/legacy-api';
 import { User, Role } from '@/types/legacy';
-import { socialFacilitiesService } from "../services/socialFacilitiesService";
+import { socialFacilitiesService } from "@/services/socialFacilitiesService";
 import {
   Users,
   Shield,
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Toast } from "primereact/toast";
 import { Button, InputText, Dropdown, MultiSelect } from "@/components/prime";
-import { FacilityFilterDropdown } from '@/components/legacy/feedbacks/FacilityFilterDropdown";
+import { FacilityFilterDropdown } from '@/components/legacy/feedbacks/FacilityFilterDropdown';
 
 interface UserModalProps {
   visible: boolean;
