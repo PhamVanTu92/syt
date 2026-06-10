@@ -34,11 +34,6 @@ const handleResponse = async (response: Response, method: string) => {
     throw new Error(data.message || `API Error: ${response.status} ${response.statusText}`);
   }
 
-  // Unwrap new backend envelope { success, data, meta }
-  if (data && typeof data === 'object' && 'success' in data && 'data' in data) {
-    return data.data;
-  }
-
   return data;
 };
 
