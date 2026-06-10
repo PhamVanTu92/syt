@@ -18,3 +18,6 @@ export * from 'primereact/multiselect';
 export * from 'primereact/badge';
 export * from 'primereact/avatar';
 export * from 'primereact/chip';
+export * from 'primereact/inputnumber';
+export * from 'primereact/inputswitch';
+export * from 'primereact/tooltip';

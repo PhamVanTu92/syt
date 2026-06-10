@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { api } from "@/lib/legacy-api";
 import { Dropdown, Button } from "@/components/prime";
-import { SocialFacilityDropdown } from "@/components/feedbacks/SocialFacilityDropdown";
+import { SocialFacilityDropdown } from "@/components/legacy/feedbacks/SocialFacilityDropdown";
 
 const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -329,7 +329,7 @@ const Register: React.FC = () => {
                     </label>
                     <SocialFacilityDropdown
                       value={formData.unit || null}
-                      onChange={(selectedOption) =>
+                      onChange={(selectedOption: any) =>
                         setFormData({
                           ...formData,
                           unit: selectedOption ? String(selectedOption.key) : "",

@@ -10,8 +10,6 @@ import {
   Key,
   Save,
   Loader2,
-  RefreshCw,
-  Hash,
   Lock,
   Eye,
   EyeOff
@@ -141,7 +139,7 @@ const SmtpSettings: React.FC = () => {
                       <label className="block text-[10px] font-black text-gray-400 uppercase mb-2 ml-1 tracking-widest">CỔNG (PORT) <span className="text-red-500">*</span></label>
                       <InputNumber
                         value={config.smtp_port}
-                        onValueChange={(e) => setConfig({ ...config, smtp_port: e.value || 587 })}
+                        onValueChange={(e: any) => setConfig({ ...config, smtp_port: e.value || 587 })}
                         useGrouping={false}
                         className="w-full"
                         inputClassName="w-full !px-4 !py-3.5 !bg-gray-50 !border-gray-200 !rounded-2xl outline-none focus:!ring-2 focus:!ring-primary-100 !font-bold !text-gray-700 !transition-all"
@@ -152,7 +150,7 @@ const SmtpSettings: React.FC = () => {
                       <div className="flex items-center justify-center p-3 bg-gray-50 border border-gray-200 rounded-2xl h-[52px]">
                         <InputSwitch
                           checked={config.smtp_secure}
-                          onChange={(e) => setConfig({ ...config, smtp_secure: e.value })}
+                          onChange={(e: any) => setConfig({ ...config, smtp_secure: e.value })}
                         />
                         <span className="ml-3 font-black text-[10px] text-gray-600 uppercase tracking-widest">
                           {config.smtp_secure ? "Bật" : "Tắt"}

@@ -5,7 +5,7 @@ import { formService } from "@/services/formService";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
@@ -198,7 +198,7 @@ const SurveysManagement: React.FC = () => {
     setSurveyDialog(true);
   };
 
-  const toggleStatus = async (rowData: any) => {
+  const _toggleStatus = async (rowData: any) => {
     try {
       const newStatus = !rowData.status;
       const res = await surveyService.updateSurvey(rowData.id, {
@@ -382,7 +382,7 @@ const SurveysManagement: React.FC = () => {
             >
               <Column
                 header="STT"
-                body={(rowData, options) =>
+                body={(_rowData, options) =>
                   options.rowIndex + lazyParams.first + 1
                 }
                 style={{ width: "5rem" }}

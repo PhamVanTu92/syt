@@ -1,5 +1,5 @@
-﻿import React, { useEffect, useState } from "react";
-import { api } from "@/api";
+﻿import { useEffect, useState } from "react";
+import { api } from "@/lib/legacy-api";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 
 import BieuMau1Table from "@/components/legacy/formDetail/Form1";
@@ -9,7 +9,7 @@ export default function EvaluationTable() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const survey_key = searchParams.get("survey_key");
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
 
   // useEffect(() => {
   //   if (!survey_key) {

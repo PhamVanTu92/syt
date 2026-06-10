@@ -2,7 +2,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Toast } from "@/components/prime";
 import { Navigate, useParams } from "react-router-dom";
-import { getDefaultDates } from "@/utils/dateUtils";
 import { useFeedbacks } from "@/hooks/legacy/useFeedbacks";
 import { useFeedbackStats } from "@/hooks/legacy/useFeedbackStats";
 import { ReportFilters } from "@/components/legacy/report/ReportFilters";
@@ -10,7 +9,7 @@ import { FeedbackStatsSection } from "@/components/legacy/feedbacks/FeedbackStat
 import { FeedbackDataTable } from "@/components/legacy/feedbacks/FeedbackDataTable";
 import { FeedbackDetailsDialog } from "@/components/legacy/feedbacks/FeedbackDetailsDialog";
 import { surveyService } from "@/services/surveyService";
-import { useReportFilter } from "@/hooks/useReportFilter";
+import { useReportFilter } from "@/hooks/legacy/useReportFilter";
 
 const ALLOWED_TYPES = ["evaluate", "reflect"] as const;
 type FormType = (typeof ALLOWED_TYPES)[number];

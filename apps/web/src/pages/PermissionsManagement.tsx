@@ -3,7 +3,6 @@ import {
   Shield,
   Plus,
   Edit3,
-  Trash2,
   Search,
   Loader2,
   X,

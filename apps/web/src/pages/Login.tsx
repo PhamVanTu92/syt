@@ -1,6 +1,6 @@
 ﻿import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ArrowLeft, AlertCircle, Loader2 } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, AlertCircle } from "lucide-react";
 import { api } from "@/lib/legacy-api";
 import { useAuth } from "@/AuthContext"; // Import useAuth
 import { Button } from "@/components/prime";

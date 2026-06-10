@@ -61,7 +61,7 @@ const Home = () => {
     paddingClass = "",
   }: {
     title: string;
-    Icon: React.ComponentType<{ className?: string; size?: number }>;
+    Icon: React.ComponentType<any>;
     iconColor: string;
     hoverColor: string;
     image: string;
@@ -674,7 +674,7 @@ const Home = () => {
                   {/* Playlist Sidebar (Narrower) */}
                   <div className="md:w-1/4 bg-[#1e293b] overflow-y-auto no-scrollbar">
                     <div className="p-3">
-                      {MOCK_VIDEOS.map((video, idx) => (
+                      {MOCK_VIDEOS.map((video, _idx) => (
                         <div
                           key={video.id}
                           onClick={() => {
