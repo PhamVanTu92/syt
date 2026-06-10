@@ -9,7 +9,7 @@ interface ReportAppendixProps {
     type?: 'DCBC' | 'TCT01';
     surveys?: any[];
     selectedSurveyKey?: string;
-    _dateFilter?: any;
+    dateFilter?: any;
 }
 
 export const ReportAppendix: React.FC<ReportAppendixProps> = ({
@@ -18,7 +18,7 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
     type = 'DCBC',
     surveys = [],
     selectedSurveyKey = "",
-    _dateFilter = null
+    dateFilter = null
 }) => {
     const { facilities } = useFacilities();
 

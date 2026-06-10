@@ -9,8 +9,7 @@ export default function EvaluationTable() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const survey_key = searchParams.get("survey_key");
-  const _navigate = useNavigate();
-
+  
   // useEffect(() => {
   //   if (!survey_key) {
   //     navigate("/");

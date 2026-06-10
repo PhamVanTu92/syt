@@ -207,7 +207,7 @@ const ChangePassword: React.FC = () => {
 
                 <Button
                   type="submit"
-                  disabled={Boolean(isLoading || !canSubmit)}
+                  disabled={!!(Boolean(isLoading || !canSubmit))}
                   loading={isLoading}
                   label="XÁC NHẬN ĐỔI MẬT KHẨU"
                   className="w-full !h-[60px] !bg-[#0088cc] !text-white font-black rounded-2xl shadow-xl shadow-blue-100 hover:!bg-[#0077bb] transition-all transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none border-none"

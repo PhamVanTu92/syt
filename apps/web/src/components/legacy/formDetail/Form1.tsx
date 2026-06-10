@@ -630,8 +630,7 @@ export default function BieuMau1Table({ id, type, formJson, survey_key }: any) {
         if (item.isValidate === false) return;
         const progressValue = item?.progress?.value;
         const ratingValue = item?.rating?.value;
-        const _noteValue = item?.note;
-
+        
         if (
           progressValue === null ||
           progressValue === undefined ||

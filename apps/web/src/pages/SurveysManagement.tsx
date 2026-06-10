@@ -198,8 +198,7 @@ const SurveysManagement: React.FC = () => {
     setSurveyDialog(true);
   };
 
-  const _toggleStatus = async (rowData: any) => {
-    try {
+      try {
       const newStatus = !rowData.status;
       const res = await surveyService.updateSurvey(rowData.id, {
         ...rowData,

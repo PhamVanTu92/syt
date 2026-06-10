@@ -59,7 +59,7 @@ export default function SurveyInfo({
         "mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl",
     },
     wrapper: { className: "max-h-60" },
-    item: ({ context }) => ({
+    item: ({ context }: any) => ({
       className: `
       px-4 py-2 text-[14px] cursor-pointer transition-colors
       ${context.selected

@@ -14,7 +14,6 @@ import {
   Info
 } from 'lucide-react';
 // Standard Link import from react-router-dom
-import { Link } from 'react-router-dom';
 
 // --- Mock Data for Charts ---
 const recordsByAgeData = [

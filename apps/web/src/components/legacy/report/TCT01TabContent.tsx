@@ -7,10 +7,10 @@ interface TCT01TabContentProps {
         tiepNhan: any[];
         deCuong: any[];
     };
-    _dateRange: { startDate: string, endDate: string };
+    dateRange: { startDate: string, endDate: string };
 }
 
-export const TCT01TabContent: React.FC<TCT01TabContentProps> = ({ data, _dateRange }) => {
+export const TCT01TabContent: React.FC<TCT01TabContentProps> = ({ data, dateRange }) => {
     if (!data) return null;
     const { tongSo, tiepNhan, deCuong } = data;
     const reportedCount = tiepNhan?.find(i => i.stt === 1)?.soLuong || 0;
