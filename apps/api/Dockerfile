@@ -17,10 +17,10 @@ RUN pnpm install --filter @soyte/api --frozen-lockfile
 COPY apps/api/ apps/api/
 
 # Generate Prisma client
-RUN cd apps/api && npx prisma generate
+RUN cd apps/api && pnpm exec prisma generate
 
 # Build NestJS
-RUN cd apps/api && npx nest build
+RUN cd apps/api && pnpm exec nest build
 
 # ─── Stage 2: Runtime ────────────────────────────────────────────────────────
 FROM node:22-alpine AS runner
@@ -39,7 +39,7 @@ COPY --from=builder /app/apps/api/dist apps/api/dist
 COPY --from=builder /app/apps/api/prisma apps/api/prisma
 
 # Re-generate Prisma client for runtime
-RUN cd apps/api && npx prisma generate
+RUN cd apps/api && pnpm exec prisma generate
 
 WORKDIR /app/apps/api
 
