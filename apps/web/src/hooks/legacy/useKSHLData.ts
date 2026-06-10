@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+﻿import { useState, useEffect, useMemo } from 'react'
 import { feedBacksSevice } from '@/services/feedBacksSevice'
 import { formService } from '@/services/formService'
 import { useFacilities } from '@/hooks/legacy/useFacilities';
@@ -14,7 +14,7 @@ export function useKSHLData(dateFilter: DateFilter, surveyKey?: string, unit?: s
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const { facilities } = useFacilities();
+    const { facilities, loading: facilitiesLoading } = useFacilities();
     
     const allUnits = useMemo(() => {
         if (!facilities.length || isFilterLoading) return [];
@@ -239,7 +239,7 @@ export function useKSHLData(dateFilter: DateFilter, surveyKey?: string, unit?: s
                 col5: formatNumber(unmappedFeedbacks.ngoai_tru.qr.length + unmappedFeedbacks.unknown.qr.length),
                 col6: displayRate(calcRate([...unmappedFeedbacks.ngoai_tru.qr, ...unmappedFeedbacks.unknown.qr]))
             },
-            { id: '', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals, ...tytUnits], 'ngoai_tru', 'Tổng') }
+            { id: '', type: 'Tổng', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals, ...tytUnits], 'ngoai_tru', 'Tổng') }
         ];
         const lastRow = summaryNgoaiTru[summaryNgoaiTru.length - 1];
         lastRow.col2 = formatNumber(parseInt(lastRow.col2.replace(/\./g, '')) + unmappedFeedbacks.ngoai_tru.self.length + unmappedFeedbacks.unknown.self.length);
@@ -256,14 +256,14 @@ export function useKSHLData(dateFilter: DateFilter, surveyKey?: string, unit?: s
                 col5: formatNumber(unmappedFeedbacks.noi_tru.qr.length + unmappedFeedbacks.unknown.qr.length),
                 col6: displayRate(calcRate([...unmappedFeedbacks.noi_tru.qr, ...unmappedFeedbacks.unknown.qr]))
             },
-            { id: '', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals], 'noi_tru', 'Tổng') }
+            { id: '', type: 'Tổng', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals], 'noi_tru', 'Tổng') }
         ];
         const lastRowNoiTru = summaryNoiTru[summaryNoiTru.length - 1];
         lastRowNoiTru.col2 = formatNumber(parseInt(lastRowNoiTru.col2.replace(/\./g, '')) + unmappedFeedbacks.noi_tru.self.length + unmappedFeedbacks.unknown.self.length);
         lastRowNoiTru.col5 = formatNumber(parseInt(lastRowNoiTru.col5.replace(/\./g, '')) + unmappedFeedbacks.noi_tru.qr.length + unmappedFeedbacks.unknown.qr.length);
 
         const summaryTiemChung = [
-            { id: '1', ...createSummaryData(facilities.filter((f: any) => f.type === 'BV'), 'tiem_chung', 'Khối Bệnh viện') },
+            { id: '1', ...createSummaryData(facilities.filter(f => f.type === 'BV'), 'tiem_chung', 'Khối Bệnh viện') },
             { id: '2', ...createSummaryData(tytUnits, 'tiem_chung', 'Khối TYT') },
             {
                 id: '3', type: 'Không ghi địa chỉ', col1: '',
@@ -273,7 +273,7 @@ export function useKSHLData(dateFilter: DateFilter, surveyKey?: string, unit?: s
                 col5: formatNumber(unmappedFeedbacks.tiem_chung.qr.length + unmappedFeedbacks.unknown.qr.length),
                 col6: displayRate(calcRate([...unmappedFeedbacks.tiem_chung.qr, ...unmappedFeedbacks.unknown.qr]))
             },
-            { id: '', isTotal: true, ...createSummaryData([...facilities.filter((f: any) => f.type === 'BV'), ...tytUnits], 'tiem_chung', 'Tổng') }
+            { id: '', type: 'Tổng', isTotal: true, ...createSummaryData([...facilities.filter(f => f.type === 'BV'), ...tytUnits], 'tiem_chung', 'Tổng') }
         ];
         const lastRowTiemChung = summaryTiemChung[summaryTiemChung.length - 1];
         lastRowTiemChung.col2 = formatNumber(parseInt(lastRowTiemChung.col2.replace(/\./g, '')) + unmappedFeedbacks.tiem_chung.self.length + unmappedFeedbacks.unknown.self.length);

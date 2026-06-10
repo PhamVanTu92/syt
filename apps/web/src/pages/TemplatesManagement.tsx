@@ -1,14 +1,15 @@
-﻿import AdminLayout from "@/components/legacy/AdminLayout";
+﻿import AdminLayout from '@/components/legacy/AdminLayout';
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import { formService } from "@/services/formService";
+import { formService } from "../services/formService";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
-import { surveyService } from "@/services/surveyService";
+import { surveyService } from "../services/surveyService";
 
 import { Toast } from "@/components/prime";
 import { Plus, QrCode } from "lucide-react";
@@ -156,7 +157,7 @@ const TemplatesManagement: React.FC = () => {
   //   });
   // };
 
-  const sttBodyTemplate = (_rowData: any, options: { rowIndex: number }) => {
+  const sttBodyTemplate = (rowData: any, options: { rowIndex: number }) => {
     return options.rowIndex + lazyParams.first + 1;
   };
 

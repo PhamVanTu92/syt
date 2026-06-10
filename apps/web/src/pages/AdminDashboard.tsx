@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import {
   FileText,
   Plus,
@@ -12,17 +12,18 @@ import {
   Image as ImageIcon,
   Loader2,
   Calendar,
+  Delete,
 } from "lucide-react";
-import { api } from "@/lib/legacy-api";
-import { SERVICE_CATEGORIES_FILTER } from "@/constants";
-import PostForm from "@/components/legacy/PostForm";
-import AdminLayout from "@/components/legacy/AdminLayout"; // Import the new layout
-import { ScrollableTable } from "@/components/legacy/common/ScrollableTable";
-import { TablePagination } from "@/components/legacy/common/TablePagination";
+import { api } from '@/lib/legacy-api';
+import { SERVICE_CATEGORIES_FILTER } from '@/constants';
+import PostForm from '@/components/legacy/PostForm';
+import AdminLayout from '@/components/legacy/AdminLayout'; // Import the new layout
+import { ScrollableTable } from "../components/common/ScrollableTable";
+import { TablePagination } from "../components/common/TablePagination";
 import {
   getInitialPageFromUrl,
   usePageUrlSync,
-} from "@/hooks/legacy/usePageUrlSync";
+} from '@/hooks/legacy/usePageUrlSync';
 import { Dropdown, Button } from "@/components/prime";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
@@ -55,13 +56,12 @@ const AdminDashboard = () => {
         endpoint += `&search=${encodeURIComponent(debouncedSearchTerm)}`;
       }
       const response = await api.get(endpoint);
-      if (response && Array.isArray(response)) {
-        const data = response;
-        const meta = { total: response.length };
+      if (response && response.data && Array.isArray(response.data)) {
+        const { data, meta } = response;
         const mapped = data.map((p: any) => ({
           ...p,
           imageUrl: p.image_url,
-          createdAt: p.created_at || p.createdAt,
+          createdAt: p.created_at,
           category: p.category_id,
         }));
         setPosts(mapped);

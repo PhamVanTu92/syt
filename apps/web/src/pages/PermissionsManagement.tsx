@@ -3,6 +3,7 @@ import {
   Shield,
   Plus,
   Edit3,
+  Trash2,
   Search,
   Loader2,
   X,
@@ -11,12 +12,12 @@ import {
   ChevronRight,
   ChevronDown,
 } from "lucide-react";
-import { api } from "@/lib/legacy-api";
-import AdminLayout from "@/components/legacy/AdminLayout";
-import { ScrollableTable } from "@/components/legacy/common/ScrollableTable";
+import { api } from '@/lib/legacy-api';
+import AdminLayout from '@/components/legacy/AdminLayout';
+import { ScrollableTable } from "../components/common/ScrollableTable";
 import { Button, InputText, InputTextarea, Dropdown } from "@/components/prime";
 import { Toast } from "primereact/toast";
-import { Permission } from "@/types/legacy";
+import { Permission } from '@/types/legacy';
 
 const PermissionsManagement: React.FC = () => {
   const [permissions, setPermissions] = useState<Permission[]>([]);
@@ -237,8 +238,8 @@ const PermissionsManagement: React.FC = () => {
           </td>
           <td className="px-6 py-4">
             <span className="text-[10px] text-gray-600 font-black">
-              {(item as any).created_at || (item as any).createdAt
-                ? new Date((item as any).created_at || (item as any).createdAt).toLocaleString("vi-VN")
+              {item.created_at
+                ? new Date(item.created_at).toLocaleString("vi-VN")
                 : "---"}
             </span>
           </td>

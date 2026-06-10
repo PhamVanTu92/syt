@@ -1,7 +1,7 @@
-﻿import React from 'react';
+import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from 'primereact/button';
-import PageJumper from '@/components/legacy/PageJumper';
+import PageJumper from '../PageJumper';
 import { PageSizeSelector } from './PageSizeSelector';
 
 interface TablePaginationProps {

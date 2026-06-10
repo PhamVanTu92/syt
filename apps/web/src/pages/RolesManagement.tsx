@@ -12,13 +12,13 @@ import {
   ChevronDown,
   Key,
 } from "lucide-react";
-import { api } from "@/lib/legacy-api";
-import AdminLayout from "@/components/legacy/AdminLayout";
-import { ScrollableTable } from "@/components/legacy/common/ScrollableTable";
+import { api } from '@/lib/legacy-api';
+import AdminLayout from '@/components/legacy/AdminLayout';
+import { ScrollableTable } from "../components/common/ScrollableTable";
 import { Button, InputText, InputTextarea } from "@/components/prime";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
-import { Role, Permission } from "@/types/legacy";
+import { Role, Permission } from '@/types/legacy';
 
 const RolesManagement: React.FC = () => {
   const [roles, setRoles] = useState<Role[]>([]);

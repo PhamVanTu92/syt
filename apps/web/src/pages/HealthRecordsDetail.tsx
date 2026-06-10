@@ -1,8 +1,16 @@
 
-import { useEffect, useRef } from "react";
-import {
-  Activity,
+import React, { useEffect, useRef, useState } from "react";
+import { 
+  Building2, 
+  Activity, 
+  HeartPulse, 
+  Building, 
+  Stethoscope, 
+  Home, 
+  MapPin, 
+  ChevronRight,
   ShieldCheck,
+  Search
 } from "lucide-react";
 
 const HealthRecordsDetail = () => {

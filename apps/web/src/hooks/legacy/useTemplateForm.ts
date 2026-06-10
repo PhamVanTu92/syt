@@ -1,8 +1,8 @@
-﻿import React, { useState, useCallback, useEffect } from 'react';
-import { formService } from '@/services/formService';
+import React, { useState, useCallback, useEffect } from 'react';
+import { formService } from '../services/formService';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom';
-import { TemplateData, GroupNode, OptionNode, InfoNode } from '@/types/templates';
+import { TemplateData, GroupNode, OptionNode, InfoNode } from '../types/templates';
 import { confirmDialog } from 'primereact/confirmdialog';
 
 export const useTemplateForm = (

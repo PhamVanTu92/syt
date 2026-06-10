@@ -1,7 +1,7 @@
-import { api } from "@/lib/legacy-api";
+﻿import { api } from "@/lib/legacy-api";
 import { Button } from "primereact/button";
 import { InputTextarea } from "primereact/inputtextarea";
-import {
+import React, {
   memo,
   useCallback,
   useEffect,
@@ -440,8 +440,8 @@ export default function BieuMau1Table({ id, type, formJson, survey_key }: any) {
   const prevOpenSection = useRef(openSection);
   const visibleInfo = useMemo(() => {
     return (info ?? [])
-      .filter((item: any) => item?.status)
-      .map((item: any, index: any) => ({
+      .filter((item) => item?.status)
+      .map((item, index) => ({
         item,
         fieldKey: getInfoKey(item, index),
       }));
@@ -630,7 +630,7 @@ export default function BieuMau1Table({ id, type, formJson, survey_key }: any) {
         if (item.isValidate === false) return;
         const progressValue = item?.progress?.value;
         const ratingValue = item?.rating?.value;
-
+        const noteValue = item?.note;
 
         if (
           progressValue === null ||

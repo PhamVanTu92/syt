@@ -9,7 +9,7 @@ import {
   Mail,
   User,
 } from "lucide-react";
-import { api } from "@/lib/legacy-api";
+import { api } from '@/lib/legacy-api';
 import { Dropdown, Button } from "@/components/prime";
 import { SocialFacilityDropdown } from "@/components/legacy/feedbacks/SocialFacilityDropdown";
 
@@ -329,7 +329,7 @@ const Register: React.FC = () => {
                     </label>
                     <SocialFacilityDropdown
                       value={formData.unit || null}
-                      onChange={(selectedOption: any) =>
+                      onChange={(selectedOption) =>
                         setFormData({
                           ...formData,
                           unit: selectedOption ? String(selectedOption.key) : "",

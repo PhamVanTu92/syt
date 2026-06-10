@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
 import { MultiSelect } from 'primereact/multiselect';
-import { InfoNode, InfoOptionNode } from '@/types/templates';
+import { InfoNode, InfoOptionNode } from '../../types/templates';
 import { api } from '@/lib/legacy-api';
 import { FacilityFilterDropdown } from '@/components/legacy/feedbacks/FacilityFilterDropdown';
 
@@ -46,7 +46,7 @@ const FacilityFieldConfig: React.FC<FacilityFieldConfigProps> = ({
   useEffect(() => {
     let cancelled = false;
     api.get('/social-facilities', { page: 1, limit: 1 })
-      .then((res: any) => {
+      .then((res) => {
         if (cancelled) return;
         if (Array.isArray(res?.meta?.reports)) setTypeReports(res.meta.reports);
       })
@@ -100,8 +100,8 @@ const FacilityFieldConfig: React.FC<FacilityFieldConfigProps> = ({
             value: String(option.key),
           }))}
           onChange={() => { }}
-          onResolvedChange={(resolvedOptions: any) => {
-            const nextOptions: InfoOptionNode[] = resolvedOptions.map((option: any) => {
+          onResolvedChange={(resolvedOptions) => {
+            const nextOptions: InfoOptionNode[] = resolvedOptions.map((option) => {
               const existing = selectedOptions.find(
                 (selectedOption) => String(selectedOption.key) === String(option.value),
               );

@@ -1,7 +1,7 @@
-﻿import { useState, useEffect, useCallback, useRef } from "react";
+﻿import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MAIN_MENU, SERVICE_CATEGORIES_FILTER } from "@/constants";
-import { api } from "@/lib/legacy-api";
+import { MAIN_MENU, SERVICE_CATEGORIES_FILTER } from '@/constants';
+import { api } from '@/lib/legacy-api';
 import {
   ChevronRight,
   TrendingUp,
@@ -54,7 +54,9 @@ const NewsCategory = () => {
           limit: 10,
           order: "createdAt.desc",
         });
-        const latestItems = Array.isArray(latestData) ? latestData : (latestData?.items ?? latestData?.data ?? []);
+        const latestItems = Array.isArray(latestData.data)
+          ? latestData.data
+          : latestData.data?.data || [];
         setLatestNews(latestItems);
         setLatestNews3([...latestItems].sort(() => 0.5 - Math.random()).slice(0, 3));
 
@@ -68,7 +70,9 @@ const NewsCategory = () => {
           status: "published",
           limit: 30,
         });
-        const allPosts = Array.isArray(trendingData) ? trendingData : (trendingData?.items ?? trendingData?.data ?? []);
+        const allPosts = Array.isArray(trendingData.data)
+          ? trendingData.data
+          : trendingData.data?.data || [];
         const shuffled = [...allPosts].sort(() => 0.5 - Math.random());
         setTrendingNews(shuffled.slice(0, 5));
       } catch (err) {
@@ -101,7 +105,9 @@ const NewsCategory = () => {
         if (category) params.category_id = category.id;
 
         const response = await api.get("/posts", params);
-        const newPosts = Array.isArray(response) ? response : (response?.items ?? []);
+        const newPosts = Array.isArray(response.data)
+          ? response.data
+          : response.data?.data || [];
 
         if (newPosts.length === 0) {
           setHasMore(false);

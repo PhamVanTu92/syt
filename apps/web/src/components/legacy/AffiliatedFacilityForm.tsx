@@ -8,9 +8,9 @@ import {
   X,
 } from "lucide-react";
 import { Toast } from "primereact/toast";
-import { api } from "@/lib/legacy-api";
+import { api } from '@/lib/legacy-api';
 import { Button, InputText } from "@/components/prime";
-import { affiliatedFacilitiesService } from "@/services/affiliatedFacilitiesService";
+import { affiliatedFacilitiesService } from "../services/affiliatedFacilitiesService";
 
 const FALLBACK_LOGO = "https://storage-vnportal.vnpt.vn/gov-hni/6749/soyte.png";
 

@@ -1,4 +1,4 @@
-﻿import { api } from "@/lib/legacy-api";
+﻿import { api } from '@/lib/legacy-api';
 
 export type AffiliatedFacility = {
   id: number | string;

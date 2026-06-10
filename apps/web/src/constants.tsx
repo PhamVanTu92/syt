@@ -1,8 +1,11 @@
-import { MenuItem, NewsItem, User } from "./types/legacy";
+﻿import { MenuItem, NewsItem, User } from '@/types/legacy';
 import baoTroXHImage from "./assets/image/bao tro XH-By5fco0o.png";
 import chinhSachYTeImage from "./assets/image/chinh sach y te-C_dDpJVZ.png";
 import chuyenDoiSoImage from "./assets/image/chuyen doi so-DSivldkT.png";
+import guongNguoiTotImage from "./assets/image/guong nguoi tot-C7NJJGDV.png";
 import khamBenhImage from "./assets/image/kham benh-__1wzyZ_.png";
+import phongBenhImage from "./assets/image/phong benh-CTWuljBT.png";
+
 import {
   Newspaper,
   AlertTriangle,
@@ -10,6 +13,7 @@ import {
   ShieldPlus,
   Stethoscope,
   MessageCircleHeart,
+  FileHeart,
   Building2,
   Ambulance,
   Laptop2,
@@ -17,6 +21,7 @@ import {
   Award,
   Home,
   Info,
+  Users,
   Utensils,
   Syringe,
   CalendarDays,

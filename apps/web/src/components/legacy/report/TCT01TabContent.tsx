@@ -1,5 +1,6 @@
-import React from 'react';
-
+import React, { useMemo } from 'react';
+import { FeedbackItem } from '@/types/feedbacks';
+import { calculateTotalUnits, calculateOnTimeStats, formatRate } from '@/utils/reportDataUtils';
 
 interface TCT01TabContentProps {
     data: {
@@ -10,7 +11,7 @@ interface TCT01TabContentProps {
     dateRange: { startDate: string, endDate: string };
 }
 
-export const TCT01TabContent: React.FC<TCT01TabContentProps> = ({ data, dateRange: _dateRange }) => {
+export const TCT01TabContent: React.FC<TCT01TabContentProps> = ({ data, dateRange }) => {
     if (!data) return null;
     const { tongSo, tiepNhan, deCuong } = data;
     const reportedCount = tiepNhan?.find(i => i.stt === 1)?.soLuong || 0;

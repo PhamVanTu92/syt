@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+﻿import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import {
   Building2,
   Award,
@@ -6,24 +6,26 @@ import {
   Stethoscope,
   Database,
   Edit3,
+  Filter,
   Loader2,
   Plus,
   Search,
   Trash2,
+  X,
 } from "lucide-react";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
-import AdminLayout from "@/components/legacy/AdminLayout";
-import { ScrollableTable } from "@/components/legacy/common/ScrollableTable";
-import { PageSizeSelector } from "@/components/legacy/common/PageSizeSelector";
-import { TablePagination } from "@/components/legacy/common/TablePagination";
-import DatasetRecordForm from "@/components/legacy/DatasetRecordForm";
+import AdminLayout from '@/components/legacy/AdminLayout';
+import { ScrollableTable } from "../components/common/ScrollableTable";
+import { PageSizeSelector } from "../components/common/PageSizeSelector";
+import { TablePagination } from "../components/common/TablePagination";
+import DatasetRecordForm from '@/components/legacy/DatasetRecordForm';
 import { Button, Dropdown } from "@/components/prime";
 import {
   datasetsService,
   type Dataset,
   type DatasetRecord,
-} from "@/services/datasetsService";
+} from "../services/datasetsService";
 
 const SORT_BY_OPTIONS = [
   { label: "Mã ID", value: "id" },
@@ -371,7 +373,7 @@ const TradingFacilitiesManagement = () => {
                     options={SORT_BY_OPTIONS}
                     optionLabel="label"
                     optionValue="value"
-                    onChange={(e: any) => handleQueryParamChange("sort_by", e.value)}
+                    onChange={(e) => handleQueryParamChange("sort_by", e.value)}
                     className="w-40"
                   />
                   <Dropdown
@@ -379,7 +381,7 @@ const TradingFacilitiesManagement = () => {
                     options={SORT_ORDER_OPTIONS}
                     optionLabel="label"
                     optionValue="value"
-                    onChange={(e: any) => handleQueryParamChange("sort_order", e.value)}
+                    onChange={(e) => handleQueryParamChange("sort_order", e.value)}
                     className="w-36"
                   />
                   <PageSizeSelector

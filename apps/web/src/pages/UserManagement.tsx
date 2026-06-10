@@ -1,9 +1,9 @@
 ﻿import React, { useEffect, useState, useMemo, useRef } from "react";
-import { api } from "@/lib/legacy-api";
-import AdminLayout from "@/components/legacy/AdminLayout";
-import { ScrollableTable } from "@/components/legacy/common/ScrollableTable";
-import { TablePagination } from "@/components/legacy/common/TablePagination";
-import UserModal from "@/components/legacy/UserModal";
+import { api } from '@/lib/legacy-api';
+import AdminLayout from '@/components/legacy/AdminLayout';
+import { ScrollableTable } from "../components/common/ScrollableTable";
+import { TablePagination } from "../components/common/TablePagination";
+import UserModal from '@/components/legacy/UserModal';
 import {
   Loader2,
   Search,
@@ -21,8 +21,8 @@ import { Button, Tooltip, InputText } from "@/components/prime";
 import {
   getInitialPageFromUrl,
   usePageUrlSync,
-} from "@/hooks/legacy/usePageUrlSync";
-import { User } from "@/types/legacy";
+} from '@/hooks/legacy/usePageUrlSync';
+import { User } from '@/types/legacy';
 
 // Extract role names from a user object across the multiple shapes the API returns:
 // assignedRoles[] / assigned_roles[] / roles[] / assignedRole / assigned_role
@@ -282,7 +282,7 @@ const UserManagement: React.FC = () => {
             <InputText
               placeholder="Tìm kiếm theo tên hoặc email..."
               value={searchTerm}
-              onChange={(e: any) => handleSearchChange(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-primary-100 font-medium text-sm"
             />
           </div>

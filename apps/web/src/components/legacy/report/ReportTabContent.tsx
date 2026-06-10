@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
+import { formService } from '@/services/formService';
 import { FeedbackItem } from '@/types/feedbacks';
 import { useFacilities } from '@/hooks/legacy/useFacilities';
+import { Dropdown } from 'primereact/dropdown';
 import { feedBacksSevice } from '@/services/feedBacksSevice';
 
 interface ReportTabContentProps {
@@ -91,7 +93,7 @@ export const ReportTabContent: React.FC<ReportTabContentProps> = ({
 
         // 2. Nếu là danh sách động dựa trên loại đơn vị (VD: tất cả TYT)
         const selectedTypes = facilityField.facilityTypeFilter || [];
-        const filteredFacilities = facilities.filter((f: any) =>
+        const filteredFacilities = facilities.filter(f =>
             selectedTypes.length === 0 || selectedTypes.includes(f.type)
         );
         return filteredFacilities.length;
@@ -220,7 +222,7 @@ export const ReportTabContent: React.FC<ReportTabContentProps> = ({
     // Duyệt tất cả cơ sở để tạo ra mảng các loại (tiền tố) duy nhất từ API (ví dụ: ['bv', 'bt', 'tyt'])
     const facilityTypeSet = React.useMemo(() => {
         const types = new Set<string>();
-        facilities.forEach((f: any) => {
+        facilities.forEach(f => {
             if (f.type) types.add(f.type.toLowerCase());
         });
         return types;
@@ -247,7 +249,7 @@ export const ReportTabContent: React.FC<ReportTabContentProps> = ({
         }
         // Fallback: sử dụng facility_id hoặc các trường tên cơ bản
         const facilityId = fb.facility_id || fb.info?.facility_id;
-        const facility = facilities.find((f: any) => String(f.id) === String(facilityId));
+        const facility = facilities.find(f => String(f.id) === String(facilityId));
         return facility ? facility.name : (fb.fullName || fb.name || `Đơn vị (${facilityId || '?'})`);
     };
 

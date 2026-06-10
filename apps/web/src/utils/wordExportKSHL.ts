@@ -1,5 +1,6 @@
 import { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, AlignmentType, WidthType, BorderStyle, VerticalAlign } from 'docx';
 import { saveAs } from 'file-saver';
+import { formatDateVN } from '@/utils/dateUtils';
 
 export const exportKSHLToWord = async (
     data: {

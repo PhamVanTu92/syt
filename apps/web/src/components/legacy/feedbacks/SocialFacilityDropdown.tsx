@@ -109,7 +109,7 @@ export const SocialFacilityDropdown: React.FC<SocialFacilityDropdownProps> = ({
         setHasMore(more);
         setApiOptions((prev) => {
           const merged = new Map<string, SocialFacilityOption>();
-          (replace ? nextItems : [...prev, ...nextItems]).forEach((item: any) => {
+          (replace ? nextItems : [...prev, ...nextItems]).forEach((item) => {
             merged.set(String(item.key), item);
           });
           return Array.from(merged.values());

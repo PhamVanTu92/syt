@@ -8,18 +8,18 @@ import {
   MapPin,
   Phone,
 } from "lucide-react";
-import { api } from "@/lib/legacy-api";
-import AdminLayout from "@/components/legacy/AdminLayout";
+import { api } from '@/lib/legacy-api';
+import AdminLayout from '@/components/legacy/AdminLayout';
 import { Button } from "@/components/prime";
-import { ScrollableTable } from "@/components/legacy/common/ScrollableTable";
-import { TablePagination } from "@/components/legacy/common/TablePagination";
+import { ScrollableTable } from "../components/common/ScrollableTable";
+import { TablePagination } from "../components/common/TablePagination";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
-import FacilityForm from "@/components/legacy/FacilityForm";
+import FacilityForm from '@/components/legacy/FacilityForm';
 import {
   getInitialPageFromUrl,
   usePageUrlSync,
-} from "@/hooks/legacy/usePageUrlSync";
+} from '@/hooks/legacy/usePageUrlSync';
 
 const FACILITY_TYPES = [
   { id: "all", title: "Tất cả các loại" },
@@ -61,8 +61,8 @@ const SocialFacilitiesManagement = () => {
       if (debouncedSearch.trim()) params.search = debouncedSearch.trim();
 
       const response = await api.get(`/social-facilities`, params);
-      if (response) {
-        const data = Array.isArray(response) ? response : (response?.items ?? []);
+      if (response && response.success) {
+        const data = Array.isArray(response.data) ? response.data : [];
         setFacilities(data);
         const meta = response.meta || {};
         setTotalRecords(Number(meta.total ?? data.length));

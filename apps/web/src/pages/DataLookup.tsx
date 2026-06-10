@@ -22,12 +22,12 @@ import {
   datasetsService,
   type Dataset,
   type DatasetRecord,
-} from "@/services/datasetsService";
-import PageJumper from "@/components/legacy/PageJumper";
+} from "../services/datasetsService";
+import PageJumper from '@/components/legacy/PageJumper';
 import {
   getInitialPageFromUrl,
   usePageUrlSync,
-} from "@/hooks/legacy/usePageUrlSync";
+} from '@/hooks/legacy/usePageUrlSync';
 
 const ALL_VALUE = "all";
 const PAGE_SIZE = 9;

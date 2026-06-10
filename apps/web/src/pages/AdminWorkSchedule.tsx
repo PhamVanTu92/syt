@@ -1,9 +1,9 @@
 ﻿import React, { useState, useEffect, useRef } from "react";
-import AdminLayout from "@/components/legacy/AdminLayout";
-import { ScrollableTable } from "@/components/legacy/common/ScrollableTable";
-import { TablePagination } from "@/components/legacy/common/TablePagination";
-import { useSchedules } from "@/services/useSchedules";
-import { WorkSchedule } from "@/types/legacy";
+import AdminLayout from '@/components/legacy/AdminLayout';
+import { ScrollableTable } from "../components/common/ScrollableTable";
+import { TablePagination } from "../components/common/TablePagination";
+import { useSchedules } from "../services/useSchedules";
+import { WorkSchedule } from '@/types/legacy';
 import { format, subHours } from "date-fns";
 
 import { vi } from "date-fns/locale";
@@ -17,12 +17,13 @@ import {
   CheckCircle,
   Clock,
   MapPin,
+  User as UserIcon,
 } from "lucide-react";
-import ScheduleForm from "@/components/legacy/ScheduleForm";
+import ScheduleForm from '@/components/legacy/ScheduleForm';
 import {
   getInitialPageFromUrl,
   usePageUrlSync,
-} from "@/hooks/legacy/usePageUrlSync";
+} from '@/hooks/legacy/usePageUrlSync';
 import { Dropdown, Button, Toast, InputText } from "@/components/prime";
 import { confirmDialog } from "primereact/confirmdialog";
 
@@ -81,7 +82,7 @@ const AdminWorkSchedule: React.FC = () => {
       let res;
       if (editingSchedule?.id) {
         res = await updateSchedule(editingSchedule.id, scheduleData);
-        if (!(res as any)?.message) {
+        if (!res?.message) {
           toast.current?.show({
             severity: "success",
             summary: "Thành công",
@@ -91,7 +92,7 @@ const AdminWorkSchedule: React.FC = () => {
         }
       } else {
         res = await createSchedule(scheduleData);
-        if (!(res as any)?.message) {
+        if (!res?.message) {
           toast.current?.show({
             severity: "success",
             summary: "Thành công",
@@ -132,7 +133,7 @@ const AdminWorkSchedule: React.FC = () => {
       accept: async () => {
         try {
           const res = await deleteSchedule(id);
-          if (!(res as any)?.message) {
+          if (!res?.message) {
             toast.current?.show({
               severity: "success",
               summary: "Thành công",

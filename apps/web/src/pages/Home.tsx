@@ -17,12 +17,12 @@ import {
   MOCK_NEWS,
   MOCK_VIDEOS,
   CATEGORIES,
-} from "@/constants";
+} from '@/constants';
 import { Button } from "@/components/prime";
 import heroSlide1 from "@/assets/image/anh1-CFkqSFx4.png";
 import heroSlide2 from "@/assets/image/anh2-r7WidWql.jpg";
-import HospitalSlider from "@/components/legacy/HospitalSlider";
-import { api } from "@/lib/legacy-api";
+import HospitalSlider from '@/components/legacy/HospitalSlider';
+import { api } from '@/lib/legacy-api';
 const Home = () => {
   const getEmbedUrl = (url: string) => {
     if (!url) return "";
@@ -37,7 +37,6 @@ const Home = () => {
   const [activeChannel, setActiveChannel] = useState("H1");
   const [dbPosts, setDbPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [categoryData, setCategoryData] = useState<Record<number, any[]>>({});
   const spotlightPost = dbPosts[0];
   const latestTenPosts = dbPosts.slice(1, 11);
   const tieuDiem = dbPosts.slice(1, 6);
@@ -62,7 +61,7 @@ const Home = () => {
     paddingClass = "",
   }: {
     title: string;
-    Icon: React.ComponentType<any>;
+    Icon: React.ComponentType<{ className?: string; size?: number }>;
     iconColor: string;
     hoverColor: string;
     image: string;
@@ -122,17 +121,16 @@ const Home = () => {
     const fetchLatestPosts = async () => {
       try {
         const response = await api.get("/posts");
-        const items = Array.isArray(response) ? response : (response?.items ?? response?.data ?? []);
-        if (items.length > 0) {
-          const mappedPosts = items.map((p: any) => ({
+        if (response && response.data && Array.isArray(response.data)) {
+          const mappedPosts = response.data.map((p: any) => ({
             id: p.id,
             title: p.title,
             summary: p.summary,
             content: p.content,
-            imageUrl: p.image_url || p.imageUrl,
-            category: p.category_id ?? p.categoryId ?? "news-events",
-            createdAt: p.created_at || p.createdAt,
-            isFeatured: p.is_featured ?? p.isFeatured,
+            imageUrl: p.image_url,
+            category: p.category_id || "news-events",
+            createdAt: p.created_at,
+            isFeatured: p.is_featured,
           }));
           setDbPosts(mappedPosts);
         } else {
@@ -173,18 +171,20 @@ const Home = () => {
           },
         ];
         const response = await api.post("/posts/by-categories", postData);
-        const catItems = Array.isArray(response) ? response : (response?.items ?? response?.data ?? []);
-        if (catItems.length > 0) {
-          const postsByCategory = catItems.reduce(
+        if (response && response.data && Array.isArray(response.data)) {
+          const postsByCategory = response.data.reduce(
             (acc: any, item: any) => {
               acc[item.category_id] = item.posts;
               return acc;
             },
             {} as Record<number, any[]>,
           );
-          setCategoryData(postsByCategory);
+          CATEGORIES.forEach((category) => {
+            if (postsByCategory[category.id])
+              category.data = postsByCategory[category.id];
+          });
         } else {
-          console.error("Không lấy được dữ liệu danh mục!");
+          console.error("Không lấy được dữ liệu!");
         }
       } catch (err) {
         console.error(err);
@@ -674,7 +674,7 @@ const Home = () => {
                   {/* Playlist Sidebar (Narrower) */}
                   <div className="md:w-1/4 bg-[#1e293b] overflow-y-auto no-scrollbar">
                     <div className="p-3">
-                      {MOCK_VIDEOS.map((video, _idx) => (
+                      {MOCK_VIDEOS.map((video, idx) => (
                         <div
                           key={video.id}
                           onClick={() => {
@@ -737,7 +737,7 @@ const Home = () => {
                 iconColor={item.iconColor}
                 hoverColor={item.hoverColor}
                 image={item.image}
-                data={categoryData[item.id] ?? item.data ?? []}
+                data={item.data}
                 paddingClass={item.paddingClass}
               />
             ))}

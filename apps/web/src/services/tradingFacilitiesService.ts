@@ -1,4 +1,4 @@
-﻿import { api } from "@/lib/legacy-api";
+﻿import { api } from '@/lib/legacy-api';
 
 export type TradingFacilityTradingType = "wholesale" | "retail";
 
@@ -89,7 +89,7 @@ const normalizeList = (response: any): TradingFacility[] => {
         ? response.items
         : [];
 
-  return rawItems.map(normalizeItem).filter((item: any) => item.id);
+  return rawItems.map(normalizeItem).filter((item) => item.id);
 };
 
 const normalizeMeta = (

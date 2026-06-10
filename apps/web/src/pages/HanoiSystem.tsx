@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   Search,
@@ -24,7 +24,7 @@ import { Button } from "@/components/prime";
 import { socialFacilitiesService } from "@/services/socialFacilitiesService";
 import { Sidebar } from "primereact/sidebar";
 import { Dialog } from "primereact/dialog";
-
+import "../styles/index.css";
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({

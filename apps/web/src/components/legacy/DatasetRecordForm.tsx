@@ -1,9 +1,11 @@
-﻿import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Database,
   Save,
   Send,
   X,
+  FileText,
+  Check,
 } from "lucide-react";
 import { Toast } from "primereact/toast";
 import {
@@ -15,7 +17,7 @@ import {
 import {
   datasetsService,
   type Dataset,
-} from "@/services/datasetsService";
+} from "../services/datasetsService";
 
 interface DatasetRecordFormProps {
   dataset: Dataset;

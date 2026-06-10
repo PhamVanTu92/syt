@@ -1,7 +1,7 @@
-﻿import React from 'react';
+import React from 'react';
 import { Dialog } from 'primereact/dialog';
-import { FeedbackItem } from '@/types/feedbacks';
-import { formatDisplayDateTime } from '@/utils/dateUtils';
+import { FeedbackItem } from '../../types/feedbacks';
+import { formatDisplayDateTime } from '../../utils/dateUtils';
 import { Button } from 'primereact/button';
 import { Trash2 } from 'lucide-react';
 import { confirmDialog } from 'primereact/confirmdialog';
@@ -112,7 +112,7 @@ export const FeedbackDetailsDialog: React.FC<FeedbackDetailsDialogProps> = ({
                 )}
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-3 py-2 rounded-xl border border-slate-200">
                   <span className="opacity-50">Ngày gửi:</span>{" "}
-                  {formatDisplayDateTime(selectedFeedback.created_at || selectedFeedback.createdAt || selectedFeedback.date || '')}
+                  {formatDisplayDateTime(selectedFeedback.created_at || selectedFeedback.createdAt || selectedFeedback.date)}
                 </span>
                 {selectedFeedback.creator_name && (
                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-3 py-2 rounded-xl border border-slate-200">

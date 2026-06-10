@@ -1,12 +1,12 @@
-﻿import React from 'react';
+import React from 'react';
 import { Chart } from "primereact/chart";
-import SatisfactionTrendChart from "@/components/legacy/Chart";
-import { DashboardStats } from '@/types/DashboardStats';
-import SatisfactionComponentChart from '@/components/legacy/SatisfactionRadarChart';
-import OverviewStats from '@/components/legacy/StatsChart';
-import SectionStackedChart from '@/components/legacy/SectionStackedChart';
-import SummaryCards from '@/components/legacy/SummaryCards';
-import CombinedProgressQualityChart from '@/components/legacy/CombinedProgressQualityChart';
+import SatisfactionTrendChart from "@/components/Chart";
+import { DashboardStats } from '../../types/DashboardStats';
+import SatisfactionComponentChart from '../SatisfactionRadarChart';
+import OverviewStats from '../StatsChart';
+import SectionStackedChart from '../SectionStackedChart';
+import SummaryCards from '../SummaryCards';
+import CombinedProgressQualityChart from '../CombinedProgressQualityChart';
 
 interface FeedbackStatsSectionProps {
   type?: string;
@@ -48,7 +48,7 @@ export const FeedbackStatsSection: React.FC<FeedbackStatsSectionProps> = ({
   tiendoChartData,
   danhgiaChartData,
   barChartData,
-  getPercentValue: _getPercentValue
+  getPercentValue
 }) => {
   if (loading) {
     return (

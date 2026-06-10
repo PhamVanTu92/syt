@@ -1,8 +1,8 @@
-﻿import React, { useState, useEffect, useCallback } from 'react';
-import { feedBacksSevice } from '@/services/feedBacksSevice';
-import { formService } from '@/services/formService';
+import React, { useState, useEffect, useCallback } from 'react';
+import { feedBacksSevice } from '../services/feedBacksSevice';
+import { formService } from '../services/formService';
 import { Toast } from 'primereact/toast';
-import { FeedbackItem } from '@/types/feedbacks';
+import { FeedbackItem } from '../types/feedbacks';
 
 export const useFeedbacks = (type?: string, toastRef?: React.RefObject<Toast | null>, surveyKey?: string | string[], unit?: string, unitType?: string, isFilterLoading?: boolean) => {
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);

@@ -1,4 +1,4 @@
-﻿import { api } from "@/lib/legacy-api";
+﻿import { api } from '@/lib/legacy-api';
 
 export const feedBacksSevice = {
     async fetchFeedBacks(page: number = 1, limit: number = 10, type?: string, survey_key?: string | string[], unit?: string, unit_type?: string) {

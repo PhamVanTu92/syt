@@ -1,11 +1,11 @@
-﻿import AdminLayout from "@/components/legacy/AdminLayout";
+﻿import AdminLayout from '@/components/legacy/AdminLayout';
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import { surveyService } from "@/services/surveyService";
-import { formService } from "@/services/formService";
+import { surveyService } from "../services/surveyService";
+import { formService } from "../services/formService";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
@@ -198,6 +198,33 @@ const SurveysManagement: React.FC = () => {
     setSurveyDialog(true);
   };
 
+  const toggleStatus = async (rowData: any) => {
+    try {
+      const newStatus = !rowData.status;
+      const res = await surveyService.updateSurvey(rowData.id, {
+        ...rowData,
+        status: newStatus,
+      });
+      if (!res?.message) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Thành công",
+          detail: "Đã cập nhật trạng thái",
+        });
+      }
+      fetchSurveys();
+    } catch (error: any) {
+      console.error(error);
+      if (error.message && error.message.includes("API Error")) {
+        toast.current?.show({
+          severity: "error",
+          summary: "Lỗi",
+          detail: "Không thể cập nhật trạng thái",
+        });
+      }
+    }
+  };
+
   const actionBodyTemplate = (rowData: any) => {
     return (
       <div className="flex gap-2">
@@ -355,7 +382,7 @@ const SurveysManagement: React.FC = () => {
             >
               <Column
                 header="STT"
-                body={(_rowData, options) =>
+                body={(rowData, options) =>
                   options.rowIndex + lazyParams.first + 1
                 }
                 style={{ width: "5rem" }}

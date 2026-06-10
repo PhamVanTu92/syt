@@ -1,7 +1,7 @@
 ﻿import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, AlertCircle, CheckCircle2 } from "lucide-react";
-import { api } from "@/lib/legacy-api";
+import { Eye, EyeOff, ArrowLeft, AlertCircle, CheckCircle2 } from "lucide-react";
+import { api } from '@/lib/legacy-api';
 import { Button } from "@/components/prime";
 
 const ForgotPassword: React.FC = () => {

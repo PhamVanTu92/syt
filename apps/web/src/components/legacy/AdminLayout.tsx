@@ -10,14 +10,15 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { useAuth } from "@/AuthContext";
+import { useAuth } from '@/AuthContext';
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { TieredMenu } from "primereact/tieredmenu";
-import { adminMenu, type MenuItem } from "@/adminMenu";
+import { Button } from "@/components/prime";
+import { adminMenu, type MenuItem } from '@/adminMenu';
 import UserInfoModal from "./UserInfoModal";
 import { useRef } from "react";
-import { hasPermission } from "@/utils/permissionUtils";
+import { hasPermission } from '@/utils/permissionUtils';
 
 interface AdminLayoutProps {
   children: React.ReactNode;

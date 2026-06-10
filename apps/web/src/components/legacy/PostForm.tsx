@@ -7,15 +7,15 @@ import {
   Link as LinkIcon,
   Clock,
 } from "lucide-react";
-import { SERVICE_CATEGORIES_FILTER } from "@/constants";
-import { api } from "@/lib/legacy-api";
+import { SERVICE_CATEGORIES_FILTER } from '@/constants';
+import { api } from '@/lib/legacy-api';
 import {
   Dropdown,
   InputText,
   InputTextarea,
+  Editor,
   Button,
 } from "@/components/prime";
-import { Editor } from "primereact/editor";
 import { Toast } from "primereact/toast";
 
 interface PostFormProps {
@@ -330,7 +330,7 @@ const PostForm: React.FC<PostFormProps> = ({
               </label>
               <Editor
                 value={formData.content}
-                onTextChange={(e: any) =>
+                onTextChange={(e) =>
                   setFormData({ ...formData, content: e.htmlValue })
                 }
                 placeholder="Nội dung bài viết đầy đủ..."

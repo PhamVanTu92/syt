@@ -1,6 +1,6 @@
-﻿import { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { api } from "@/lib/legacy-api";
+import { api } from '@/lib/legacy-api';
 import {
   Calendar,
   Printer,
@@ -14,7 +14,7 @@ import {
   Clock,
   ChevronLeft,
 } from "lucide-react";
-import { SERVICE_CATEGORIES } from "@/constants";
+import { SERVICE_CATEGORIES } from '@/constants';
 import { Button } from "@/components/prime";
 // News Card for bottom grid
 const BottomRelatedCard = ({ post }: { post: any }) => (
@@ -37,7 +37,7 @@ const BottomRelatedCard = ({ post }: { post: any }) => (
       </h4>
       <div className="flex items-center gap-2 mt-2 text-[11px] text-gray-400 font-medium">
         <Clock size={12} />{" "}
-        {new Date(post.date || post.created_at || post.createdAt).toLocaleDateString("vi-VN")}
+        {new Date(post.date || post.created_at).toLocaleDateString("vi-VN")}
       </div>
     </div>
   </Link>
@@ -66,7 +66,7 @@ const RelatedNewsCard = ({ post }: { post: any }) => (
         {post.title}
       </h3>
       <p className="text-[11px] text-gray-400 mt-1 font-medium italic">
-        {new Date(post.date || post.created_at || post.createdAt).toLocaleDateString("vi-VN")}
+        {new Date(post.date || post.created_at).toLocaleDateString("vi-VN")}
       </p>
     </div>
   </Link>
@@ -200,7 +200,7 @@ const NewsDetail = () => {
                   <div className="flex items-center gap-4 text-[11px] text-gray-500 font-bold uppercase tracking-tight italic">
                     <span className="flex items-center gap-1.5">
                       <Calendar size={13} />{" "}
-                      {new Date(post.created_at || post.createdAt).toLocaleDateString("vi-VN")}
+                      {new Date(post.created_at).toLocaleDateString("vi-VN")}
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Eye size={13} /> {post.view_count || 0} lượt xem

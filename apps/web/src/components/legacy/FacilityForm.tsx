@@ -6,8 +6,9 @@ import {
   Building2,
   MapPin,
   Phone,
+  Info,
 } from "lucide-react";
-import { api } from "@/lib/legacy-api";
+import { api } from '@/lib/legacy-api';
 import {
   Dropdown,
   InputText,

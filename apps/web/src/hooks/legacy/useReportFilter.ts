@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { getDefaultDates } from '@/utils/dateUtils';
 import { useAuth } from '@/AuthContext';
 import { useFacilities } from '@/hooks/legacy/useFacilities';
@@ -77,7 +77,7 @@ export const useReportFilter = () => {
         let fUnitType: string | undefined = uType;
         // Tính toán tổng số đơn vị thuộc loại hình này từ danh sách facilities động
         const totalUnitsForType = (uType && facilities.length > 0)
-            ? facilities.filter((f: any) => (f.type || "").toString().toUpperCase().trim() === uType).length
+            ? facilities.filter(f => (f.type || "").toString().toUpperCase().trim() === uType).length
             : 0;
         // Nếu người dùng có quyền trên tất cả các đơn vị của loại hình đó (và danh sách hệ thống đã load) thì chỉ gửi unit_type để tối ưu hóa query
         if (uniqueUnits.length > 0 && totalUnitsForType > 0 && uniqueUnits.length >= totalUnitsForType) {

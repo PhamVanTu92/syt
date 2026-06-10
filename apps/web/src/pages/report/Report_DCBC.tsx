@@ -1,5 +1,5 @@
-import AdminLayout from "@/components/legacy/AdminLayout";
-import { useState, useEffect, useRef, useMemo } from "react";
+﻿import AdminLayout from "@/components/AdminLayout";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { feedBacksSevice } from "@/services/feedBacksSevice";
 import { formService } from "@/services/formService";
 import { ReportTabContent } from "@/components/legacy/report/ReportTabContent";
@@ -16,8 +16,8 @@ import {
   ReportEmptyState,
   StyledTabViewCSS,
 } from "@/components/legacy/report/ReportStates";
-import { useReportFilter } from "@/hooks/legacy/useReportFilter";
-import { useFacilities } from "@/hooks/legacy/useFacilities";
+import { useReportFilter } from "@/hooks/useReportFilter";
+import { useFacilities } from "@/hooks/useFacilities";
 import { surveyService } from "@/services/surveyService";
 import { getReportedFacilityId } from "@/utils/reportDataUtils";
 
@@ -49,7 +49,7 @@ const Report_DCBC = () => {
       filtered = filtered.filter(f => (f.type || "").toString().toUpperCase().trim() === finalUnitType.toUpperCase().trim());
     }
     if (finalUnit) {
-      const unitIds = finalUnit.split(',').map((id: any) => id.trim());
+      const unitIds = finalUnit.split(',').map(id => id.trim());
       filtered = filtered.filter(f => unitIds.includes(String(f.id)));
     }
     return filtered;
@@ -262,7 +262,7 @@ const Report_DCBC = () => {
           reportHeader={reportHeader}
           surveys={surveys}
           selectedSurveyKey={selectedSurveyKey}
-          onSurveyChange={(val: any) => setSelectedSurveyKey(val)}
+          onSurveyChange={(val) => setSelectedSurveyKey(val)}
           isMulti={false}
         />
 

@@ -1,4 +1,4 @@
-﻿import { api } from "@/lib/legacy-api";
+﻿import { api } from '@/lib/legacy-api';
 
 export type DatasetFieldDatatype =
   | "text"
@@ -97,7 +97,7 @@ export const datasetsService = {
       : Array.isArray(response)
         ? response
         : [];
-    return items.map(normalizeDataset).filter((dataset: any) => dataset.code);
+    return items.map(normalizeDataset).filter((dataset) => dataset.code);
   },
 
   async records(

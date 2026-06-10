@@ -1,18 +1,26 @@
 
-import {
+import React from 'react';
+import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  PieChart, Pie, Cell, AreaChart, Area
+  PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
 } from 'recharts';
-import {
-  Laptop2,
-  Users,
-  Building2,
-  Activity,
-  TrendingUp,
-  Database,
+import { 
+  Laptop2, 
+  FileText, 
+  Users, 
+  Building2, 
+  Activity, 
+  TrendingUp, 
+  Database, 
   ShieldCheck,
+  Smartphone,
+  Server,
+  Network,
+  ChevronRight,
   Info
 } from 'lucide-react';
+// Standard Link import from react-router-dom
+import { Link } from 'react-router-dom';
 
 // --- Mock Data for Charts ---
 const recordsByAgeData = [
@@ -150,7 +158,7 @@ const DigitalTransformation = () => {
                     paddingAngle={5}
                     dataKey="value"
                   >
-                    {recordsByAgeData.map((_entry, index) => (
+                    {recordsByAgeData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>

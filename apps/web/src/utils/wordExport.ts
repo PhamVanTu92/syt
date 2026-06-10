@@ -10,6 +10,10 @@ import {
     BorderStyle,
     AlignmentType,
     VerticalAlign,
+    Header,
+    Footer,
+    PageNumber,
+    NumberFormat,
     SectionType
 } from "docx";
 import { saveAs } from "file-saver";
@@ -227,7 +231,7 @@ export const exportReportToWord = async (
             if (!template) return;
             const expected = getExpectedFacilities(template, facilities);
             const reportedIds = new Set(group.items.map((fb: any) => getReportedFacilityId(fb, facilities)));
-            const nonReported = expected.filter((exp: any) => !reportedIds.has(exp.id));
+            const nonReported = expected.filter(exp => !reportedIds.has(exp.id));
 
             appendixIRows.push(new TableRow({
                 children: [
@@ -237,7 +241,7 @@ export const exportReportToWord = async (
             }));
 
             if (nonReported.length > 0) {
-                nonReported.forEach((unit: any, ii: any) => {
+                nonReported.forEach((unit, ii) => {
                     appendixIRows.push(new TableRow({ children: [mkCell((ii + 1).toString(), false, AlignmentType.CENTER), mkCell(unit.name)] }));
                 });
             } else {

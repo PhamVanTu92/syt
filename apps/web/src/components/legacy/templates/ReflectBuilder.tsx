@@ -1,10 +1,10 @@
-﻿import React from 'react';
+import React from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputSwitch } from 'primereact/inputswitch';
-import { GroupNode, OptionNode } from '@/types/templates';
-import { getGroupIndexString, getOptionIndexString } from '@/utils/templateUtils';
+import { GroupNode, OptionNode } from '../../types/templates';
+import { getGroupIndexString, getOptionIndexString } from '../../utils/templateUtils';
 
 interface ReflectBuilderProps {
   data: GroupNode[];

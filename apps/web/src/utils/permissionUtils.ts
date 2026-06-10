@@ -1,4 +1,4 @@
-﻿import { adminMenu } from "@/adminMenu";
+﻿import { adminMenu } from '@/adminMenu';
 
 /**
  * Robustly checks if a user has a specific permission.
@@ -54,10 +54,7 @@ export const getLandingPath = (user: any): string => {
   if (!user || user.role !== "admin") return "/";
 
   const userPermissions = user.permissions;
-  // Super admin (no explicit permissions) → dashboard
-  if (!userPermissions || (Array.isArray(userPermissions) && userPermissions.length === 0)) {
-    return "/admin/dashboard";
-  }
+  if (!userPermissions) return "/";
 
   for (const item of adminMenu) {
     if (hasPermission(userPermissions, item.permission)) {

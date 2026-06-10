@@ -2,9 +2,9 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Eye, EyeOff, ArrowLeft, AlertCircle, CheckCircle2, Lock, XCircle, Loader2, Mail, Send } from "lucide-react";
 import { Button } from "@/components/prime";
-import { api } from "@/lib/legacy-api";
+import { api } from '@/lib/legacy-api';
 import { Toast } from "primereact/toast";
-import { useAuth } from "@/AuthContext";
+import { useAuth } from '@/AuthContext';
 
 const ConfirmPassword: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -373,7 +373,7 @@ const ConfirmPassword: React.FC = () => {
                        <ValidationItem label="Ít nhất 1 chữ cái in hoa" isValid={validation.hasUpper} hasInput={!!password} />
                        <ValidationItem label="Ít nhất 1 ký tự đặc biệt" isValid={validation.hasSpecial} hasInput={!!password} />
                        <ValidationItem label="Không chứa khoảng trắng" isValid={validation.noSpace} hasInput={!!password} />
-                       <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={!!passwordsMatch} hasInput={!!confirmPassword} />
+                       <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={passwordsMatch} hasInput={!!confirmPassword} />
                     </div>
 
                     <Button
