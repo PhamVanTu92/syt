@@ -9,7 +9,7 @@ interface ReportAppendixProps {
     type?: 'DCBC' | 'TCT01';
     surveys?: any[];
     selectedSurveyKey?: string;
-    dateFilter?: any;
+    _dateFilter?: any;
 }
 
 export const ReportAppendix: React.FC<ReportAppendixProps> = ({
@@ -18,7 +18,7 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
     type = 'DCBC',
     surveys = [],
     selectedSurveyKey = "",
-    dateFilter = null
+    _dateFilter = null
 }) => {
     const { facilities } = useFacilities();
 
@@ -32,7 +32,7 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
             return {
                 app1Title: "PHỤ LỤC 1",
                 app1Sub: "Danh mục các đơn vị đã thực hiện báo cáo trong kỳ",
-                app1Items: sortedEntries.map(([formId, group]) => {
+                app1Items: sortedEntries.map(([_formId, group]) => {
                     // Loại bỏ các đơn vị trùng lặp (nếu một đơn vị nộp nhiều lần)
                     const uniqueUnitsMap = new Map();
                     group.items.forEach(item => {
@@ -52,8 +52,8 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
                 app2Items: []
             };
         } else {
-            const app1Groups = sortedEntries.map(([formId, group]) => {
-                const template = formTemplates?.[formId];
+            const app1Groups = sortedEntries.map(([_formId, group]) => {
+                const template = formTemplates?.[_formId];
                 if (!template) return { title: group.title, units: [] };
 
                 const expected = getExpectedFacilities(template, facilities);
@@ -74,8 +74,8 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
                 return { title: group.title, units: nonReported };
             });
             // Giao điểm đồng bộ logic với ReportTabContent
-            const app2Groups = sortedEntries.map(([formId, group]) => {
-                const template = formTemplates?.[formId];
+            const app2Groups = sortedEntries.map(([_formId, group]) => {
+                const template = formTemplates?.[_formId];
                 if (!template) return { title: group.title, units: [] };
 
                 const lateUnitsList: any[] = [];
@@ -91,7 +91,7 @@ export const ReportAppendix: React.FC<ReportAppendixProps> = ({
                             activeSurvey = surveys.find(s => String(s.key || s.id) === String(fbSurveyId));
                         }
                         if (!activeSurvey) {
-                            activeSurvey = surveys.find((s: any) => (s.form_ids || []).some((f: any) => String(f.form_id || f.id || f) === String(formId)));
+                            activeSurvey = surveys.find((s: any) => (s.form_ids || []).some((f: any) => String(f.form_id || f.id || f) === String(_formId)));
                         }
                     }
 

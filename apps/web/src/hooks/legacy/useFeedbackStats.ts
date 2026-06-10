@@ -1,8 +1,8 @@
 ﻿import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { feedBacksSevice } from '../services/feedBacksSevice';
+import { feedBacksSevice } from '@/services/feedBacksSevice';
 import { api } from '@/lib/legacy-api';
 import { Toast } from 'primereact/toast';
-import { DashboardStats } from '../types/DashboardStats';
+import { DashboardStats } from '@/types/legacy/DashboardStats';
 
 function mapEvaluateDashboard(data: any): DashboardStats {
   const forms: any[] = data.forms || [];

@@ -2,7 +2,7 @@
 import { api } from "@/lib/legacy-api";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/AuthContext";
 import {
   SocialFacilityDropdown,
@@ -97,7 +97,7 @@ export default function SurveyInfo({
 
     if (unitId && isSelectField) {
       const matchedOption = options.find(
-        (opt) => String(opt.key) === String(unitId),
+        (opt: any) => String(opt.key) === String(unitId),
       );
       if (matchedOption) {
         return [matchedOption];
@@ -129,7 +129,7 @@ export default function SurveyInfo({
     }
 
     const matchedOption = staticOptions.find(
-      (opt) => String(opt.key) === String(unitId),
+      (opt: any) => String(opt.key) === String(unitId),
     );
 
     if (matchedOption) {
@@ -344,7 +344,7 @@ export default function SurveyInfo({
             onChange={(e) => {
               const selectedOption =
                 selectOptions.find(
-                  (opt) => String(opt.key) === String(e.value),
+                  (opt: any) => String(opt.key) === String(e.value),
                 ) || null;
               handleFacilityChange(selectedOption);
             }}

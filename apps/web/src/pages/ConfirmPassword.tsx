@@ -283,7 +283,7 @@ const ConfirmPassword: React.FC = () => {
 
                     <Button
                       type="submit"
-                      disabled={isResending}
+                      disabled={Boolean(isResending)}
                       loading={isResending}
                       className="w-full px-6 py-4 !bg-[#0088cc] !text-white font-black rounded-2xl shadow-xl shadow-primary-100 hover:!bg-[#0077bb] transition-all transform hover:-translate-y-0.5"
                     >
@@ -378,7 +378,7 @@ const ConfirmPassword: React.FC = () => {
 
                     <Button
                       type="submit"
-                      disabled={isLoading || !validation.isValid || !passwordsMatch}
+                      disabled={Boolean(isLoading || !validation.isValid || !passwordsMatch)}
                       loading={isLoading}
                       label="CẬP NHẬT MẬT KHẨU"
                       className="w-full py-4 !bg-[#0088cc] !text-white font-black rounded-2xl shadow-xl shadow-primary-100 hover:!bg-[#0077bb] transition-all transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none"

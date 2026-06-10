@@ -1,15 +1,15 @@
-﻿import React, { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { api } from "@/lib/legacy-api";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 
-import BieuMau1Table from "../components/formDetail/Form1";
-import SurveyForm from "../components/formDetail/Form2";
+import BieuMau1Table from '@/components/legacy/formDetail/Form1';
+import SurveyForm from '@/components/legacy/formDetail/Form2';
 
 export default function EvaluationTable() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const survey_key = searchParams.get("survey_key");
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
 
   // useEffect(() => {
   //   if (!survey_key) {

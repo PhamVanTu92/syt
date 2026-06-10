@@ -23,7 +23,7 @@ import {
   datasetsService,
   type Dataset,
   type DatasetRecord,
-} from "../services/datasetsService";
+} from '@/services/datasetsService';
 
 const SORT_BY_OPTIONS = [
   { label: "Mã ID", value: "id" },

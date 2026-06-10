@@ -1,5 +1,4 @@
-import React from "react";
-import { Facebook, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
+﻿import { Facebook, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/prime";
 
 const Footer = () => {

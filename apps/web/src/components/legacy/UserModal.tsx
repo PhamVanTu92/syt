@@ -39,7 +39,7 @@ const getUserRoleIds = (user: any): number[] => {
   return [];
 };
 
-type FacilityOption = {
+type _FacilityOption = {
   label: string;
   value: string;
 };

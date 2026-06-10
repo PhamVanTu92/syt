@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import {
   FileText,
   Plus,
@@ -12,7 +12,6 @@ import {
   Image as ImageIcon,
   Loader2,
   Calendar,
-  Delete,
 } from "lucide-react";
 import { api } from '@/lib/legacy-api';
 import { SERVICE_CATEGORIES_FILTER } from '@/constants';

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+﻿import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Dropdown, DropdownProps } from "primereact/dropdown";
 import { socialFacilitiesService } from "@/services/socialFacilitiesService";
 
@@ -109,7 +109,7 @@ export const SocialFacilityDropdown: React.FC<SocialFacilityDropdownProps> = ({
         setHasMore(more);
         setApiOptions((prev) => {
           const merged = new Map<string, SocialFacilityOption>();
-          (replace ? nextItems : [...prev, ...nextItems]).forEach((item) => {
+          (replace ? nextItems : [...prev, ...nextItems]).forEach((item: any) => {
             merged.set(String(item.key), item);
           });
           return Array.from(merged.values());

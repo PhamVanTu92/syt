@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+﻿import React, { useEffect, useRef, useState } from "react";
 import {
   Database,
   Save,
   Send,
   X,
-  FileText,
-  Check,
 } from "lucide-react";
 import { Toast } from "primereact/toast";
 import {
@@ -17,7 +15,7 @@ import {
 import {
   datasetsService,
   type Dataset,
-} from "../services/datasetsService";
+} from '@/services/datasetsService';
 
 interface DatasetRecordFormProps {
   dataset: Dataset;
@@ -57,7 +55,7 @@ const DatasetRecordForm: React.FC<DatasetRecordFormProps> = ({
     }
 
     const defaultState: Record<string, any> = {};
-    dataset.fields.forEach((field) => {
+    dataset.fields.forEach((field: any) => {
       if (field.datatype === "enum" && field.values && field.values.length > 0) {
         defaultState[field.name] = field.values[0];
       } else {
@@ -70,7 +68,7 @@ const DatasetRecordForm: React.FC<DatasetRecordFormProps> = ({
   const validate = () => {
     const nextErrors: Record<string, string> = {};
 
-    dataset.fields.forEach((field) => {
+    dataset.fields.forEach((field: any) => {
       const val = formData[field.name];
       if (isRequiredField(field.name)) {
         if (val === undefined || val === null || String(val).trim() === "") {
@@ -111,7 +109,7 @@ const DatasetRecordForm: React.FC<DatasetRecordFormProps> = ({
     try {
       // Clean data before submitting
       const cleanedData: Record<string, any> = {};
-      dataset.fields.forEach((field) => {
+      dataset.fields.forEach((field: any) => {
         const val = formData[field.name];
         if (field.datatype === "number") {
           cleanedData[field.name] = val !== "" && val !== undefined ? Number(val) : null;
@@ -143,13 +141,13 @@ const DatasetRecordForm: React.FC<DatasetRecordFormProps> = ({
   const previewTitle = React.useMemo(() => {
     const candidates = ["Tên cơ sở", "Họ và tên", "Tên", "tên", "name"];
     for (const key of candidates) {
-      const match = dataset.fields.find((f) => f.name.toLowerCase() === key.toLowerCase());
+      const match = dataset.fields.find((f: any) => f.name.toLowerCase() === key.toLowerCase());
       if (match && formData[match.name]) {
         return String(formData[match.name]);
       }
     }
     // Fallback to first text field
-    const firstTextField = dataset.fields.find((f) => f.datatype === "text");
+    const firstTextField = dataset.fields.find((f: any) => f.datatype === "text");
     if (firstTextField && formData[firstTextField.name]) {
       return String(formData[firstTextField.name]);
     }
@@ -183,7 +181,7 @@ const DatasetRecordForm: React.FC<DatasetRecordFormProps> = ({
           {/* Dynamic Fields Section */}
           <div className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
-              {dataset.fields.map((field) => {
+              {dataset.fields.map((field: any) => {
                 const isRequired = isRequiredField(field.name);
                 const hasError = !!errors[field.name];
 
@@ -208,7 +206,7 @@ const DatasetRecordForm: React.FC<DatasetRecordFormProps> = ({
                     {field.datatype === "enum" ? (
                       <Dropdown
                         value={formData[field.name] || ""}
-                        options={(field.values || []).map((v) => ({ label: v, value: v }))}
+                        options={(field.values || []).map((v: any) => ({ label: v, value: v }))}
                         onChange={(e) => handleFieldChange(field.name, e.value)}
                         className="w-full text-sm"
                         placeholder={`Chọn ${field.name.toLowerCase()}`}
@@ -278,7 +276,7 @@ const DatasetRecordForm: React.FC<DatasetRecordFormProps> = ({
                 {previewTitle}
               </h4>
               <div className="mt-4 space-y-3.5 text-xs text-gray-600 border-t border-gray-100/80 pt-4">
-                {dataset.fields.slice(0, 6).map((field) => {
+                {dataset.fields.slice(0, 6).map((field: any) => {
                   const val = formData[field.name];
                   if (val === undefined || val === null || val === "") return null;
                   return (

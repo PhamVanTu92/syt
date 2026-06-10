@@ -1,6 +1,6 @@
 ﻿import React, { useState, useEffect, useRef } from "react";
-import { X, Info, MapPin, Building } from "lucide-react";
-import { WorkSchedule, User } from '@/types/legacy';
+import { X, Info, MapPin } from "lucide-react";
+import { WorkSchedule } from '@/types/legacy';
 import { Dropdown, Calendar, InputText, Button } from "@/components/prime";
 import { Toast } from "primereact/toast";
 import { users } from '@/constants';
@@ -28,7 +28,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
     title: "",
     content: "",
     start_time: "",
-    end_time: "",
+    end_time: ("") ?? '',
     location: "",
     presider_id: 0,
     coordinating_unit: "",
@@ -54,7 +54,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
         start_time: initialData.start_time
           ? initialData.start_time.slice(0, 16)
           : "",
-        end_time: initialData.end_time ? initialData.end_time.slice(0, 16) : "",
+        end_time: (initialData.end_time ? initialData.end_time.slice(0) ?? '', 16) : "",
         location: initialData.location || "",
         presider_id: initialData.presider_id || 0,
         coordinating_unit: initialData.coordinating_unit || "",
@@ -67,7 +67,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
         leader: "",
         content: "",
         start_time: "",
-        end_time: "",
+        end_time: ("") ?? '',
         location: "",
         presider_id: 0,
         coordinating_unit: "",

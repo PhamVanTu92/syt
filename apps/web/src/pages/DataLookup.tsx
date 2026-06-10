@@ -22,7 +22,7 @@ import {
   datasetsService,
   type Dataset,
   type DatasetRecord,
-} from "../services/datasetsService";
+} from '@/services/datasetsService';
 import PageJumper from '@/components/legacy/PageJumper';
 import {
   getInitialPageFromUrl,

@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { formService } from '../services/formService';
+﻿import React, { useState, useCallback, useEffect } from 'react';
+import { formService } from '@/services/formService';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom';
-import { TemplateData, GroupNode, OptionNode, InfoNode } from '../types/templates';
+import { TemplateData, GroupNode, OptionNode, InfoNode } from '@/types/legacy/templates';
 import { confirmDialog } from 'primereact/confirmdialog';
 
 export const useTemplateForm = (
@@ -160,7 +160,7 @@ export const useTemplateForm = (
 
   // Group functions
   const addGroup = () => {
-    setTemplate((prev) => ({
+    setTemplate((prev: any) => ({
       ...prev,
       data: [...prev.data, { name: "", status: true, Roman: "roman", option: [] }]
     }));
@@ -281,7 +281,7 @@ export const useTemplateForm = (
     const nextKey = currentInfo.length > 0
       ? Math.max(...currentInfo.map(i => typeof i.key === 'number' ? i.key : (Number(i.key) || 0))) + 1
       : 1;
-    setTemplate((prev) => ({
+    setTemplate((prev: any) => ({
       ...prev,
       info: [...(prev.info || []), { key: nextKey, title: "", value: "", type: "text", status: true, isValidate: false, isDisable: false, option: [] }]
     }));

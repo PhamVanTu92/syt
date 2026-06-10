@@ -14,7 +14,6 @@ import { useAuth } from '@/AuthContext';
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { TieredMenu } from "primereact/tieredmenu";
-import { Button } from "@/components/prime";
 import { adminMenu, type MenuItem } from '@/adminMenu';
 import UserInfoModal from "./UserInfoModal";
 import { useRef } from "react";

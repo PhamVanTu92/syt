@@ -12,7 +12,7 @@ import { Button } from "@/components/prime";
 import { WorkSchedule as WorkScheduleType } from "@/types/legacy";
 import { format, parseISO, isSameDay, startOfDay, startOfWeek } from "date-fns";
 import { vi } from "date-fns/locale";
-import { useSchedules } from "../services/useSchedules";
+import { useSchedules } from '@/services/useSchedules';
 interface GroupedSchedule {
   dateKey: string;
   formattedDate: string;

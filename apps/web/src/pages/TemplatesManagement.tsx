@@ -1,14 +1,9 @@
-﻿import AdminLayout from '@/components/legacy/AdminLayout';
+﻿import { Button } from '@/components/prime'
+import AdminLayout from '@/components/legacy/AdminLayout';
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import { formService } from "../services/formService";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import { formService } from '@/services/formService';
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
-import { Dialog } from "primereact/dialog";
-import { surveyService } from "../services/surveyService";
+import { surveyService } from '@/services/surveyService';
 
 import { Toast } from "@/components/prime";
 import { Plus, QrCode } from "lucide-react";

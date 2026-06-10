@@ -1,22 +1,16 @@
-
-import React from 'react';
+﻿
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
+  PieChart, Pie, Cell, AreaChart, Area
 } from 'recharts';
 import { 
   Laptop2, 
-  FileText, 
   Users, 
   Building2, 
   Activity, 
   TrendingUp, 
   Database, 
   ShieldCheck,
-  Smartphone,
-  Server,
-  Network,
-  ChevronRight,
   Info
 } from 'lucide-react';
 // Standard Link import from react-router-dom

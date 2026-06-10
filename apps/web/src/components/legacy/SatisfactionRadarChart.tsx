@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+﻿import React, { useMemo } from "react";
 import {
   Radar,
   RadarChart,
@@ -20,7 +20,7 @@ type SatisfactionComponentChartProps = {
   hideOverall?: boolean;
 };
 
-type ChartItem = {
+type _ChartItem = {
   key: string;
   label: string;
   shortLabel: string;

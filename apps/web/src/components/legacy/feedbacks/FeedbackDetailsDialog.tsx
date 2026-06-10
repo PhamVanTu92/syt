@@ -1,7 +1,7 @@
-import React from 'react';
+﻿import React from 'react';
 import { Dialog } from 'primereact/dialog';
-import { FeedbackItem } from '../../types/feedbacks';
-import { formatDisplayDateTime } from '../../utils/dateUtils';
+import { FeedbackItem } from '@/types/legacy/feedbacks';
+import { formatDisplayDateTime } from '@/utils/dateUtils';
 import { Button } from 'primereact/button';
 import { Trash2 } from 'lucide-react';
 import { confirmDialog } from 'primereact/confirmdialog';

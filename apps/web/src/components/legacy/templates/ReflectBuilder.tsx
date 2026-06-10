@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputSwitch } from 'primereact/inputswitch';
-import { GroupNode, OptionNode } from '../../types/templates';
-import { getGroupIndexString, getOptionIndexString } from '../../utils/templateUtils';
+import { GroupNode, OptionNode } from '@/types/legacy/templates';
+import { getGroupIndexString, getOptionIndexString } from '@/utils/templateUtils';
 
 interface ReflectBuilderProps {
   data: GroupNode[];
@@ -97,7 +97,7 @@ export const ReflectBuilder: React.FC<ReflectBuilderProps> = ({
               </td>
             </tr>
 
-            {expandedGroups[groupIndex] !== false && group.option.map((opt, optIndex) => {
+            {expandedGroups[groupIndex] !== false && group.option.map((opt: any, optIndex: any) => {
               const globalIdx = groupStartIndices[groupIndex] + optIndex + 1;
               const currentGlobalIndex = getOptionIndexString(groupIndex, optIndex, group.Roman, globalIdx);
               return (

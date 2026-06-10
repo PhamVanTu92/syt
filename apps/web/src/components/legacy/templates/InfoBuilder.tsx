@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
 import { MultiSelect } from 'primereact/multiselect';
-import { InfoNode, InfoOptionNode } from '../../types/templates';
+import { InfoNode, InfoOptionNode } from '@/types/legacy/templates';
 import { api } from '@/lib/legacy-api';
 import { FacilityFilterDropdown } from '@/components/legacy/feedbacks/FacilityFilterDropdown';
 
@@ -185,7 +185,7 @@ export const InfoBuilder: React.FC<InfoBuilderProps> = ({
                   <Button label="Thêm tùy chọn" icon="pi pi-plus" size="small" text onClick={() => addInfoOption(idx)} className="text-primary-600 hover:bg-primary-50 py-2 px-3" />
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  {field.option?.map((opt, optIdx) => (
+                  {field.option?.map((opt: any, optIdx: any) => (
                     <div key={optIdx} className="flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden shadow-sm hover:border-primary-400 transition-colors">
                       <InputText value={opt.value} onChange={(e) => updateInfoOption(idx, optIdx, e.target.value)} className="w-40 border-none p-2 text-sm focus:ring-0" placeholder="Nhập tên tùy chọn..." />
                       <Button icon="pi pi-times" rounded text severity="danger" onClick={() => removeInfoOption(idx, optIdx)} className="w-10 h-10 p-0 flex-shrink-0 hover:bg-red-50 text-red-500 rounded-none border-l border-slate-200" />

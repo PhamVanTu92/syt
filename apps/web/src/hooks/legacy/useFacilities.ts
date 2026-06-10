@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { socialFacilitiesService } from '../services/socialFacilitiesService';
+﻿import { useState, useEffect } from 'react';
+import { socialFacilitiesService } from '@/services/socialFacilitiesService';
 
 interface Facility {
     id: string;

@@ -2,7 +2,7 @@
 import AdminLayout from '@/components/legacy/AdminLayout';
 import { ScrollableTable } from '@/components/legacy/common/ScrollableTable';
 import { TablePagination } from '@/components/legacy/common/TablePagination';
-import { useSchedules } from "../services/useSchedules";
+import { useSchedules } from '@/services/useSchedules';
 import { WorkSchedule } from '@/types/legacy';
 import { format, subHours } from "date-fns";
 
@@ -17,8 +17,7 @@ import {
   CheckCircle,
   Clock,
   MapPin,
-  User as UserIcon,
-} from "lucide-react";
+  User as } from "lucide-react";
 import ScheduleForm from '@/components/legacy/ScheduleForm';
 import {
   getInitialPageFromUrl,

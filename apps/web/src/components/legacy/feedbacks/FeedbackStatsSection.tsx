@@ -1,7 +1,7 @@
-import React from 'react';
+﻿import React from 'react';
 import { Chart } from "primereact/chart";
-import SatisfactionTrendChart from "@/components/Chart";
-import { DashboardStats } from '../../types/DashboardStats';
+import SatisfactionTrendChart from "@/components/legacy/Chart";
+import { DashboardStats } from '@/types/legacy/DashboardStats';
 import SatisfactionComponentChart from '../SatisfactionRadarChart';
 import OverviewStats from '../StatsChart';
 import SectionStackedChart from '../SectionStackedChart';

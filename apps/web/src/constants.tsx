@@ -2,9 +2,7 @@
 import baoTroXHImage from "./assets/image/bao tro XH-By5fco0o.png";
 import chinhSachYTeImage from "./assets/image/chinh sach y te-C_dDpJVZ.png";
 import chuyenDoiSoImage from "./assets/image/chuyen doi so-DSivldkT.png";
-import guongNguoiTotImage from "./assets/image/guong nguoi tot-C7NJJGDV.png";
 import khamBenhImage from "./assets/image/kham benh-__1wzyZ_.png";
-import phongBenhImage from "./assets/image/phong benh-CTWuljBT.png";
 
 import {
   Newspaper,
@@ -13,7 +11,6 @@ import {
   ShieldPlus,
   Stethoscope,
   MessageCircleHeart,
-  FileHeart,
   Building2,
   Ambulance,
   Laptop2,
@@ -21,7 +18,6 @@ import {
   Award,
   Home,
   Info,
-  Users,
   Utensils,
   Syringe,
   CalendarDays,
@@ -102,8 +98,7 @@ export const SERVICE_CATEGORIES = [
   //   id: 7,
   //   title: "Hồ sơ sức khỏe toàn dân",
   //   path: "/health-records",
-  //   icon: FileHeart,
-  //   containerClass:
+  //   icon: //   containerClass:
   //     "bg-gradient-to-br from-sky-50 via-sky-100 to-sky-50 border-sky-200 hover:shadow-sky-300",
   //   iconBoxClass: "bg-sky-600 text-white shadow-sky-400/50",
   //   titleClass: "text-sky-900",
@@ -301,8 +296,7 @@ export const MAIN_MENU: MenuItem[] = [
       //   id: "population",
       //   title: "Hồ sơ sức khỏe toàn dân",
       //   path: "/health-records",
-      //   icon: Users,
-      // },
+      //   icon: // },
     ],
   },
   { id: "policy", title: "Chính sách - BHYT", path: "/policy", icon: Info },

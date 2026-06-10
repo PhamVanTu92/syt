@@ -1,7 +1,7 @@
 ﻿import AdminLayout from '@/components/legacy/AdminLayout';
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import { surveyService } from "../services/surveyService";
-import { formService } from "../services/formService";
+import { surveyService } from '@/services/surveyService';
+import { formService } from '@/services/formService';
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -198,7 +198,7 @@ const SurveysManagement: React.FC = () => {
     setSurveyDialog(true);
   };
 
-  const toggleStatus = async (rowData: any) => {
+  const _toggleStatus = async (rowData: any) => {
     try {
       const newStatus = !rowData.status;
       const res = await surveyService.updateSurvey(rowData.id, {

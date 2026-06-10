@@ -441,7 +441,7 @@ export default function BieuMau1Table({ id, type, formJson, survey_key }: any) {
   const visibleInfo = useMemo(() => {
     return (info ?? [])
       .filter((item) => item?.status)
-      .map((item, index) => ({
+      .map((item: any, index: any) => ({
         item,
         fieldKey: getInfoKey(item, index),
       }));
@@ -630,7 +630,7 @@ export default function BieuMau1Table({ id, type, formJson, survey_key }: any) {
         if (item.isValidate === false) return;
         const progressValue = item?.progress?.value;
         const ratingValue = item?.rating?.value;
-        const noteValue = item?.note;
+        const _noteValue = item?.note;
 
         if (
           progressValue === null ||

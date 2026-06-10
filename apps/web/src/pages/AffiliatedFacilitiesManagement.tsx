@@ -22,7 +22,7 @@ import { Button } from "@/components/prime";
 import {
   affiliatedFacilitiesService,
   type AffiliatedFacility,
-} from "../services/affiliatedFacilitiesService";
+} from '@/services/affiliatedFacilitiesService';
 
 const AffiliatedFacilitiesManagement = () => {
   const [facilities, setFacilities] = useState<AffiliatedFacility[]>([]);

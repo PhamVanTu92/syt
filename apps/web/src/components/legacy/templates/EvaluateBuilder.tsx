@@ -1,11 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Dropdown } from 'primereact/dropdown';
-import { GroupNode, OptionNode } from '../../types/templates';
-import { getGroupIndexString, getOptionIndexString } from '../../utils/templateUtils';
+import { GroupNode, OptionNode } from '@/types/legacy/templates';
+import { getGroupIndexString, getOptionIndexString } from '@/utils/templateUtils';
 
 interface EvaluateBuilderProps {
   data: GroupNode[];
@@ -75,7 +75,7 @@ export const EvaluateBuilder: React.FC<EvaluateBuilderProps> = ({
                 <Button icon="pi pi-trash" rounded text severity="danger" onClick={() => removeGroup(groupIndex)} className="w-8 h-8 flex-shrink-0 bg-white hover:bg-red-50 hover:text-red-600 shadow-sm" />
               </td>
             </tr>
-            {expandedGroups[groupIndex] !== false && group.option.map((opt, optIndex) => {
+            {expandedGroups[groupIndex] !== false && group.option.map((opt: any, optIndex: any) => {
               const globalIdx = groupStartIndices[groupIndex] + optIndex + 1;
               const currentGlobalIndex = getOptionIndexString(groupIndex, optIndex, group.Roman, globalIdx);
               return (
@@ -98,7 +98,7 @@ export const EvaluateBuilder: React.FC<EvaluateBuilderProps> = ({
                           <Button icon="pi pi-plus" size="small" rounded text onClick={() => addAnswerOption(groupIndex, optIndex)} className="w-6 h-6 p-0 text-primary-600" />
                         </div>
                         <div className="flex flex-col gap-2">
-                          {(opt.answerOptions || []).map((ans, ansIdx) => (
+                          {(opt.answerOptions || []).map((ans: any, ansIdx: any) => (
                             <div key={ansIdx} className="flex items-center gap-1">
                               <InputText value={ans.value} onChange={(e) => updateAnswerOption(groupIndex, optIndex, ansIdx, e.target.value)} className="w-full p-1 text-xs border-slate-300" placeholder="Nội dung đáp án" />
                               <Button icon="pi pi-times" rounded text severity="danger" onClick={() => removeAnswerOption(groupIndex, optIndex, ansIdx)} className="w-6 h-6 p-0 flex-shrink-0 hover:bg-red-100" />
