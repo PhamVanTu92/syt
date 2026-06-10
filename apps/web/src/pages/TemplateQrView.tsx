@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ChevronRight,
-  FileText,
   Home,
   ArrowLeft,
   Download,
@@ -10,7 +9,7 @@ import {
   ShieldCheck,
   PhoneCall,
 } from "lucide-react";
-import { api } from "@/api";
+import { api } from "@/lib/legacy-api";
 import { Button } from "@/components/prime";
 
 const TemplateQrView: React.FC = () => {

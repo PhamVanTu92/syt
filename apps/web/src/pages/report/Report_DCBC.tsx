@@ -1,23 +1,23 @@
-import AdminLayout from "@/components/AdminLayout";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import AdminLayout from "@/components/legacy/AdminLayout";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { feedBacksSevice } from "@/services/feedBacksSevice";
 import { formService } from "@/services/formService";
-import { ReportTabContent } from "@/components/report/ReportTabContent";
-import { ReportFilters } from "@/components/report/ReportFilters";
+import { ReportTabContent } from "@/components/legacy/report/ReportTabContent";
+import { ReportFilters } from "@/components/legacy/report/ReportFilters";
 import { Toast } from "@/components/prime";
 import { TabView, TabPanel } from "primereact/tabview";
 import { FeedbackItem } from "@/types/feedbacks";
 import { exportReportToPDF } from "@/utils/pdfExport";
 import { exportReportToWord } from "@/utils/wordExport";
-import { ReportAppendix } from "@/components/report/ReportAppendix";
-import { ReportHeader } from "@/components/report/ReportHeader";
+import { ReportAppendix } from "@/components/legacy/report/ReportAppendix";
+import { ReportHeader } from "@/components/legacy/report/ReportHeader";
 import {
   ReportLoadingState,
   ReportEmptyState,
   StyledTabViewCSS,
-} from "@/components/report/ReportStates";
-import { useReportFilter } from "@/hooks/useReportFilter";
-import { useFacilities } from "@/hooks/useFacilities";
+} from "@/components/legacy/report/ReportStates";
+import { useReportFilter } from "@/hooks/legacy/useReportFilter";
+import { useFacilities } from "@/hooks/legacy/useFacilities";
 import { surveyService } from "@/services/surveyService";
 import { getReportedFacilityId } from "@/utils/reportDataUtils";
 
@@ -49,7 +49,7 @@ const Report_DCBC = () => {
       filtered = filtered.filter(f => (f.type || "").toString().toUpperCase().trim() === finalUnitType.toUpperCase().trim());
     }
     if (finalUnit) {
-      const unitIds = finalUnit.split(',').map(id => id.trim());
+      const unitIds = finalUnit.split(',').map((id: any) => id.trim());
       filtered = filtered.filter(f => unitIds.includes(String(f.id)));
     }
     return filtered;
@@ -262,7 +262,7 @@ const Report_DCBC = () => {
           reportHeader={reportHeader}
           surveys={surveys}
           selectedSurveyKey={selectedSurveyKey}
-          onSurveyChange={(val) => setSelectedSurveyKey(val)}
+          onSurveyChange={(val: any) => setSelectedSurveyKey(val)}
           isMulti={false}
         />
 

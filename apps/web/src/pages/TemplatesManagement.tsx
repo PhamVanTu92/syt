@@ -5,7 +5,6 @@ import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
@@ -157,7 +156,7 @@ const TemplatesManagement: React.FC = () => {
   //   });
   // };
 
-  const sttBodyTemplate = (rowData: any, options: { rowIndex: number }) => {
+  const sttBodyTemplate = (_rowData: any, options: { rowIndex: number }) => {
     return options.rowIndex + lazyParams.first + 1;
   };
 

@@ -10,10 +10,6 @@ import {
     BorderStyle,
     AlignmentType,
     VerticalAlign,
-    Header,
-    Footer,
-    PageNumber,
-    NumberFormat,
     SectionType
 } from "docx";
 import { saveAs } from "file-saver";

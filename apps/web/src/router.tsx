@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { useAuthStore } from '@/store/auth.store'
 
 // ─── New Layouts ──────────────────────────────────────────────────────────────
 const PublicLayout = lazy(() => import('@/components/layout/PublicLayout'))
@@ -30,9 +29,9 @@ const SocialFacilitiesManagement = lazy(() => import('@/pages/SocialFacilitiesMa
 const AffiliatedFacilitiesManagement = lazy(() => import('@/pages/AffiliatedFacilitiesManagement'))
 const TradingFacilitiesManagement = lazy(() => import('@/pages/TradingFacilitiesManagement'))
 const SmtpSettings               = lazy(() => import('@/pages/SmtpSettings'))
-const Report_DCBC                = lazy(() => import('@/pages/Report_DCBC'))
-const Report_KSHL                = lazy(() => import('@/pages/Report_KSHL'))
-const Report_TCT01               = lazy(() => import('@/pages/Report_TCT01'))
+const Report_DCBC                = lazy(() => import('@/pages/report/Report_DCBC'))
+const Report_KSHL                = lazy(() => import('@/pages/report/Report_KSHL'))
+const Report_TCT01               = lazy(() => import('@/pages/report/Report_TCT01'))
 
 // ─── Public pages (legacy) ───────────────────────────────────────────────────
 const Home               = lazy(() => import('@/pages/Home'))
@@ -46,12 +45,6 @@ const HealthConsultation = lazy(() => import('@/pages/HealthConsultation'))
 const EmergencyCenter    = lazy(() => import('@/pages/EmergencyCenter'))
 
 // ─── Route guard ─────────────────────────────────────────────────────────────
-function RequireAuth({ children }: { children: React.ReactNode }) {
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
-  if (!isAuthenticated) return <Navigate to="/login" replace />
-  return <>{children}</>
-}
-
 function PageLoader() {
   return (
     <div className="flex h-screen items-center justify-center">

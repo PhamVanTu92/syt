@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+﻿import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import {
   Building2,
   Award,
@@ -6,12 +6,10 @@ import {
   Stethoscope,
   Database,
   Edit3,
-  Filter,
   Loader2,
   Plus,
   Search,
   Trash2,
-  X,
 } from "lucide-react";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
@@ -373,7 +371,7 @@ const TradingFacilitiesManagement = () => {
                     options={SORT_BY_OPTIONS}
                     optionLabel="label"
                     optionValue="value"
-                    onChange={(e) => handleQueryParamChange("sort_by", e.value)}
+                    onChange={(e: any) => handleQueryParamChange("sort_by", e.value)}
                     className="w-40"
                   />
                   <Dropdown
@@ -381,7 +379,7 @@ const TradingFacilitiesManagement = () => {
                     options={SORT_ORDER_OPTIONS}
                     optionLabel="label"
                     optionValue="value"
-                    onChange={(e) => handleQueryParamChange("sort_order", e.value)}
+                    onChange={(e: any) => handleQueryParamChange("sort_order", e.value)}
                     className="w-36"
                   />
                   <PageSizeSelector

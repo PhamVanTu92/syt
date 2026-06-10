@@ -1,21 +1,21 @@
-import AdminLayout from "@/components/AdminLayout";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import AdminLayout from "@/components/legacy/AdminLayout";
+import { useState, useEffect, useRef, useMemo } from "react";
 
-import { ReportFilters } from '@/components/report/ReportFilters'
+import { ReportFilters } from '@/components/legacy/report/ReportFilters'
 import { Toast } from '@/components/prime'
 import { TabView, TabPanel } from 'primereact/tabview'
 import { exportTCT01ToWord } from '@/utils/wordExportTCT01'
 import { exportTCT01ToPDF } from '@/utils/pdfExportTCT01'
 import { feedBacksSevice } from '@/services/feedBacksSevice'
 import { formService } from '@/services/formService'
-import { useFacilities } from '@/hooks/useFacilities'
+import { useFacilities } from '@/hooks/legacy/useFacilities'
 import { FeedbackItem } from '@/types/feedbacks'
-import { ReportAppendix } from '@/components/report/ReportAppendix'
-import { TCT01TabContent } from '@/components/report/TCT01TabContent'
+import { ReportAppendix } from '@/components/legacy/report/ReportAppendix'
+import { TCT01TabContent } from '@/components/legacy/report/TCT01TabContent'
 import { calculateTotalUnits, calculateOnTimeStats, formatRate, getReportedFacilityId } from '@/utils/reportDataUtils'
-import { ReportHeader } from '@/components/report/ReportHeader'
-import { ReportLoadingState, ReportEmptyState, StyledTabViewCSS } from '@/components/report/ReportStates'
-import { useReportFilter } from '@/hooks/useReportFilter'
+import { ReportHeader } from '@/components/legacy/report/ReportHeader'
+import { ReportLoadingState, ReportEmptyState, StyledTabViewCSS } from '@/components/legacy/report/ReportStates'
+import { useReportFilter } from '@/hooks/legacy/useReportFilter'
 import { surveyService } from "@/services/surveyService";
 
 
@@ -47,7 +47,7 @@ const Report_TCT01 = () => {
             filtered = filtered.filter(f => (f.type || "").toString().toUpperCase().trim() === finalUnitType.toUpperCase().trim());
         }
         if (finalUnit) {
-            const unitIds = finalUnit.split(',').map(id => id.trim());
+            const unitIds = finalUnit.split(',').map((id: any) => id.trim());
             filtered = filtered.filter(f => unitIds.includes(String(f.id)));
         }
         return filtered;
@@ -321,7 +321,7 @@ const Report_TCT01 = () => {
                     reportHeader={reportHeader}
                     surveys={surveys}
                     selectedSurveyKey={selectedSurveyKey}
-                    onSurveyChange={(val) => setSelectedSurveyKey(val)}
+                    onSurveyChange={(val: any) => setSelectedSurveyKey(val)}
                     isMulti={false}
 
                 />

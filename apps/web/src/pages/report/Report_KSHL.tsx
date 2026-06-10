@@ -1,13 +1,13 @@
-import AdminLayout from "@/components/AdminLayout";
+import AdminLayout from "@/components/legacy/AdminLayout";
 import React, { useState, useRef } from "react";
 import { Toast } from "@/components/prime";
-import { ReportFilters } from "@/components/report/ReportFilters";
-import { TablePreview } from "@/components/report/TablePreview";
+import { ReportFilters } from "@/components/legacy/report/ReportFilters";
+import { TablePreview } from "@/components/legacy/report/TablePreview";
 import { exportKSHLToWord } from "@/utils/wordExportKSHL";
 import { exportKSHLToPDF } from "@/utils/pdfExportKSHL";
-import { useGSATData } from "@/hooks/useGSATData";
-import { ReportHeader } from "@/components/report/ReportHeader";
-import { useReportFilter } from "@/hooks/useReportFilter";
+import { useGSATData } from "@/hooks/legacy/useGSATData";
+import { ReportHeader } from "@/components/legacy/report/ReportHeader";
+import { useReportFilter } from "@/hooks/legacy/useReportFilter";
 import { surveyService } from "@/services/surveyService";
 
 const Report_KSHL = () => {
@@ -126,7 +126,7 @@ const Report_KSHL = () => {
           reportHeader={reportHeader}
           surveys={surveys}
           selectedSurveyKey={selectedSurveyKey}
-          onSurveyChange={(val) => setSelectedSurveyKey(val)}
+          onSurveyChange={(val: any) => setSelectedSurveyKey(val)}
           isMulti={false}
           showDateFilter={false}
         />

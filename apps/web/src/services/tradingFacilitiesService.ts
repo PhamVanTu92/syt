@@ -89,7 +89,7 @@ const normalizeList = (response: any): TradingFacility[] => {
         ? response.items
         : [];
 
-  return rawItems.map(normalizeItem).filter((item) => item.id);
+  return rawItems.map(normalizeItem).filter((item: any) => item.id);
 };
 
 const normalizeMeta = (

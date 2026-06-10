@@ -282,7 +282,7 @@ const UserManagement: React.FC = () => {
             <InputText
               placeholder="Tìm kiếm theo tên hoặc email..."
               value={searchTerm}
-              onChange={(e) => handleSearchChange(e.target.value)}
+              onChange={(e: any) => handleSearchChange(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-primary-100 font-medium text-sm"
             />
           </div>
