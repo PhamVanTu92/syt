@@ -198,7 +198,8 @@ const SurveysManagement: React.FC = () => {
     setSurveyDialog(true);
   };
 
-      try {
+  const toggleStatus = async (rowData: any) => {
+    try {
       const newStatus = !rowData.status;
       const res = await surveyService.updateSurvey(rowData.id, {
         ...rowData,
@@ -394,7 +395,7 @@ const SurveysManagement: React.FC = () => {
               <Column 
                 header="Thời hạn" 
                 style={{ width: "15rem" }}
-                body={(rowData: any) => {
+                body={(rowData) => {
                     if (!rowData.dateFrom && !rowData.dateTo) return <span className="text-slate-400">Không giới hạn</span>;
                     return (
                         <div className="text-xs">
@@ -551,7 +552,7 @@ const SurveysManagement: React.FC = () => {
                     color: "#64748b",
                   }}
                   className="px-4 py-3 font-medium text-slate-700"
-                  body={(rowData: any) => (
+                  body={(rowData) => (
                     <div className="flex items-center gap-2">
                       <span className="leading-relaxed">{rowData.name}</span>
                     </div>
