@@ -37,6 +37,7 @@ const Home = () => {
   const [activeChannel, setActiveChannel] = useState("H1");
   const [dbPosts, setDbPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [categoryData, setCategoryData] = useState<Record<number, any[]>>({});
   const spotlightPost = dbPosts[0];
   const latestTenPosts = dbPosts.slice(1, 11);
   const tieuDiem = dbPosts.slice(1, 6);
@@ -181,12 +182,9 @@ const Home = () => {
             },
             {} as Record<number, any[]>,
           );
-          CATEGORIES.forEach((category) => {
-            if (postsByCategory[category.id])
-              category.data = postsByCategory[category.id];
-          });
+          setCategoryData(postsByCategory);
         } else {
-          console.error("Không lấy được dữ liệu!");
+          console.error("Không lấy được dữ liệu danh mục!");
         }
       } catch (err) {
         console.error(err);
@@ -739,7 +737,7 @@ const Home = () => {
                 iconColor={item.iconColor}
                 hoverColor={item.hoverColor}
                 image={item.image}
-                data={item.data}
+                data={categoryData[item.id] ?? item.data ?? []}
                 paddingClass={item.paddingClass}
               />
             ))}
