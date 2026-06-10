@@ -94,4 +94,18 @@ export class PostsService {
   async setImage(id: number, imageUrl: string) {
     return this.prisma.post.update({ where: { id }, data: { imageUrl } });
   }
+
+  async findByCategories(items: { category_id: number; limit?: number }[]) {
+    const results = await Promise.all(
+      items.map(async ({ category_id, limit = 5 }) => {
+        const posts = await this.prisma.post.findMany({
+          where: { categoryId: category_id, status: 'published' },
+          orderBy: { createdAt: 'desc' },
+          take: limit,
+        });
+        return { category_id, posts };
+      }),
+    );
+    return results;
+  }
 }

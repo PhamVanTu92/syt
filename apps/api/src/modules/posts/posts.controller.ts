@@ -30,6 +30,13 @@ export class PostsController {
   }
 
   @Public()
+  @Post('by-categories')
+  @ApiOperation({ summary: 'Bài viết theo nhiều danh mục' })
+  findByCategories(@Body() items: { category_id: number; limit?: number }[]) {
+    return this.postsService.findByCategories(items);
+  }
+
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: 'Chi tiết bài viết' })
   findOne(@Param('id', ParseIntPipe) id: number) {
