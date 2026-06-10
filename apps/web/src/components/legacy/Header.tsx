@@ -195,10 +195,10 @@ const Header = () => {
                   className="flex items-center gap-2.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full text-white transition-all border border-white/10 group shadow-inner"
                 >
                   <div className="w-6 h-6 rounded-full bg-secondary-500 flex items-center justify-center text-[10px] font-black group-hover:scale-110 transition-transform">
-                    {user.full_name?.charAt(0) || "A"}
+                    {(user.full_name || user.fullName)?.charAt(0) || "A"}
                   </div>
                   <span className="text-xs font-bold tracking-tight">
-                    {user.full_name || "Quản trị viên"}
+                    {user.full_name || user.fullName || "Quản trị viên"}
                   </span>
                   <ChevronDown
                     size={12}

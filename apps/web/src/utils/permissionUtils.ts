@@ -54,7 +54,10 @@ export const getLandingPath = (user: any): string => {
   if (!user || user.role !== "admin") return "/";
 
   const userPermissions = user.permissions;
-  if (!userPermissions) return "/";
+  // Super admin (no explicit permissions) → dashboard
+  if (!userPermissions || (Array.isArray(userPermissions) && userPermissions.length === 0)) {
+    return "/admin/dashboard";
+  }
 
   for (const item of adminMenu) {
     if (hasPermission(userPermissions, item.permission)) {

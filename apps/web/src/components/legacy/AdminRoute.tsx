@@ -26,22 +26,21 @@ const AdminRoute: React.FC = () => {
   const currentPath = location.pathname;
   const userPermissions = user.permissions || [];
 
-  // 1. If user has NO permissions at all, redirect to homepage
-  if (userPermissions.length === 0) {
-    return <Navigate to="/" replace />;
-  }
+  // Super admin: role=admin with no explicit permissions → bypass all permission checks
+  const isSuperAdmin = userPermissions.length === 0;
 
-  // 2. Handle the root admin path (/admin) by redirecting to the first allowed feature
+  // 1. Handle the root admin path (/admin) by redirecting to dashboard
   if (currentPath === "/admin" || currentPath === "/admin/") {
+    if (isSuperAdmin) return <Navigate to="/admin/dashboard" replace />;
     const landingPath = getLandingPath(user);
-    // If no landing path found, it will redirect back to the home page via getLandingPath returning "/"
     return <Navigate to={landingPath} replace />;
   }
 
+  // 2. Super admin can access all admin paths
+  if (isSuperAdmin) return <Outlet />;
+
   // 3. Check if the specific sub-path is allowed
   if (!isPathAllowed(currentPath, user)) {
-    // If they are on a page they don't have permission for, 
-    // redirect them to their primary landing page instead of the homepage.
     const landingPath = getLandingPath(user);
     return <Navigate to={landingPath} replace />;
   }
