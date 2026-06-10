@@ -283,7 +283,7 @@ const ConfirmPassword: React.FC = () => {
 
                     <Button
                       type="submit"
-                      disabled={!!(Boolean(isResending))}
+                      disabled={Boolean(isResending)}
                       loading={isResending}
                       className="w-full px-6 py-4 !bg-[#0088cc] !text-white font-black rounded-2xl shadow-xl shadow-primary-100 hover:!bg-[#0077bb] transition-all transform hover:-translate-y-0.5"
                     >
@@ -373,12 +373,12 @@ const ConfirmPassword: React.FC = () => {
                        <ValidationItem label="Ít nhất 1 chữ cái in hoa" isValid={validation.hasUpper} hasInput={!!password} />
                        <ValidationItem label="Ít nhất 1 ký tự đặc biệt" isValid={validation.hasSpecial} hasInput={!!password} />
                        <ValidationItem label="Không chứa khoảng trắng" isValid={validation.noSpace} hasInput={!!password} />
-                       <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={passwordsMatch} hasInput={!!confirmPassword} />
+                       <ValidationItem label="Mật khẩu xác nhận phải khớp" isValid={!!passwordsMatch} hasInput={!!confirmPassword} />
                     </div>
 
                     <Button
                       type="submit"
-                      disabled={!!(Boolean(isLoading || !validation.isValid || !passwordsMatch))}
+                      disabled={Boolean(isLoading || !validation.isValid || !passwordsMatch)}
                       loading={isLoading}
                       label="CẬP NHẬT MẬT KHẨU"
                       className="w-full py-4 !bg-[#0088cc] !text-white font-black rounded-2xl shadow-xl shadow-primary-100 hover:!bg-[#0077bb] transition-all transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none"

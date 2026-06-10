@@ -239,7 +239,7 @@ export function useKSHLData(dateFilter: DateFilter, surveyKey?: string, unit?: s
                 col5: formatNumber(unmappedFeedbacks.ngoai_tru.qr.length + unmappedFeedbacks.unknown.qr.length),
                 col6: displayRate(calcRate([...unmappedFeedbacks.ngoai_tru.qr, ...unmappedFeedbacks.unknown.qr]))
             },
-            { id: '', type: 'Tổng', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals, ...tytUnits], 'ngoai_tru', 'Tổng') }
+            ({ id: '', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals, ...tytUnits], 'ngoai_tru', 'Tổng') } as any)
         ];
         const lastRow = summaryNgoaiTru[summaryNgoaiTru.length - 1];
         lastRow.col2 = formatNumber(parseInt(lastRow.col2.replace(/\./g, '')) + unmappedFeedbacks.ngoai_tru.self.length + unmappedFeedbacks.unknown.self.length);
@@ -256,7 +256,7 @@ export function useKSHLData(dateFilter: DateFilter, surveyKey?: string, unit?: s
                 col5: formatNumber(unmappedFeedbacks.noi_tru.qr.length + unmappedFeedbacks.unknown.qr.length),
                 col6: displayRate(calcRate([...unmappedFeedbacks.noi_tru.qr, ...unmappedFeedbacks.unknown.qr]))
             },
-            { id: '', type: 'Tổng', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals], 'noi_tru', 'Tổng') }
+            ({ id: '', isTotal: true, ...createSummaryData([...publicHospitals, ...privateHospitals], 'noi_tru', 'Tổng') } as any)
         ];
         const lastRowNoiTru = summaryNoiTru[summaryNoiTru.length - 1];
         lastRowNoiTru.col2 = formatNumber(parseInt(lastRowNoiTru.col2.replace(/\./g, '')) + unmappedFeedbacks.noi_tru.self.length + unmappedFeedbacks.unknown.self.length);
@@ -273,7 +273,7 @@ export function useKSHLData(dateFilter: DateFilter, surveyKey?: string, unit?: s
                 col5: formatNumber(unmappedFeedbacks.tiem_chung.qr.length + unmappedFeedbacks.unknown.qr.length),
                 col6: displayRate(calcRate([...unmappedFeedbacks.tiem_chung.qr, ...unmappedFeedbacks.unknown.qr]))
             },
-            { id: '', type: 'Tổng', isTotal: true, ...createSummaryData([...facilities.filter(f => f.type === 'BV'), ...tytUnits], 'tiem_chung', 'Tổng') }
+            ({ id: '', isTotal: true, ...createSummaryData([...facilities.filter(f => f.type === 'BV'), ...tytUnits], 'tiem_chung', 'Tổng') } as any)
         ];
         const lastRowTiemChung = summaryTiemChung[summaryTiemChung.length - 1];
         lastRowTiemChung.col2 = formatNumber(parseInt(lastRowTiemChung.col2.replace(/\./g, '')) + unmappedFeedbacks.tiem_chung.self.length + unmappedFeedbacks.unknown.self.length);
