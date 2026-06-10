@@ -59,7 +59,7 @@ model Permission {
   parentId        Int?             @map("parent_id")
   name            String
   description     String?
-  createdAt       DateTime         @map("created_at") @db.Timestamptz(6)
+  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   parent          Permission?      @relation("PermissionChildren", fields: [parentId], references: [id])
@@ -117,7 +117,7 @@ model Post {
   viewCount  Int?               @default(0) @map("view_count")
   isFeatured Boolean?           @default(false) @map("is_featured")
   expiresAt  DateTime?          @map("expires_at") @db.Timestamptz(6)
-  createdAt  DateTime           @map("created_at") @db.Timestamptz(6)
+  createdAt  DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
 
   @@index([categoryId], map: "posts_category_id")
   @@index([expiresAt], map: "posts_expires_at")
@@ -156,8 +156,10 @@ model SocialFacility {
   latitude    Float?
   longitude   Float?
   description String?
-  createdAt   DateTime @map("created_at") @db.Timestamptz(6)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  surveyFacilities SurveyFacility[]
 
   @@map("social_facilities")
 }
@@ -166,7 +168,7 @@ model AffiliatedFacility {
   id        Int      @id @default(autoincrement())
   name      String
   logo      String?  @db.VarChar(500)
-  createdAt DateTime @map("created_at") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@map("affiliated_facilities")
@@ -224,7 +226,7 @@ model WorkSchedule {
   createdBy        Int                          @map("created_by")
   approvedBy       Int?                         @map("approved_by")
   presiderId       Int?                         @map("presider_id")
-  createdAt        DateTime                     @map("created_at") @db.Timestamptz(6)
+  createdAt        DateTime                     @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime                     @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   attendees   ScheduleAttendee[]
@@ -271,10 +273,10 @@ model Form {
   description String?
   type        String?
   info        String?
-  data        String             // JSON string storing sections/questions
+  data        String             @default("[]") // JSON string storing sections/questions (legacy field)
   status      enum_forms_status? @default(active)
   deletedAt   DateTime?          @map("deleted_at") @db.Timestamptz(6)
-  createdAt   DateTime           @map("created_at") @db.Timestamptz(6)
+  createdAt   DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@index([status], map: "forms_status")
@@ -293,7 +295,7 @@ model Feedback {
   facilityId  String?                @map("facility_id")  // extracted from info JSON — O(1) lookup
   userId      Int?                   @map("user_id")
   surveyKey   String?                @map("survey_key")
-  createdAt   DateTime               @map("created_at") @db.Timestamptz(6)
+  createdAt   DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime               @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   sections FeedbackSection[]
@@ -335,13 +337,13 @@ model FeedbackOption {
 model Survey {
   id          Int      @id @default(autoincrement())
   name        String
-  type        String   @db.VarChar(50)
-  dateFrom    DateTime @map("date_from") @db.Date
-  dateTo      DateTime @map("date_to") @db.Date
-  formIds     String   @map("form_ids")
+  type        String?  @db.VarChar(50)
+  dateFrom    DateTime? @map("date_from") @db.Date
+  dateTo      DateTime? @map("date_to") @db.Date
+  formIds     String   @default("[]") @map("form_ids")
   status      Boolean? @default(true)
   description String?
-  createdAt   DateTime @map("created_at") @db.Timestamptz(6)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   facilities SurveyFacility[]
@@ -353,7 +355,8 @@ model SurveyFacility {
   surveyId   Int    @map("survey_id")
   facilityId String @map("facility_id")
 
-  survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  survey   Survey         @relation(fields: [surveyId],   references: [id], onDelete: Cascade)
+  facility SocialFacility @relation(fields: [facilityId], references: [id], onDelete: Cascade)
 
   @@id([surveyId, facilityId])
   @@unique([surveyId, facilityId])
