@@ -111,14 +111,13 @@ export class FeedbacksService {
             data: {
               feedbackId: feedback.id,
               name: section.name,
-              ...(section.data !== undefined ? { data: section.data as Prisma.InputJsonValue } : {}),
             },
           });
 
           if (section.options?.length) {
             await tx.feedbackOption.createMany({
               data: section.options.map((opt) => ({
-                sectionId: s.id,
+                feedback_section_id: s.id,
                 tiendo: opt.tiendo ?? null,
                 danhgia: opt.danhgia ?? null,
                 ghichu: opt.ghichu ?? null,
@@ -159,7 +158,6 @@ export class FeedbacksService {
         take,
         orderBy: { createdAt: 'desc' },
         include: {
-          form: { select: { id: true, name: true, type: true } },
           user: { select: { id: true, fullName: true } },
         },
       }),
@@ -175,9 +173,8 @@ export class FeedbacksService {
     const fb = await this.prisma.feedback.findUnique({
       where: { id },
       include: {
-        form: { select: { id: true, name: true } },
         user: { select: { id: true, fullName: true } },
-        sections: { include: { options: true } },
+        sections: { include: { feedback_options: true } },
       },
     });
     if (!fb) throw new NotFoundException('Phản hồi không tồn tại');
@@ -274,7 +271,7 @@ export class FeedbacksService {
         sections: {
           select: {
             name: true,
-            options: {
+            feedback_options: {
               select: { tiendo: true, danhgia: true, data: true },
             },
           },
@@ -307,7 +304,7 @@ export class FeedbacksService {
   // ─── Private computations (ported 1:1) ────────────────────────────────────
 
   private computeReflectStats(feedbacks: Array<{
-    sections: Array<{ name: string; options: Array<{ tiendo: number | null; danhgia: number | null }> }>;
+    sections: Array<{ name: string; feedback_options: Array<{ tiendo: number | null; danhgia: number | null }> }>;
   }>) {
     const sectionMap = new Map<string, {
       tiendo1: number; tiendo2: number; tiendo3: number;
@@ -319,7 +316,7 @@ export class FeedbacksService {
         const key = s.name;
         const agg = sectionMap.get(key) ?? { tiendo1: 0, tiendo2: 0, tiendo3: 0, dat: 0, khongDat: 0, total: 0 };
 
-        s.options.forEach((opt) => {
+        s.feedback_options.forEach((opt) => {
           agg.total++;
           if (opt.tiendo === 1) agg.tiendo1++;
           else if (opt.tiendo === 2) agg.tiendo2++;
@@ -336,14 +333,14 @@ export class FeedbacksService {
   }
 
   private computeEvaluateStats(feedbacks: Array<{
-    sections: Array<{ options: Array<{ data: unknown }> }>;
+    sections: Array<{ feedback_options: Array<{ data: unknown }> }>;
   }>) {
     const ratingDist: Record<number, number> = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     let ratingCount = 0;
 
     feedbacks.forEach((fb) => {
       fb.sections.forEach((s) => {
-        s.options.forEach((opt) => {
+        s.feedback_options.forEach((opt) => {
           if (opt.data && typeof opt.data === 'object') {
             const d = opt.data as Record<string, unknown>;
             const vote = Number(d['ratingVote'] ?? d['rating'] ?? -1);

@@ -109,13 +109,15 @@ export class FormsService {
   async remove(id: number) {
     await this.findOne(id);
 
-    const surveysUsing = await this.prisma.survey.findFirst({
-      where: {
-        status: true, // Survey.status is Boolean? (true=active)
-        formIds: { path: [], array_contains: id },
-      },
+    // Survey.formIds is a JSON string (e.g. "[1,2,3]") — check by parsing in memory
+    const activeSurveys = await this.prisma.survey.findMany({
+      where: { status: true },
+      select: { formIds: true },
     });
-    if (surveysUsing) {
+    const isUsed = activeSurveys.some((s) => {
+      try { return (JSON.parse(s.formIds) as number[]).includes(id); } catch { return false; }
+    });
+    if (isUsed) {
       throw new BadRequestException('Biểu mẫu đang được sử dụng trong khảo sát đang hoạt động');
     }
 

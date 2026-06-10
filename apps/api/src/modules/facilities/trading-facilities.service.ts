@@ -10,7 +10,7 @@ export class CreateTradingFacilityDto {
   @IsOptional() @IsString() certificateNumber?: string;
   @IsOptional() @IsString() personInCharge?: string;
   @IsOptional() @IsString() facilityType?: string;
-  @IsOptional() @IsEnum(['wholesale', 'retail']) tradingType?: string;
+  @IsEnum(['wholesale', 'retail']) tradingType!: string;
   @IsOptional() @IsString() address?: string;
   @IsOptional() @IsBoolean() isActive?: boolean;
 }
