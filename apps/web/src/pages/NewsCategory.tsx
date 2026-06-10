@@ -105,9 +105,7 @@ const NewsCategory = () => {
         if (category) params.category_id = category.id;
 
         const response = await api.get("/posts", params);
-        const newPosts = Array.isArray(response.data)
-          ? response.data
-          : response.data?.data || [];
+        const newPosts = Array.isArray(response) ? response : (response?.items ?? []);
 
         if (newPosts.length === 0) {
           setHasMore(false);

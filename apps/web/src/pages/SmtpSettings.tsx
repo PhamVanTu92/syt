@@ -34,9 +34,7 @@ const SmtpSettings: React.FC = () => {
     try {
       setLoading(true);
       const response = await api.getSmtpConfig();
-      if (response && response.data) {
-        setConfig(response.data);
-      } else if (response) {
+      if (response) {
         setConfig(response);
       }
     } catch (err) {

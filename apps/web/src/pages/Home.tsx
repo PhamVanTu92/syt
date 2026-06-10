@@ -121,8 +121,9 @@ const Home = () => {
     const fetchLatestPosts = async () => {
       try {
         const response = await api.get("/posts");
-        if (response && response.data && Array.isArray(response.data)) {
-          const mappedPosts = response.data.map((p: any) => ({
+        const items = Array.isArray(response) ? response : (response?.items ?? response?.data ?? []);
+        if (items.length > 0) {
+          const mappedPosts = items.map((p: any) => ({
             id: p.id,
             title: p.title,
             summary: p.summary,
@@ -171,8 +172,9 @@ const Home = () => {
           },
         ];
         const response = await api.post("/posts/by-categories", postData);
-        if (response && response.data && Array.isArray(response.data)) {
-          const postsByCategory = response.data.reduce(
+        const catItems = Array.isArray(response) ? response : (response?.items ?? response?.data ?? []);
+        if (catItems.length > 0) {
+          const postsByCategory = catItems.reduce(
             (acc: any, item: any) => {
               acc[item.category_id] = item.posts;
               return acc;

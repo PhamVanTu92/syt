@@ -61,8 +61,8 @@ const SocialFacilitiesManagement = () => {
       if (debouncedSearch.trim()) params.search = debouncedSearch.trim();
 
       const response = await api.get(`/social-facilities`, params);
-      if (response && response.success) {
-        const data = Array.isArray(response.data) ? response.data : [];
+      if (response) {
+        const data = Array.isArray(response) ? response : (response?.items ?? []);
         setFacilities(data);
         const meta = response.meta || {};
         setTotalRecords(Number(meta.total ?? data.length));

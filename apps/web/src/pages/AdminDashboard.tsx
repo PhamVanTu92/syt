@@ -55,8 +55,9 @@ const AdminDashboard = () => {
         endpoint += `&search=${encodeURIComponent(debouncedSearchTerm)}`;
       }
       const response = await api.get(endpoint);
-      if (response && response.data && Array.isArray(response.data)) {
-        const { data, meta } = response;
+      if (response && Array.isArray(response)) {
+        const data = response;
+        const meta = { total: response.length };
         const mapped = data.map((p: any) => ({
           ...p,
           imageUrl: p.image_url,
