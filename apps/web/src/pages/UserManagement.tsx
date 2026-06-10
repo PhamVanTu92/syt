@@ -1,8 +1,8 @@
 ﻿import React, { useEffect, useState, useMemo, useRef } from "react";
 import { api } from '@/lib/legacy-api';
 import AdminLayout from '@/components/legacy/AdminLayout';
-import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
-import { TablePagination } from '@/components/legacy/common/TablePagination";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable';
+import { TablePagination } from '@/components/legacy/common/TablePagination';
 import UserModal from '@/components/legacy/UserModal';
 import {
   Loader2,

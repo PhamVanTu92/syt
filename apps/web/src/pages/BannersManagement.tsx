@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useMemo, useRef, useState } from "react";
 import { api } from '@/lib/legacy-api';
 import AdminLayout from '@/components/legacy/AdminLayout';
-import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable';
 import { Banner, BannerPosition } from '@/types/legacy';
 import {
   Loader2,

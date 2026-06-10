@@ -18,8 +18,8 @@ import { api } from '@/lib/legacy-api';
 import { SERVICE_CATEGORIES_FILTER } from '@/constants';
 import PostForm from '@/components/legacy/PostForm';
 import AdminLayout from '@/components/legacy/AdminLayout'; // Import the new layout
-import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
-import { TablePagination } from '@/components/legacy/common/TablePagination";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable';
+import { TablePagination } from '@/components/legacy/common/TablePagination';
 import {
   getInitialPageFromUrl,
   usePageUrlSync,

@@ -1,7 +1,7 @@
 ﻿import React, { useState, useEffect, useRef } from "react";
 import AdminLayout from '@/components/legacy/AdminLayout';
-import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
-import { TablePagination } from '@/components/legacy/common/TablePagination";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable';
+import { TablePagination } from '@/components/legacy/common/TablePagination';
 import { useSchedules } from "../services/useSchedules";
 import { WorkSchedule } from '@/types/legacy';
 import { format, subHours } from "date-fns";

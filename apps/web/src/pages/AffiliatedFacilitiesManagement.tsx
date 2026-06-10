@@ -12,8 +12,8 @@ import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
 import AdminLayout from '@/components/legacy/AdminLayout';
 import AffiliatedFacilityForm from '@/components/legacy/AffiliatedFacilityForm';
-import { ScrollableTable } from '@/components/legacy/common/ScrollableTable";
-import { TablePagination } from '@/components/legacy/common/TablePagination";
+import { ScrollableTable } from '@/components/legacy/common/ScrollableTable';
+import { TablePagination } from '@/components/legacy/common/TablePagination';
 import {
   getInitialPageFromUrl,
   usePageUrlSync,
