@@ -1,0 +1,79 @@
+version: '3.9'
+
+# ─── TEST / DEV environment ───────────────────────────────────────────────────
+# Dùng DB mới restore từ golive: suckhuoethudo_dev
+# Backend port: 3003 | Frontend port: 3004
+#
+# Cấu hình: copy .env.test.example → .env.test rồi điền giá trị thực
+#
+# Khởi động:
+#   docker compose -f docker-compose.test.yml --env-file .env.test up -d
+#
+# Rebuild sau khi sửa code:
+#   docker compose -f docker-compose.test.yml --env-file .env.test build api-test
+#   docker compose -f docker-compose.test.yml --env-file .env.test up -d api-test
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  # ─── Backend API (test) ────────────────────────────────────────────────────
+  api-test:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: soyte-backend:test
+    container_name: soyte-backend-test
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      API_PORT: 3003
+      API_PREFIX: api/v2
+      DATABASE_URL: ${TEST_DATABASE_URL}
+      JWT_SECRET: ${TEST_JWT_SECRET}
+      JWT_EXPIRES_IN: "15m"
+      JWT_REFRESH_SECRET: ${TEST_JWT_REFRESH_SECRET}
+      JWT_REFRESH_EXPIRES_IN: "30d"
+      ALLOWED_ORIGINS: ${TEST_ALLOWED_ORIGINS:-http://localhost:3004}
+      FRONTEND_URL: ${TEST_FRONTEND_URL:-http://localhost:3004}
+      EMAIL_HOST: ${EMAIL_HOST:-}
+      EMAIL_PORT: ${EMAIL_PORT:-587}
+      EMAIL_USER: ${EMAIL_USER:-}
+      EMAIL_PASS: ${EMAIL_PASS:-}
+      EMAIL_FROM: ${EMAIL_FROM:-Soyte Test <noreply@test.local>}
+      THROTTLE_TTL_SECONDS: "60"
+      THROTTLE_LIMIT: "500"
+      AUTH_THROTTLE_TTL_SECONDS: "900"
+      AUTH_THROTTLE_LIMIT: "100"
+      UPLOAD_MAX_SIZE_MB: "10"
+      UPLOAD_DEST: "uploads"
+    ports:
+      - "3003:3003"
+    volumes:
+      - uploads_test:/app/apps/api/uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3003/api/v2/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ─── Frontend (test) ───────────────────────────────────────────────────────
+  web-test:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        VITE_API_URL: ${TEST_VITE_API_URL:-http://localhost:3003/api/v2}
+        VITE_PUBLIC_URL: ${TEST_VITE_PUBLIC_URL:-http://localhost:3004}
+    image: soyte-frontend:test
+    container_name: soyte-frontend-test
+    restart: unless-stopped
+    ports:
+      - "3004:80"
+    depends_on:
+      api-test:
+        condition: service_healthy
+
+volumes:
+  uploads_test:

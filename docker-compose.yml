@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+  # ─── Backend API ─────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: soyte-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      API_PORT: 3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - uploads_data:/app/apps/api/uploads
+    networks:
+      - soyte-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/v2/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ─── Frontend ────────────────────────────────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        VITE_API_URL: /api/v2
+        VITE_PUBLIC_URL: ${VITE_PUBLIC_URL:-https://suckhoethudo.vn}
+    container_name: soyte-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    networks:
+      - soyte-net
+    depends_on:
+      api:
+        condition: service_healthy
+
+  # ─── Nginx Reverse Proxy (optional — for running old + new side by side) ──
+  # Uncomment if using nginx to route /api/v1 → old backend, /api/v2 → new
+  # nginx:
+  #   image: nginx:1.27-alpine
+  #   container_name: soyte-nginx
+  #   ports:
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #   networks:
+  #     - soyte-net
+
+volumes:
+  uploads_data:
+
+networks:
+  soyte-net:
+    driver: bridge

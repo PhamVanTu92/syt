@@ -1,0 +1,27 @@
+version: '3.9'
+
+# Development override — mounts source code for hot reload
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: builder
+    volumes:
+      - ./apps/api/src:/app/apps/api/src
+    environment:
+      NODE_ENV: development
+    command: ["pnpm", "--filter", "@soyte/api", "dev"]
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: builder
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+    ports:
+      - "5174:5174"
+    environment:
+      NODE_ENV: development
+    command: ["pnpm", "--filter", "@soyte/web", "dev"]

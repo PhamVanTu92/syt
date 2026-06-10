@@ -1,0 +1,456 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users & Auth ─────────────────────────────────────────────────────────────
+
+model User {
+  id                     Int                @id @default(autoincrement())
+  username               String?
+  email                  String             @unique
+  password               String
+  fullName               String?            @map("full_name")
+  role                   enum_users_role    @default(user)
+  status                 Int                @default(-1)
+  unit                   String?
+  isVerified             Boolean            @default(false) @map("is_verified")
+  reset_password_token   String?
+  reset_password_expires DateTime?          @db.Timestamptz(6)
+  passwordChangedAt      DateTime?          @map("password_changed_at") @db.Timestamptz(6)
+  type                   String?
+  createdAt              DateTime?          @map("created_at") @db.Timestamptz(6)
+  updatedAt              DateTime?          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  role_id                Int?
+
+  feedbacks         Feedback[]
+  scheduleAttendees ScheduleAttendee[]
+  userPermissions   UserPermission[]
+  userRoles         UserRole[]
+  roles             Role?              @relation(fields: [role_id], references: [id])
+
+  @@index([role_id], map: "idx_users_role_id")
+  @@map("users")
+}
+
+model Role {
+  id              Int              @id @default(autoincrement())
+  name            String           @unique @db.VarChar(100)
+  description     String?          @db.VarChar(500)
+  isActive        Boolean          @default(true) @map("is_active")
+  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  rolePermissions RolePermission[]
+  userRoles       UserRole[]
+  users           User[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id              Int              @id @default(autoincrement())
+  key             String?          @unique @map("key")       // dot-notation: "users.view", "posts.create" (nullable: safe for old backend)
+  parentKey       String?          @map("parent_key")        // parent dot-notation key
+  parentId        Int?             @map("parent_id")
+  name            String
+  description     String?
+  createdAt       DateTime         @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  parent          Permission?      @relation("PermissionChildren", fields: [parentId], references: [id])
+  children        Permission[]     @relation("PermissionChildren")
+  rolePermissions RolePermission[]
+  userPermissions UserPermission[]
+
+  @@map("permissions")
+}
+
+model UserRole {
+  userId Int  @map("user_id")
+  roleId Int  @map("role_id")
+
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ur_role")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ur_user")
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model UserPermission {
+  userId       Int @map("user_id")
+  permissionId Int @map("permission_id")
+
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, permissionId])
+  @@map("user_permissions")
+}
+
+model RolePermission {
+  roleId       Int @map("role_id")
+  permissionId Int @map("permission_id")
+
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, map: "fk_rp_permission")
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade, map: "fk_rp_role")
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+// ─── Content ──────────────────────────────────────────────────────────────────
+
+model Post {
+  id         Int                @id @default(autoincrement())
+  categoryId Int?               @map("category_id")
+  authorId   Int?               @map("author_id")
+  title      String
+  summary    String?
+  content    String?
+  imageUrl   String?            @map("image_url")
+  status     enum_posts_status? @default(draft)
+  viewCount  Int?               @default(0) @map("view_count")
+  isFeatured Boolean?           @default(false) @map("is_featured")
+  expiresAt  DateTime?          @map("expires_at") @db.Timestamptz(6)
+  createdAt  DateTime           @map("created_at") @db.Timestamptz(6)
+
+  @@index([categoryId], map: "posts_category_id")
+  @@index([expiresAt], map: "posts_expires_at")
+  @@index([isFeatured], map: "posts_is_featured")
+  @@index([status, createdAt], map: "posts_status_created_at")
+  @@index([authorId], map: "idx_posts_author_id")
+  @@index([status], map: "idx_posts_status")
+  @@map("posts")
+}
+
+model Banner {
+  id        Int      @id @default(autoincrement())
+  position  String   @db.VarChar(20)
+  imageUrl  String   @map("image_url")
+  title     String?  @db.VarChar(255)
+  linkUrl   String?  @map("link_url")
+  sortOrder Int      @default(0) @map("sort_order")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([isActive], map: "idx_banners_active")
+  @@index([position], map: "idx_banners_position")
+  @@map("banners")
+}
+
+// ─── Facilities ───────────────────────────────────────────────────────────────
+
+model SocialFacility {
+  id          String   @id @db.VarChar(50)
+  name        String
+  type        String?  @db.VarChar(100)
+  category    String?  @db.VarChar(100)
+  address     String?  @db.VarChar(500)
+  phone       String?  @db.VarChar(20)
+  latitude    Float?
+  longitude   Float?
+  description String?
+  createdAt   DateTime @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("social_facilities")
+}
+
+model AffiliatedFacility {
+  id        Int      @id @default(autoincrement())
+  name      String
+  logo      String?  @db.VarChar(500)
+  createdAt DateTime @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("affiliated_facilities")
+}
+
+model TradingFacility {
+  id                   Int      @id @default(autoincrement())
+  certificateNumber    String?  @map("certificate_number") @db.VarChar(100)
+  name                 String
+  personInCharge       String?  @map("person_in_charge") @db.VarChar(255)
+  practice_certificate String?  @db.VarChar(100)
+  facilityType         String?  @map("facility_type") @db.VarChar(100)
+  tradingType          String   @map("trading_type") @db.VarChar(100)
+  address              String?
+  issue_date           String?  @db.VarChar(30)
+  gps_number           String?  @db.VarChar(50)
+  gps_issue_date       String?  @db.VarChar(30)
+  isActive             Boolean  @default(true) @map("is_active")
+  createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([certificateNumber], map: "idx_tf_cert")
+  @@index([facilityType], map: "idx_tf_facility_type")
+  @@index([isActive], map: "idx_tf_is_active")
+  @@index([tradingType], map: "idx_tf_trading_type")
+  @@map("trading_facilities")
+}
+
+model TradingFacilityOption {
+  id         Int      @id @default(autoincrement())
+  kind       String   @db.VarChar(50)
+  value      String   @db.VarChar(100)
+  label      String   @db.VarChar(255)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@unique([kind, value], map: "uidx_tfo_kind_value")
+  @@map("trading_facility_options")
+}
+
+// ─── Work Schedules ───────────────────────────────────────────────────────────
+
+model WorkSchedule {
+  id               BigInt                       @id @default(autoincrement())
+  title            String
+  content          String?
+  startTime        DateTime                     @map("start_time") @db.Timestamptz(6)
+  endTime          DateTime                     @map("end_time") @db.Timestamptz(6)
+  location         String?                      @db.VarChar(500)
+  coordinatingUnit String?                      @map("coordinating_unit")
+  status           enum_work_schedules_status   @default(DRAFT)
+  priority         enum_work_schedules_priority @default(NORMAL)
+  internal_notes   String?
+  licensePlate     String?                      @map("license_plate") @db.VarChar(20)
+  createdBy        Int                          @map("created_by")
+  approvedBy       Int?                         @map("approved_by")
+  presiderId       Int?                         @map("presider_id")
+  createdAt        DateTime                     @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime                     @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  attendees   ScheduleAttendee[]
+  attachments ScheduleAttachment[]
+
+  @@index([startTime], map: "idx_ws_start_time")
+  @@index([status], map: "idx_ws_status")
+  @@index([presiderId], map: "work_schedules_presider_id")
+  @@index([startTime], map: "work_schedules_start_time")
+  @@index([status], map: "work_schedules_status")
+  @@map("work_schedules")
+}
+
+model ScheduleAttendee {
+  scheduleId BigInt @map("schedule_id")
+  userId     Int    @map("user_id")
+
+  schedule WorkSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade, map: "fk_sa_schedule")
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade, map: "fk_sa_user")
+
+  @@id([scheduleId, userId])
+  @@map("schedule_attendees")
+}
+
+model ScheduleAttachment {
+  id          BigInt   @id @default(autoincrement())
+  scheduleId  BigInt   @map("schedule_id")
+  file_name   String
+  file_path   String   @db.VarChar(500)
+  file_type   String?  @db.VarChar(50)
+  uploaded_at DateTime @db.Timestamptz(6)
+
+  schedule WorkSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  @@index([scheduleId], map: "schedule_attachments_schedule_id")
+  @@map("schedule_attachments")
+}
+
+// ─── Forms & Feedbacks ────────────────────────────────────────────────────────
+
+model Form {
+  id          Int                @id @default(autoincrement())
+  name        String
+  description String?
+  type        String?
+  info        String?
+  data        String             // JSON string storing sections/questions
+  status      enum_forms_status? @default(active)
+  deletedAt   DateTime?          @map("deleted_at") @db.Timestamptz(6)
+  createdAt   DateTime           @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([status], map: "forms_status")
+  @@index([type], map: "forms_type")
+  @@map("forms")
+}
+
+model Feedback {
+  id          Int                    @id @default(autoincrement())
+  formId      Int                    @map("form_id")
+  creatorName String                 @default("Người gửi ẩn danh") @map("creator_name")
+  status      enum_feedbacks_status? @default(pending)
+  info        Json?                  @db.Json
+  type        String?
+  source      String?                // "QR" | "WEB" — added via migration
+  facilityId  String?                @map("facility_id")  // extracted from info JSON — O(1) lookup
+  userId      Int?                   @map("user_id")
+  surveyKey   String?                @map("survey_key")
+  createdAt   DateTime               @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime               @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  sections FeedbackSection[]
+  user     User?             @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([formId], map: "idx_feedbacks_form_id")
+  @@index([surveyKey], map: "idx_feedbacks_survey_key")
+  @@index([type], map: "idx_feedbacks_type")
+  @@index([surveyKey, facilityId, type], map: "idx_feedbacks_survey_facility_type")
+  @@map("feedbacks")
+}
+
+model FeedbackSection {
+  id         Int @id @default(autoincrement())
+  feedbackId Int @map("feedback_id")
+  name       String
+
+  feedback_options FeedbackOption[]
+  feedback         Feedback         @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+
+  @@map("feedback_sections")
+}
+
+model FeedbackOption {
+  id                  Int  @id @default(autoincrement())
+  feedback_section_id Int
+  tiendo              Int?
+  danhgia             Int?
+  ghichu              String?
+  data                Json? @db.Json
+
+  feedback_sections FeedbackSection @relation(fields: [feedback_section_id], references: [id], onDelete: Cascade)
+
+  @@map("feedback_options")
+}
+
+// ─── Surveys ──────────────────────────────────────────────────────────────────
+
+model Survey {
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        String   @db.VarChar(50)
+  dateFrom    DateTime @map("date_from") @db.Date
+  dateTo      DateTime @map("date_to") @db.Date
+  formIds     String   @map("form_ids")
+  status      Boolean? @default(true)
+  description String?
+  createdAt   DateTime @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  facilities SurveyFacility[]
+
+  @@map("surveys")
+}
+
+model SurveyFacility {
+  surveyId   Int    @map("survey_id")
+  facilityId String @map("facility_id")
+
+  survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+
+  @@id([surveyId, facilityId])
+  @@unique([surveyId, facilityId])
+  @@map("survey_facilities")
+}
+
+// ─── Datasets ─────────────────────────────────────────────────────────────────
+
+model DatasetType {
+  id          Int             @id @default(autoincrement())
+  code        String          @unique @db.VarChar(100)
+  name        String
+  description String?
+  fields      Json?
+  sourceFile  String?         @map("source_file")
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  records DatasetRecord[]
+
+  @@map("dataset_types")
+}
+
+model DatasetRecord {
+  id            BigInt      @id @default(autoincrement())
+  datasetTypeId Int         @map("dataset_type_id")
+  data          Json
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updated_at    DateTime    @default(now()) @db.Timestamptz(6)
+
+  datasetType DatasetType @relation(fields: [datasetTypeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([data], map: "idx_dataset_records_gin", type: Gin)
+  @@index([datasetTypeId], map: "idx_dataset_records_type")
+  @@index([datasetTypeId, createdAt(sort: Desc)], map: "idx_dataset_records_type_created")
+  @@map("dataset_records")
+}
+
+// ─── Settings ─────────────────────────────────────────────────────────────────
+
+model EmailConfirm {
+  id          Int       @id @default(autoincrement())
+  smtp_host   String    @default("smtp.gmail.com")
+  smtp_port   Int       @default(587)
+  smtp_secure Boolean   @default(false)
+  smtp_user   String
+  smtp_pass   String
+  status      Int       @default(-1)
+  created_at  DateTime? @db.Timestamptz(6)
+  updated_at  DateTime? @db.Timestamptz(6)
+
+  @@map("email_confirm")
+}
+
+// ─── Legacy ───────────────────────────────────────────────────────────────────
+
+model LegacyMigration {
+  id         Int       @id @default(dbgenerated("nextval('_migrations_id_seq'::regclass)"))
+  name       String    @unique @db.VarChar(255)
+  applied_at DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@map("_migrations")
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum enum_feedbacks_status {
+  pending
+  approved
+  rejected
+}
+
+enum enum_forms_status {
+  active
+  inactive
+}
+
+enum enum_posts_status {
+  draft
+  published
+}
+
+enum enum_users_role {
+  admin
+  user
+  office
+  leader
+}
+
+enum enum_work_schedules_priority {
+  NORMAL
+  IMPORTANT
+  URGENT
+}
+
+enum enum_work_schedules_status {
+  DRAFT
+  APPROVED
+  CANCELLED
+}
