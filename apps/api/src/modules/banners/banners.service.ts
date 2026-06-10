@@ -3,8 +3,8 @@ import { IsBoolean, IsEnum, IsNumber, IsOptional, IsString } from 'class-validat
 import { PrismaService } from '../../prisma/prisma.service';
 
 export class CreateBannerDto {
-  @IsOptional() @IsEnum(['top', 'left', 'right', 'footer']) position?: string;
-  @IsOptional() @IsString() imageUrl?: string;
+  @IsEnum(['top', 'left', 'right', 'footer']) position!: string;
+  @IsString() imageUrl!: string;
   @IsOptional() @IsString() title?: string;
   @IsOptional() @IsString() linkUrl?: string;
   @IsOptional() @IsNumber() sortOrder?: number;
@@ -27,7 +27,17 @@ export class BannersService {
   }
 
   async create(dto: CreateBannerDto) {
-    return this.prisma.banner.create({ data: dto });
+    const { position, imageUrl, title, linkUrl, sortOrder, isActive } = dto;
+    return this.prisma.banner.create({
+      data: {
+        position,
+        imageUrl,
+        ...(title !== undefined ? { title } : {}),
+        ...(linkUrl !== undefined ? { linkUrl } : {}),
+        ...(sortOrder !== undefined ? { sortOrder } : {}),
+        ...(isActive !== undefined ? { isActive } : {}),
+      },
+    });
   }
 
   async update(id: number, dto: Partial<CreateBannerDto>) {
