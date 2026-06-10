@@ -111,7 +111,7 @@ const TradingFacilityForm: React.FC<TradingFacilityFormProps> = ({
 
   const handleFieldChange = <K extends keyof FormState>(
     key: K,
-    value: FormState[K as any],
+    value: FormState[K],
   ) => {
     setFormData((current: any) => ({ ...current, [key]: value }));
     setErrors((current: any) => {

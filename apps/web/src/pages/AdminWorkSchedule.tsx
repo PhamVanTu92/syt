@@ -17,7 +17,7 @@ import {
   CheckCircle,
   Clock,
   MapPin,
-  User as } from "lucide-react";
+} from "lucide-react";
 import ScheduleForm from '@/components/legacy/ScheduleForm';
 import {
   getInitialPageFromUrl,

@@ -54,7 +54,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({
         start_time: initialData.start_time
           ? initialData.start_time.slice(0, 16)
           : "",
-        end_time: (initialData.end_time ? initialData.end_time.slice(0) ?? '', 16) : "",
+        end_time: initialData.end_time ? initialData.end_time.slice(0, 16) : "",
         location: initialData.location || "",
         presider_id: initialData.presider_id || 0,
         coordinating_unit: initialData.coordinating_unit || "",
