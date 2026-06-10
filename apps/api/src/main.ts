@@ -17,6 +17,7 @@ async function bootstrap() {
   const port = config.get<number>('API_PORT', 3001);
   const prefix = config.get<string>('API_PREFIX', 'api/v2');
   const allowedOrigins = config.get<string>('ALLOWED_ORIGINS', '');
+  const publicUrl = config.get<string>('PUBLIC_URL', `http://localhost:${port}`);
 
   // Security
   app.use(helmet({ contentSecurityPolicy: false }));
@@ -25,10 +26,13 @@ async function bootstrap() {
   // CORS
   app.enableCors({
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      // Allow requests with no origin (server-to-server, curl, mobile apps)
       if (!origin) return callback(null, true);
-      const origins = allowedOrigins.split(',').map((o) => o.trim());
-      // MEDIUM FIX: exact '*' wildcard check, not substring
-      if (origins.length === 1 && origins[0] === '*' || origins.includes(origin)) {
+      const origins = allowedOrigins
+        .split(',')
+        .map((o) => o.trim())
+        .filter(Boolean);
+      if (origins.length === 0 || origins.includes('*') || origins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error(`CORS blocked: ${origin}`));
@@ -62,7 +66,8 @@ async function bootstrap() {
     .setDescription('Sở Y Tế Hà Nội — REST API v2')
     .setVersion('2.0')
     .addBearerAuth()
-    .addServer(`http://localhost:${port}`, 'Local Development')
+    .addServer(publicUrl, 'Current Server')
+    .addServer(`http://localhost:${port}`, 'Local')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
