@@ -236,6 +236,41 @@ export class FeedbacksService {
     return { submitted: !!exists };
   }
 
+  // ─── Evaluate Dashboard ───────────────────────────────────────────────────
+
+  async getEvaluateDashboard(surveyKey?: string) {
+    const where: Record<string, unknown> = { type: 'evaluate' };
+    if (surveyKey) where['surveyKey'] = surveyKey;
+
+    const [total, statusCounts, facilityCounts] = await Promise.all([
+      this.prisma.feedback.count({ where: where as Prisma.FeedbackWhereInput }),
+      this.prisma.feedback.groupBy({
+        by: ['status'],
+        where: where as Prisma.FeedbackWhereInput,
+        _count: { status: true },
+      }),
+      this.prisma.feedback.groupBy({
+        by: ['facilityId'],
+        where: where as Prisma.FeedbackWhereInput,
+        _count: { _all: true },
+      }),
+    ]);
+
+    const countMap = Object.fromEntries(statusCounts.map((s) => [s.status, s._count.status]));
+
+    return {
+      total,
+      pending: countMap['pending'] ?? 0,
+      approved: countMap['approved'] ?? 0,
+      rejected: countMap['rejected'] ?? 0,
+      facility_count: facilityCounts.length,
+      by_facility: facilityCounts.map((f) => ({
+        facility_id: f.facilityId,
+        count: f._count._all,
+      })),
+    };
+  }
+
   // ─── Stats (ported from feedback.service.js) ──────────────────────────────
 
   async getStats(query: QueryStatsDto) {

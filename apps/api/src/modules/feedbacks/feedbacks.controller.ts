@@ -57,6 +57,13 @@ export class FeedbacksController {
     return this.svc.getSurveyFacilityStatus(surveyId);
   }
 
+  @Get('evaluate-dashboard')
+  @RequirePermissions('reflect.list_feedback', 'evaluate.list_feedback')
+  @ApiBearerAuth()
+  getEvaluateDashboard(@Query('survey_key') surveyKey?: string) {
+    return this.svc.getEvaluateDashboard(surveyKey);
+  }
+
   @Get(':id')
   @RequirePermissions('reflect.list_feedback', 'evaluate.list_feedback')
   @ApiBearerAuth()
