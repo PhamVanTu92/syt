@@ -232,14 +232,21 @@ const PermissionsManagement: React.FC = () => {
             </div>
           </td>
           <td className="px-6 py-4">
-            <p className="text-[10px] font-bold text-gray-400 line-clamp-1 max-w-xs uppercase italic opacity-70">
-              {item.name}
+            <p className="text-xs text-gray-600 line-clamp-2 max-w-xs">
+              {item.description || <span className="text-gray-300 italic">—</span>}
             </p>
           </td>
           <td className="px-6 py-4">
             <span className="text-[10px] text-gray-600 font-black">
               {item.created_at
                 ? new Date(item.created_at).toLocaleString("vi-VN")
+                : "---"}
+            </span>
+          </td>
+          <td className="px-6 py-4">
+            <span className="text-[10px] text-gray-600 font-black">
+              {item.updated_at
+                ? new Date(item.updated_at).toLocaleString("vi-VN")
                 : "---"}
             </span>
           </td>
