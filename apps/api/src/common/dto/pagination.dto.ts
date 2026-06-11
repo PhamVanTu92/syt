@@ -67,6 +67,38 @@ export class PaginationDto {
   @IsOptional()
   @IsString()
   order?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  category_id?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  facility_id?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  facility_type?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  keyword?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  date_from?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  date_to?: string;
 }
 
 export function paginate(page: number, limit: number) {
