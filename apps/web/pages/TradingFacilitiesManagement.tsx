@@ -97,6 +97,15 @@ const TradingFacilitiesManagement = () => {
     [datasets, selectedCode]
   );
 
+  // Nếu dataset không có fields định nghĩa, tự suy ra từ keys của bản ghi đầu tiên
+  const resolvedFields = useMemo(() => {
+    if (activeDataset?.fields && activeDataset.fields.length > 0) return activeDataset.fields;
+    if (records.length > 0 && records[0].data) {
+      return Object.keys(records[0].data).map((k) => ({ name: k, datatype: "text" as const }));
+    }
+    return [];
+  }, [activeDataset, records]);
+
   const fetchDatasets = async () => {
     setDatasetsLoading(true);
     try {
@@ -408,7 +417,7 @@ const TradingFacilitiesManagement = () => {
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50 text-left text-[11px] font-black uppercase tracking-widest text-gray-400">
                   {/* Dynamic Headers from Dataset Fields Schema */}
-                  {activeDataset.fields.slice(0, 5).map((field) => (
+                  {resolvedFields.slice(0, 5).map((field) => (
                     <th key={field.name} className="px-6 py-4">
                       {field.name}
                     </th>
@@ -419,7 +428,7 @@ const TradingFacilitiesManagement = () => {
               <tbody className="divide-y divide-gray-50">
                 {loading ? (
                   <tr>
-                    <td colSpan={activeDataset.fields.slice(0, 5).length + 1} className="px-6 py-20 text-center">
+                    <td colSpan={resolvedFields.slice(0, 5).length + 1} className="px-6 py-20 text-center">
                       <Loader2
                         size={40}
                         className="mx-auto mb-4 animate-spin text-primary-600"
@@ -432,7 +441,7 @@ const TradingFacilitiesManagement = () => {
                 ) : records.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={activeDataset.fields.slice(0, 5).length + 1}
+                      colSpan={resolvedFields.slice(0, 5).length + 1}
                       className="px-6 py-20 text-center text-gray-400 text-sm font-medium"
                     >
                       Không tìm thấy bản ghi nào trong nhóm {activeDataset.name}.
@@ -442,7 +451,7 @@ const TradingFacilitiesManagement = () => {
                   records.map((item) => (
                     <tr key={String(item.id)} className="transition-colors hover:bg-gray-50">
                       {/* Dynamic Cells from Dataset Fields Schema */}
-                      {activeDataset.fields.slice(0, 5).map((field) => (
+                      {resolvedFields.slice(0, 5).map((field) => (
                         <td key={field.name} className="px-6 py-4">
                           {renderDynamicCell(item.data?.[field.name], field.datatype, field.name)}
                         </td>

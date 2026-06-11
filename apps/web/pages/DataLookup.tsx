@@ -645,7 +645,10 @@ const DataLookup = () => {
                     item.data,
                     CERTIFICATE_FIELDS,
                   );
-                  const fields = activeDataset?.fields ?? [];
+                  const rawFields = activeDataset?.fields ?? [];
+                  const fields = rawFields.length > 0
+                    ? rawFields
+                    : Object.keys(item.data || {}).map((k) => ({ name: k, datatype: "text" as const }));
                   const detailFields = fields.filter(
                     (field) => !FIELDS_HIDDEN_IN_DETAIL.has(field.name),
                   );
