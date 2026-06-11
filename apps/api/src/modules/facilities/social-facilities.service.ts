@@ -30,6 +30,14 @@ export class SocialFacilitiesService {
     @Optional() private reportsService?: ReportsService,
   ) {}
 
+  private readonly TYPE_LABELS: Record<string, string> = {
+    BV: 'Bệnh viện',
+    BT: 'Cơ sở bảo trợ',
+    TT: 'Trung tâm',
+    CC: 'Chi cục',
+    TYT: 'Trạm y tế',
+  };
+
   async findAll(query: QueryFacilityDto) {
     const { skip, take } = paginate(query.page, query.limit);
     const where: Record<string, unknown> = {};
@@ -37,11 +45,21 @@ export class SocialFacilitiesService {
     if (query.type) where['type'] = query.type;
     if (query.category) where['category'] = query.category;
 
-    const [items, total] = await Promise.all([
+    const [items, total, typeCounts] = await Promise.all([
       this.prisma.socialFacility.findMany({ where: where as Prisma.SocialFacilityWhereInput, skip, take, orderBy: { name: 'asc' } }),
       this.prisma.socialFacility.count({ where: where as Prisma.SocialFacilityWhereInput }),
+      this.prisma.socialFacility.groupBy({ by: ['type'], _count: { _all: true } }),
     ]);
-    return paginatedResponse(items, total, query.page, query.limit);
+
+    const typeSummary = Object.entries(this.TYPE_LABELS).map(([code, label]) => ({
+      type: code,
+      label,
+      count: typeCounts.find((r) => r.type === code)?._count._all ?? 0,
+    }));
+    const totalAll = typeCounts.reduce((sum, r) => sum + r._count._all, 0);
+
+    const base = paginatedResponse(items, total, query.page, query.limit);
+    return { ...base, type_summary: typeSummary, total_all: totalAll };
   }
 
   async findAllFlat(limit = 5000) {
