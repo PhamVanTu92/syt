@@ -59,7 +59,10 @@ export class SocialFacilitiesService {
     const totalAll = typeCounts.reduce((sum, r) => sum + r._count._all, 0);
 
     const base = paginatedResponse(items, total, query.page, query.limit);
-    return { ...base, type_summary: typeSummary, total_all: totalAll };
+    return {
+      ...base,
+      meta: { ...base.meta, type_summary: typeSummary, total_all: totalAll },
+    };
   }
 
   async findAllFlat(limit = 5000) {

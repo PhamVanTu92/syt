@@ -67,9 +67,10 @@ const SocialFacilitiesManagement = () => {
         const meta = response.meta || {};
         setTotalRecords(Number(meta.total ?? data.length));
         setTotalPages(Number(meta.totalPages ?? Math.max(1, Math.ceil((meta.total ?? data.length) / pageSize))));
-        if (Array.isArray(meta.reports)) {
-          setReports(meta.reports);
-          setReportsTotal(Number(meta.total ?? meta.reports.reduce((acc: number, r: any) => acc + Number(r.count || 0), 0)));
+        const typeSummary = meta.type_summary ?? meta.reports;
+        if (Array.isArray(typeSummary)) {
+          setReports(typeSummary);
+          setReportsTotal(Number(meta.total_all ?? meta.total ?? typeSummary.reduce((acc: number, r: any) => acc + Number(r.count || 0), 0)));
         }
       } else {
         setFacilities([]);
