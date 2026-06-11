@@ -62,6 +62,11 @@ export class PaginationDto {
   @IsOptional()
   @IsString()
   survey_key?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  order?: string;
 }
 
 export function paginate(page: number, limit: number) {
