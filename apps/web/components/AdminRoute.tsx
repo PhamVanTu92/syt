@@ -46,7 +46,9 @@ const AdminRoute: React.FC = () => {
     return <Navigate to={landingPath} replace />;
   }
 
-  return <Outlet />;
+  // key=pathname forces child component to remount on every route change,
+  // so useEffect data-fetching runs fresh when user navigates back/forward.
+  return <Outlet key={location.pathname} />;
 };
 
 export default AdminRoute;
