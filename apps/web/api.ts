@@ -3,12 +3,18 @@ import { SmtpConfig } from "./types";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 // Convert camelCase keys → snake_case recursively (new NestJS backend returns camelCase)
-const toSnake = (str: string) => str.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`);
-const snakifyKeys = (obj: any): any => {
-  if (Array.isArray(obj)) return obj.map(snakifyKeys);
+// Only replaces lowercase→uppercase transitions to avoid mangling user-defined field names
+// (e.g. "Tên cơ sở", "STT" must not be changed; "totalPages" → "total_pages" is correct)
+const toSnake = (str: string) => str.replace(/([a-z])([A-Z])/g, (_, a, b) => `${a}_${b.toLowerCase()}`);
+const snakifyKeys = (obj: any, depth = 0): any => {
+  if (Array.isArray(obj)) return obj.map((item) => snakifyKeys(item, depth));
   if (obj !== null && typeof obj === 'object' && !(obj instanceof Date)) {
     return Object.fromEntries(
-      Object.entries(obj).map(([k, v]) => [toSnake(k), snakifyKeys(v)])
+      Object.entries(obj).map(([k, v]) => {
+        // Keys named "data" at depth ≥ 1 are user-defined payloads — do not recurse
+        const skipRecurse = depth >= 1 && k === 'data';
+        return [toSnake(k), skipRecurse ? v : snakifyKeys(v, depth + 1)];
+      })
     );
   }
   return obj;
@@ -47,7 +53,7 @@ const handleResponse = async (response: Response, method: string) => {
   }
 
   // Convert camelCase → snake_case so legacy frontend code works unchanged
-  return snakifyKeys(data);
+  return snakifyKeys(data, 0);
 };
 
 export const api = {
