@@ -32,11 +32,19 @@ export type DatasetRecord = {
   updated_at?: string;
 };
 
+export type DatasetSummaryItem = {
+  code: string;
+  name: string;
+  count: number;
+};
+
 export type DatasetRecordsMeta = {
   page: number;
   limit: number;
   total: number | null;
   totalPages: number | null;
+  dataset_summary?: DatasetSummaryItem[];
+  total_all?: number;
 };
 
 export type DatasetRecordsResponse = {
@@ -138,6 +146,8 @@ export const datasetsService = {
         limit: Number(metaSource.limit ?? limit),
         total,
         totalPages,
+        dataset_summary: Array.isArray(metaSource.dataset_summary) ? metaSource.dataset_summary : undefined,
+        total_all: metaSource.total_all != null ? Number(metaSource.total_all) : undefined,
       },
     };
   },

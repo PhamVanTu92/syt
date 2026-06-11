@@ -220,6 +220,15 @@ const DataLookup = () => {
           total: response.meta.total,
           totalPages: response.meta.totalPages,
         });
+        // Cập nhật total_records cho từng dataset từ dataset_summary trả về trong meta
+        if (Array.isArray(response.meta.dataset_summary)) {
+          setDatasets((prev) =>
+            prev.map((ds) => {
+              const summary = response.meta.dataset_summary!.find((s) => s.code === ds.code);
+              return summary ? { ...ds, total_records: summary.count } : ds;
+            }),
+          );
+        }
       } catch (err) {
         if (cancelled) return;
         console.error("Records fetch error:", err);
